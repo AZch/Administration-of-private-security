@@ -61,6 +61,10 @@ public class Controller {
             stage.setTitle("Б У Х Г А Л Т Е Р");
             Scene scene = new Scene(load);
             stage.setScene(scene);
+
+            AccountantUIController accountantUIController = loader.getController();
+            accountantUIController.setStartData(id, fio);
+
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
