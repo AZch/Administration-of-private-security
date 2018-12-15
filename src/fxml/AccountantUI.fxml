@@ -9,7 +9,7 @@
 <AnchorPane prefHeight="526.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AccountantUIController">
    <children>
       <Label layoutX="14.0" layoutY="21.0" text="ФИО:" />
-      <TableView layoutX="15.0" layoutY="231.0" prefHeight="142.0" prefWidth="428.0">
+      <TableView fx:id="TableLOA" layoutX="15.0" layoutY="231.0" prefHeight="142.0" prefWidth="428.0">
         <columns>
           <TableColumn fx:id="DateSuppose" prefWidth="128.0" text="Предп дата оплаты" />
           <TableColumn fx:id="DateFactPay" prefWidth="122.0" text="Факт дата оплаты" />
@@ -25,13 +25,11 @@
         </columns>
       </TableView>
       <Label layoutX="15.0" layoutY="381.0" text="Договор:" />
-      <Label fx:id="NumDog" layoutX="72.0" layoutY="381.0" />
+      <Label fx:id="NumDog" layoutX="36.0" layoutY="411.0" />
       <Label layoutX="20.0" layoutY="451.0" text="Дата начала договора:" />
-      <Label fx:id="PeriodPay" layoutX="29.0" layoutY="423.0" />
-      <Label layoutX="166.0" layoutY="406.0" text="Сумма оплаты периода:" />
-      <Label fx:id="DateStart" layoutX="29.0" layoutY="468.0" />
-      <Label layoutX="15.0" layoutY="406.0" text="Период оплаты:" />
-      <Label fx:id="SumPeriod" layoutX="202.0" layoutY="423.0" />
+      <Label fx:id="PeriodPay" layoutX="190.0" layoutY="411.0" prefHeight="17.0" prefWidth="74.0" />
+      <Label fx:id="DateStart" layoutX="38.0" layoutY="468.0" />
+      <Label layoutX="171.0" layoutY="381.0" text="Период оплаты:" />
       <Label layoutX="171.0" layoutY="451.0" text="Дата окончания договора:" />
       <Label fx:id="DateEnd" layoutX="202.0" layoutY="468.0" />
       <Label fx:id="FIO" layoutX="46.0" layoutY="21.0" />

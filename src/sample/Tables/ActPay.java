@@ -8,11 +8,13 @@ public class ActPay {
     private int numAct;
     private String dateCreate;
     private String dateSuppose;
+    private Long id;
 
-    public ActPay(int numAct, String dateCreate, String dateSuppose) {
+    public ActPay(int numAct, String dateCreate, String dateSuppose, Long id) {
         this.numAct = numAct;
         this.dateCreate = dateCreate;
         this.dateSuppose = dateSuppose;
+        this.id = id;
     }
 
     public ActPay() {
@@ -35,6 +37,10 @@ public class ActPay {
         this.dateSuppose = dateSuppose;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     // get
     public int getNumAct() {
         return numAct;
@@ -46,5 +52,9 @@ public class ActPay {
 
     public String getDateSuppose() {
         return dateSuppose;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
