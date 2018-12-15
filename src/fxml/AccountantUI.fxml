@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="526.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AccountantUIController">
+<AnchorPane prefHeight="659.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AccountantUIController">
    <children>
-      <Label layoutX="14.0" layoutY="21.0" text="ФИО:" />
-      <TableView fx:id="TableLOA" layoutX="15.0" layoutY="231.0" prefHeight="142.0" prefWidth="428.0">
+      <Label layoutX="19.0" layoutY="14.0" text="ФИО:" />
+      <TableView fx:id="TableLOA" layoutX="13.0" layoutY="349.0" prefHeight="142.0" prefWidth="428.0">
         <columns>
           <TableColumn fx:id="DateSuppose" prefWidth="128.0" text="Предп дата оплаты" />
           <TableColumn fx:id="DateFactPay" prefWidth="122.0" text="Факт дата оплаты" />
@@ -17,21 +23,55 @@
             <TableColumn fx:id="TypePay" minWidth="0.0" prefWidth="83.0" text="Тип оплаты" />
         </columns>
       </TableView>
-      <TableView fx:id="ActPayTable" layoutX="15.0" layoutY="38.0" prefHeight="176.0" prefWidth="272.0">
+      <TableView fx:id="ActPayTable" layoutX="15.0" layoutY="38.0" prefHeight="211.0" prefWidth="272.0">
         <columns>
             <TableColumn fx:id="NumAct" prefWidth="75.0" text="Номер акта" />
           <TableColumn fx:id="DateCreate" prefWidth="106.0" text="Дата создания" />
           <TableColumn fx:id="DatePayAct" prefWidth="88.0" text="Дата оплаты" />
         </columns>
       </TableView>
-      <Label layoutX="15.0" layoutY="381.0" text="Договор:" />
-      <Label fx:id="NumDog" layoutX="36.0" layoutY="411.0" />
-      <Label layoutX="20.0" layoutY="451.0" text="Дата начала договора:" />
-      <Label fx:id="PeriodPay" layoutX="190.0" layoutY="411.0" prefHeight="17.0" prefWidth="74.0" />
-      <Label fx:id="DateStart" layoutX="38.0" layoutY="468.0" />
-      <Label layoutX="171.0" layoutY="381.0" text="Период оплаты:" />
-      <Label layoutX="171.0" layoutY="451.0" text="Дата окончания договора:" />
-      <Label fx:id="DateEnd" layoutX="202.0" layoutY="468.0" />
-      <Label fx:id="FIO" layoutX="46.0" layoutY="21.0" />
+      <Label layoutX="14.0" layoutY="611.0" text="Договор:" />
+      <Label fx:id="NumDog" layoutX="67.0" layoutY="611.0" />
+      <Label layoutX="14.0" layoutY="628.0" text="Дата начала договора:" />
+      <Label fx:id="PeriodPay" layoutX="357.0" layoutY="611.0" prefHeight="17.0" prefWidth="74.0" />
+      <Label fx:id="DateStart" layoutX="141.0" layoutY="628.0" />
+      <Label layoutX="264.0" layoutY="611.0" text="Период оплаты:" />
+      <Label layoutX="209.0" layoutY="628.0" text="Дата окончания договора:" />
+      <Label fx:id="DateEnd" layoutX="359.0" layoutY="628.0" />
+      <Label fx:id="FIO" layoutX="51.0" layoutY="14.0" />
+      <DatePicker layoutX="14.0" layoutY="275.0" prefHeight="25.0" prefWidth="125.0" />
+      <DatePicker layoutX="162.0" layoutY="275.0" prefHeight="25.0" prefWidth="125.0" />
+      <Label layoutX="16.0" layoutY="254.0" text="Дата создания" />
+      <Label layoutX="162.0" layoutY="254.0" text="Дата оплаты" />
+      <Button layoutX="14.0" layoutY="309.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Добавить" />
+      <Button layoutX="111.0" layoutY="309.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Изменить" />
+      <Button layoutX="209.0" layoutY="309.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Удалить" />
+      <Label layoutX="284.0" layoutY="14.0" text="Поиск по бланку/строке бланка" />
+      <Label layoutX="287.0" layoutY="30.0" text="Дата создания/предп дата опл" />
+      <DatePicker layoutX="305.0" layoutY="48.0" prefHeight="25.0" prefWidth="125.0" />
+      <DatePicker layoutX="305.0" layoutY="77.0" prefHeight="25.0" prefWidth="125.0" />
+      <DatePicker layoutX="305.0" layoutY="161.0" prefHeight="25.0" prefWidth="125.0" />
+      <DatePicker layoutX="305.0" layoutY="127.0" prefHeight="25.0" prefWidth="125.0" />
+      <Label layoutX="287.0" layoutY="102.0" text="Дата оплаты/факт дата оплаты" />
+      <DatePicker layoutX="16.0" layoutY="516.0" prefHeight="25.0" prefWidth="147.0" />
+      <DatePicker layoutX="187.0" layoutY="516.0" prefHeight="25.0" prefWidth="147.0" />
+      <ChoiceBox layoutX="187.0" layoutY="572.0" prefHeight="25.0" prefWidth="147.0" />
+      <TextField layoutX="16.0" layoutY="572.0" prefHeight="25.0" prefWidth="147.0" />
+      <Label layoutX="17.0" layoutY="491.0" text="Предп дата оплаты" />
+      <Label layoutX="184.0" layoutY="491.0" text="Факт дата оплаты" />
+      <Label layoutX="18.0" layoutY="549.0" text="Сумма оплаты" />
+      <Label layoutX="181.0" layoutY="549.0" text="Тип оплаты" />
+      <Button layoutX="358.0" layoutY="496.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Добавить" />
+      <Button layoutX="358.0" layoutY="537.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Изменить" />
+      <Button layoutX="358.0" layoutY="572.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" text="Удалить" />
+      <ChoiceBox layoutX="305.0" layoutY="202.0" prefHeight="25.0" prefWidth="125.0" />
+      <Label layoutX="305.0" layoutY="186.0" text="Тип оплаты" />
+      <Label layoutX="305.0" layoutY="226.0" text="Сумма оплаты" />
+      <TextField layoutX="307.0" layoutY="247.0" prefHeight="25.0" prefWidth="125.0" />
+      <Button layoutX="306.0" layoutY="281.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Поиск по бланку" />
+      <Button layoutX="305.0" layoutY="312.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Поиск по строке" />
+      <RadioButton layoutX="432.0" layoutY="226.0" mnemonicParsing="false" text="&gt;" />
+      <RadioButton layoutX="432.0" layoutY="246.0" mnemonicParsing="false" text="&lt;" />
+      <CheckBox layoutX="432.0" layoutY="263.0" mnemonicParsing="false" text="=" />
    </children>
 </AnchorPane>

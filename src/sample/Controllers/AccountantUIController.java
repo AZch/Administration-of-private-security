@@ -2,6 +2,7 @@ package sample.Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -63,6 +64,18 @@ public class AccountantUIController {
         DateSuppose.setCellValueFactory(new PropertyValueFactory<LOA, String>(LOA.columnDateSuppose));
         DateFactPay.setCellValueFactory(new PropertyValueFactory<LOA, String>(LOA.columnDateFact));
         SumPay.setCellValueFactory(new PropertyValueFactory<LOA, Integer>(LOA.columnFactPay));
+
+        SumPay.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<LOA, Integer>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<LOA, Integer> event) {
+                        ((LOA) event.getTableView().getItems().get(
+                                event.getTablePosition().getRow()
+                        )).setFactPay(event.getNewValue());
+                    }
+                }
+        );
+
         TypePay.setCellValueFactory(new PropertyValueFactory<LOA, String>(LOA.columnTypePay));
 
         TableLOA.setItems(loaData);
