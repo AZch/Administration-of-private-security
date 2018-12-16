@@ -16,6 +16,6 @@ public class Insert {
             "values(";
     public static String insertObject = "insert into objectofprotect (idobject, address_obj, type_obj, listsecsys_obj) " +
             "values(";
-    public static String insertDogovor = "insert into dogovor (iddogovor, series_dog, payperiod_dog, datastart_dog, dataend_dog, peoplecount_dog) " +
+    public static String insertDogovor = "insert into dogovor (SERVICEOFFICIER_IDSERVICEOFF, series_dog, payperiod_dog, datastart_dog, dataend_dog, peoplecount_dog) " +
             "values(";
 }

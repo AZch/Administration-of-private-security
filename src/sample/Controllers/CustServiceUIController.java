@@ -121,7 +121,6 @@ public class CustServiceUIController {
     private Long idClient = Long.valueOf("0");
     private Long idDog = Long.valueOf("0");
     private Long idObj = Long.valueOf("0");
-    private Long idSelectObj = Long.valueOf("0");
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
 
@@ -163,7 +162,7 @@ public class CustServiceUIController {
 
         ObjProtectTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                idSelectObj = newSelection.getId();
+                idObj = newSelection.getId();
                 AddressObjectEdit.setText(newSelection.getAddressObject());
                 editTypeObject.setText(newSelection.getTypeObject());
                 selecteditTypeObject = newSelection.getTypeObject();
@@ -289,11 +288,11 @@ public class CustServiceUIController {
     public void addDogovorAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
-            String resStr = Insert.insertDogovor + idDog + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + selectpayPeriod +
+            String resStr = Insert.insertDogovor + idCustService + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + selectpayPeriod +
                     Insert.comma + Insert.toDate + DataCreateEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Insert.toDate + DataEndEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + strToInt(LivesEdit.getText()) + Insert.rbc;
-            Main.getStmt().executeQuery(Insert.insertDogovor + idDog + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + "'" + selectpayPeriod + "'" +
+            Main.getStmt().executeQuery(Insert.insertDogovor + idCustService + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + "'" + selectpayPeriod + "'" +
                     Insert.comma + Insert.toDate + "'" + DataCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + strToInt(LivesEdit.getText()) + Insert.rbc);
