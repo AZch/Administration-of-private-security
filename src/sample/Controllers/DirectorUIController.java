@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Constants;
 import sample.Main;
+import sample.Scripts.Insert;
 import sample.Scripts.Select;
 import sample.Tables.ActPay;
 import sample.Tables.Graphics;
@@ -144,6 +145,14 @@ public class DirectorUIController {
     }
 
     public void addPathAction(ActionEvent actionEvent) {
+        try {
+            Main.getStmt().executeQuery(Insert.insertPath + id + Insert.comma +
+                    Insert.toDate + "'" + DateCreatePathEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Insert.toDate + "'" + DateEndPathEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    "'" + SerPathEdit.getText() + "'" + Insert.comma + "'" + ListObjPathEdit.getText() + "'" + Insert.rbc);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void EditPathAction(ActionEvent actionEvent) {
@@ -153,6 +162,14 @@ public class DirectorUIController {
     }
 
     public void addGraphAction(ActionEvent actionEvent) {
+        try {
+            Main.getStmt().executeQuery(Insert.insertGraphic + pathId + Insert.comma + patrolOfId + Insert.comma + "'" + SerGraphEdit.getText() + "'" + Insert.comma +
+                    Insert.toDate + "'" + DateCreateGraphEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Insert.toDate + "'" + DateEndGraphEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    "'" + SheduleGraphEdit.getText() + "'" + Insert.rbc);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void editGraphAction(ActionEvent actionEvent) {
