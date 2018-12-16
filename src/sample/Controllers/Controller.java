@@ -45,6 +45,16 @@ public class Controller {
             if (rs != null && rs.next()) {
                 openAccountatnForm(rs.getLong(Select.dataAccountantID), rs.getString(Select.dataAccountantFIO),
                         rs.getLong(Select.dataAccountantNUM), rs.getLong(Select.dataAccountantSer));
+                return;
+            }
+
+            rs = Main.getStmt().executeQuery(Select.getDataDir + Select.where +
+                    Select.getDataDirLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getDataDirPsw + "\'" + pswUser.getText() + "\'");
+            if (rs != null && rs.next()) {
+                openDirForm(rs.getLong(Select.dataDirID), rs.getString(Select.dataDirFIO),
+                        rs.getLong(Select.dataDirNUM), rs.getLong(Select.dataDirSer));
+                return;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,6 +74,26 @@ public class Controller {
 
             AccountantUIController accountantUIController = loader.getController();
             accountantUIController.setStartData(id, fio);
+
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openDirForm(Long id, String fio, Long num, Long ser) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
+            AnchorPane load = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Б О С С");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            DirectorUIController directorUIController = loader.getController();
+            directorUIController.setStartData(id, fio);
 
             stage.showAndWait();
         } catch (Exception e) {

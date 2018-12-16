@@ -14,6 +14,14 @@ public class Select {
     public static final String getDataAccountantLgn = "login_acc = ";
     public static final String getDataAccountantPsw = "password_acc = ";
 
+    public static final String dataDirID = "iddirector";
+    public static final String dataDirFIO = "fio_dir";
+    public static final String dataDirNUM = "num_dir";
+    public static final String dataDirSer = "series_dir";
+    public static final String getDataDir = "select iddirector, fio_dir, series_dir, num_dir from director";
+    public static final String getDataDirLgn = "login_dir = ";
+    public static final String getDataDirPsw = "password_dir = ";
+
     public static final String dataActPayingDateCreate = "datacreate_aop";
     public static final String dataActPayingDatePay = "datapay_aop";
     public static final String dataActPayingDateId = "idactpay";
@@ -48,4 +56,24 @@ public class Select {
     public static final String getDataDogIdDog = "iddogovor = ";
     public static final String getDataDogSerDog = "series_dog = ";
 
+    public static final String dataPathID = "idpath";
+    public static final String dataPathDataCreate = "datecreate_path";
+    public static final String dataPathDataEnd = "DATEEND_PATH";
+    public static final String dataPathSeries = "series_path";
+    public static final String dataPathListObj = "listobj_path";
+    public static final String getDataPath = "select idpath, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, " +
+            "to_char(DATEEND_PATH, '" + Constants.dateFormat + "') DATEEND_PATH, series_path, listobj_path from path";
+    public static final String getDataPathDirector = "DIRECTOR_IDDIRECTOR = ";
+
+    public static final String dataGraohID = "idgraphic";
+    public static final String dataGraohPatrolId = "PATROLOFFICIER_IDPATROLOFF";
+    public static final String dataGraohSeries = "SERIES_GRAPH";
+    public static final String dataGraohDateCreate = "DATECREATE_GRAPH";
+    public static final String dataGraohDateEnd = "DATEEND_GRAPH";
+    public static final String dataGraohShedule = "SHEDULE_GRAPH";
+    public static final String getDataGraph = "select idgraphic, PATROLOFFICIER_IDPATROLOFF, SERIES_GRAPH, " +
+            "to_char(DATECREATE_GRAPH, '" + Constants.dateFormat + "') DATECREATE_GRAPH, " +
+            "to_char(DATEEND_GRAPH, '" + Constants.dateFormat + "') DATEEND_GRAPH, " +
+            "SHEDULE_GRAPH from graphic";
+    public static final String getDataGraphPathId = "PATH_IDPATH = ";
 }
