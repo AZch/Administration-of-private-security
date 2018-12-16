@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="519.0" prefWidth="420.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controllers.PatrolOfficerUIController">
+<AnchorPane prefHeight="504.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.PatrolOfficerUIController">
   <children>
     <Label fx:id="FIO" labelFor="$FIO" layoutX="14.0" layoutY="6.0" text="ФИО: " />
     <Label fx:id="Rank" labelFor="$Rank" layoutX="210.0" layoutY="6.0" text="Звание:" />
-    <TableView fx:id="PathTable" layoutX="14.0" layoutY="30.0" prefHeight="130.0" prefWidth="396.0">
+    <TableView fx:id="PathTable" layoutX="12.0" layoutY="241.0" prefHeight="130.0" prefWidth="396.0">
       <columns>
-        <TableColumn editable="false" prefWidth="130.0" text="Номер маршрута" fx:id="SeriesPathC" />
-        <TableColumn editable="false" prefWidth="133.0" text="Дата создания" fx:id="DataCreateC" />
-        <TableColumn editable="false" prefWidth="130.0" text="Дата окончания" fx:id="DataEndC" />
+        <TableColumn fx:id="SeriesPathC" editable="false" prefWidth="130.0" text="Номер маршрута" />
+        <TableColumn fx:id="DataCreateC" editable="false" prefWidth="133.0" text="Дата создания" />
+        <TableColumn fx:id="DataEndC" editable="false" prefWidth="132.0" text="Дата окончания" />
       </columns>
     </TableView>
-    <TableView layoutX="14.0" layoutY="160.0" prefHeight="122.0" prefWidth="396.0">
+    <TableView layoutX="12.0" layoutY="371.0" prefHeight="122.0" prefWidth="396.0">
       <columns>
-        <TableColumn editable="false" prefWidth="395.0" text="Объекты патрулирования" fx:id="ObjPathC" />
+        <TableColumn fx:id="ObjPathC" editable="false" prefWidth="395.0" text="Объекты патрулирования" />
       </columns>
     </TableView>
-    <TableView fx:id="GraphicTable" layoutX="14.0" layoutY="294.0" prefHeight="130.0" prefWidth="396.0">
+    <TableView fx:id="GraphicTable" layoutX="12.0" layoutY="30.0" prefHeight="130.0" prefWidth="396.0">
       <columns>
-        <TableColumn editable="false" prefWidth="129.0" text="Номер графика" fx:id="SeriesGraphic" />
-        <TableColumn editable="false" prefWidth="143.0" text="Дата создания" fx:id="DateCreate" />
-        <TableColumn editable="false" prefWidth="123.0" text="Дата окончания" fx:id="DateEnd" />
+        <TableColumn fx:id="SeriesGraphicC" editable="false" prefWidth="129.0" text="Номер графика" />
+        <TableColumn fx:id="DateCreateC" editable="false" prefWidth="143.0" text="Дата создания" />
+        <TableColumn fx:id="DateEndC" editable="false" prefWidth="123.0" text="Дата окончания" />
       </columns>
     </TableView>
-    <TableView layoutX="14.0" layoutY="424.0" prefHeight="81.0" prefWidth="396.0">
+    <TableView layoutX="12.0" layoutY="160.0" prefHeight="81.0" prefWidth="396.0">
       <columns>
-        <TableColumn editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="394.0" text="График патрулирования" fx:id="Shedule" />
+        <TableColumn fx:id="SheduleC" editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="394.0" text="График патрулирования" />
       </columns>
     </TableView>
   </children>

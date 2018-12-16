@@ -13,7 +13,6 @@ import sample.Main;
 import sample.Scripts.Select;
 import sample.Tables.Graphic;
 import sample.Tables.Path;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -24,10 +23,10 @@ public class PatrolOfficerUIController {
     //Поля таблицы графика дежурства
     private ObservableList<Graphic> GraphicData = FXCollections.observableArrayList();
     public TableView<Graphic> GraphicTable;
-    public TableColumn<Graphic, String> SeriesGraphic;
-    public TableColumn<Graphic, String>DateCreate;
-    public TableColumn<Graphic, String>DateEnd;
-    public TableColumn<Graphic, String> Shedule;
+    public TableColumn<Graphic, String> SeriesGraphicC;
+    public TableColumn<Graphic, String> DateCreateC;
+    public TableColumn<Graphic, String> DateEndC;
+    public TableColumn<Graphic, String> SheduleC;
 
     // Поля таблицы маршрута патрулирования
     private ObservableList<Path> PathData = FXCollections.observableArrayList();
@@ -37,8 +36,8 @@ public class PatrolOfficerUIController {
     public TableColumn<Path, String> DataEndC;
     public TableColumn<Path, String> ObjPathC;
 
-    private DatePicker dataCreatePath;
-    private DatePicker dataEndPath;
+    private DatePicker dataCreateGraphic;
+    private DatePicker dataEndGraphic;
 
     @FXML
     private Label FIO;
@@ -48,8 +47,9 @@ public class PatrolOfficerUIController {
     //Данные по Патрульному
     private String fioPO = "";
     private String rankPO = "";
+    private String idPO = "";
 
-    private Long idSelectPath = Long.valueOf("1");
+    private Long idSelectGraphic= Long.valueOf("0");
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
 
@@ -57,43 +57,66 @@ public class PatrolOfficerUIController {
         FIO.setText("ФИО: " + fioPO);
         Rank.setText("Звание: " + rankPO);
 
-        initPathTable();
+        initTableGraphic("");
+        initMainTable();
     }
 
     // задание начальных данных
-    void setStartData(String fio, String rank) {
+    void setStartData(String id, String fio, String rank) {
+        this.idPO = id;
         this.fioPO = fio;
         this.rankPO = rank;
         initialize();
     }
 
-    // инициализации таблицы Маршрутов
-    private void initPathTable() {
-        SeriesPathC.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnSeries));
-        DataCreateC.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDataCreate));
-        DataEndC.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDataEnd));
-        ObjPathC.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnObjects));
+    // инициализации таблицы с договорами
+    private void initTableGraphic(String addSqlQuestion) {
+        GraphicData.clear();
 
-        PathTable.setItems(PathData);
+        try {
+            ResultSet rs = null;
+            rs = Main.getStmt().executeQuery(Select.getDataGraphic + Select.where +
+                    Select.getDataGraphicIDPO + idPO + addSqlQuestion);
 
-        PathTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            int index = 1;
+            while (rs != null && rs.next()) {
+                GraphicData.add(new Graphic((long) index++, rs.getLong(Select.dataGraphicIDP), rs.getLong(Select.dataGraphicIDPO),
+                        rs.getString(Select.dataGraphicSER), rs.getString(Select.dataGraphicDateCreate), rs.getString(Select.dataGraphicDateEnd),
+                        rs.getString(Select.dataGraphicSHED)));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // инициализации таблицы
+    private void initMainTable() {
+        SeriesGraphicC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnSeriesG));
+        DateCreateC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnDataCreate));
+        DateEndC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnDataEnd));
+        SheduleC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnShedule));
+
+        GraphicTable.setItems(GraphicData);
+
+        GraphicTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                idSelectPath = newSelection.getId();
-                refreshPathTable();
-                dataCreatePath.setValue(LocalDate.parse(newSelection.getDateCreate(), formatter));
-                dataEndPath.setValue(LocalDate.parse(newSelection.getDateEnd(), formatter));
+                idSelectGraphic = newSelection.getIdPath();
+                refreshPathTable("");
+                dataCreateGraphic.setValue(LocalDate.parse(newSelection.getDateCreateG(), formatter));
+                dataEndGraphic.setValue(LocalDate.parse(newSelection.getDateEndG(), formatter));
             }
         });
     }
 
     // обновить строки табоицы маршрутов
-    private void refreshPathTable() {
+    private void refreshPathTable(String addSqlQuestion) {
         PathData.clear();
 
         try {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataPath + Select.where +
-                    Select.dataPathID + idSelectPath + "");
+                    Select.getDataPathID + idSelectGraphic + "");
 
             while (rs != null && rs.next()) {
                 PathData.add(new Path(rs.getLong(Select.dataPathID), rs.getLong(Select.dataPathIDD), rs.getString(Select.dataPathDateCreate),

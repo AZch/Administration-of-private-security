@@ -55,9 +55,9 @@ public class Controller {
                     Select.getDataPatrolOfficerPsw + "\'" + pswUser.getText() + "\'");
 
             if (rs != null && rs.next()) {
-                openPatrolOfficerForm(rs.getLong(Select.dataPatrolOfficerID), rs.getString(Select.dataPatrolOfficerFIO),
-                        rs.getLong(Select.dataPatrolOfficerSER), rs.getLong(Select.dataPatrolOfficerNUM),
-                        rs.getString(Select.dataPatrolOfficerRANK), rs.getString(Select.dataPatrolOfficerSERG));
+                openPatrolOfficerForm(rs.getString(Select.dataPatrolOfficerID), rs.getString(Select.dataPatrolOfficerFIO),
+                        rs.getString(Select.dataPatrolOfficerRANK));
+                return;
             }
 
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class Controller {
         }
     }
 
-    private void openPatrolOfficerForm(Long id, String fio, Long ser, Long num, String rank, String serg){
+    private void openPatrolOfficerForm(String id, String fio, String rank){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
             AnchorPane load = loader.load();
@@ -97,7 +97,7 @@ public class Controller {
             stage.setScene(scene);
 
             PatrolOfficerUIController patrolOfficerUIController = loader.getController();
-            patrolOfficerUIController.setStartData(fio, rank);
+            patrolOfficerUIController.setStartData(id, fio, rank);
 
             stage.showAndWait();
         }catch (Exception e){
