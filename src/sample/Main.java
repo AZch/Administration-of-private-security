@@ -29,7 +29,7 @@ public class Main extends Application {
         Locale.setDefault(Locale.ENGLISH);
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "vo", "1");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "system");
             stmt = con.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
