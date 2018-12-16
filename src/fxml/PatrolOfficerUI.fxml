@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.Controllers.PatrolOfficerUIController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="519.0" prefWidth="420.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controllers.PatrolOfficerUIController">
+  <children>
+    <Label fx:id="FIO" labelFor="$FIO" layoutX="14.0" layoutY="6.0" text="ФИО: " />
+    <Label fx:id="Rank" labelFor="$Rank" layoutX="210.0" layoutY="6.0" text="Звание:" />
+    <TableView fx:id="PathTable" layoutX="14.0" layoutY="30.0" prefHeight="130.0" prefWidth="396.0">
+      <columns>
+        <TableColumn editable="false" prefWidth="130.0" text="Номер маршрута" fx:id="SeriesPathC" />
+        <TableColumn editable="false" prefWidth="133.0" text="Дата создания" fx:id="DataCreateC" />
+        <TableColumn editable="false" prefWidth="130.0" text="Дата окончания" fx:id="DataEndC" />
+      </columns>
+    </TableView>
+    <TableView layoutX="14.0" layoutY="160.0" prefHeight="122.0" prefWidth="396.0">
+      <columns>
+        <TableColumn editable="false" prefWidth="395.0" text="Объекты патрулирования" fx:id="ObjPathC" />
+      </columns>
+    </TableView>
+    <TableView fx:id="GraphicTable" layoutX="14.0" layoutY="294.0" prefHeight="130.0" prefWidth="396.0">
+      <columns>
+        <TableColumn editable="false" prefWidth="129.0" text="Номер графика" fx:id="SeriesGraphic" />
+        <TableColumn editable="false" prefWidth="143.0" text="Дата создания" fx:id="DateCreate" />
+        <TableColumn editable="false" prefWidth="123.0" text="Дата окончания" fx:id="DateEnd" />
+      </columns>
+    </TableView>
+    <TableView layoutX="14.0" layoutY="424.0" prefHeight="81.0" prefWidth="396.0">
+      <columns>
+        <TableColumn editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="394.0" text="График патрулирования" fx:id="Shedule" />
+      </columns>
+    </TableView>
+  </children>
 </AnchorPane>
