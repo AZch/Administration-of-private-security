@@ -3,7 +3,7 @@ package sample.Tables;
 public class LOA {
     public static String columnDateSuppose = "dateSuppose";
     public static String columnDateFact = "dateFact";
-    public static String columnFactPay = "factPay";
+    public static String columnPayment = "payment";
     public static String columnTypePay = "payType";
 
     private Long id;
