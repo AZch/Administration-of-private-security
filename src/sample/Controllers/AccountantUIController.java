@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Constants;
 import sample.Main;
@@ -16,6 +19,7 @@ import sample.Scripts.Update;
 import sample.Tables.ActPay;
 import sample.Tables.LOA;
 
+import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -44,6 +48,11 @@ public class AccountantUIController {
     public CheckBox Equal;
     public MenuItem searchTypePayCash;
     public MenuItem searchTypePayTrans;
+    public CheckBox isSearchDateStartCreateSuppose;
+    public CheckBox isSearchDateEndCreateSuppose;
+    public CheckBox isSearchDateStartPayFact;
+    public CheckBox isSearchDateEndPayFact;
+    public CheckBox isSearchTypePay;
     private String selectSearchTypePay;
     public MenuItem editTypePayCash;
     public MenuItem editTypePayTrans;
@@ -70,10 +79,12 @@ public class AccountantUIController {
     private Long idDog = Long.valueOf("0");
     private Long idSelectActPay = Long.valueOf("0");
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
+
 
     @FXML
     private void initialize() {
-        initTableActPay();
+        initTableActPay("");
         FIO.setText(fio);
 
         // инициализация выборки договора
@@ -114,9 +125,8 @@ public class AccountantUIController {
 
         ActPayTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
                 idSelectActPay = newSelection.getId();
-                refreshSubTable();
+                refreshSubTable("");
                 dateCreateEdit.setValue(LocalDate.parse(newSelection.getDateCreate(), formatter));
                 datePayEdit.setValue(LocalDate.parse(newSelection.getDateSuppose(), formatter));
             }
@@ -133,24 +143,25 @@ public class AccountantUIController {
 
         TableLOA.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
+                idLOA = newSelection.getId();
                 idDog = newSelection.getIdDogovor();
                 refreshDog();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
                 dateSupposeEdit.setValue(LocalDate.parse(newSelection.getDateSuppose(), formatter));
                 dateFactEdit.setValue(LocalDate.parse(newSelection.getDateFact(), formatter));
-                SumPayEdit.setText(String.valueOf(newSelection.getFactPay()));
+                SumPayEdit.setText(String.valueOf(newSelection.getPayment()));
                 TypePayEdit.setText(newSelection.getPayType());
+                selectEditTypePay = newSelection.getPayType();
             }
         });
     }
 
     // инициализации таблицы с договорами
-    private void initTableActPay() {
+    private void initTableActPay(String addSqlQuestion) {
         actPaysData.clear();
         try {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataActPaying + Select.where +
-                    Select.getDataActPayingIdAcc + idAcc);
+                    Select.getDataActPayingIdAcc + idAcc + addSqlQuestion);
             int index = 1;
             while (rs != null && rs.next()) {
                 actPaysData.add(new ActPay(index++, rs.getString(Select.dataActPayingDateCreate),
@@ -170,17 +181,17 @@ public class AccountantUIController {
     }
 
     // обновить строки бланков
-    private void refreshSubTable() {
+    private void refreshSubTable(String addSqlQuestion) {
         loaData.clear();
         try {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataLOA + Select.where +
-                    Select.getDataLOAidAct + idSelectActPay);
+                    Select.getDataLOAidAct + idSelectActPay + addSqlQuestion);
             while (rs != null && rs.next()) {
-                loaData.add(new LOA(rs.getLong(Select.getDataLOAID), rs.getLong(Select.getDataLOAidDog),
-                        rs.getString(Select.getDataLOADateFact), rs.getString(Select.getDataLOADateSuppose),
-                        rs.getInt(Select.getDataLOAPayment),
-                        rs.getInt(Select.getDataLOAFacPay), rs.getString(Select.getDataLOAPayType)));
+                loaData.add(new LOA(rs.getLong(Select.dataLOAID), rs.getLong(Select.dataLOAidDog),
+                        rs.getString(Select.dataLOADateFact), rs.getString(Select.dataLOADateSuppose),
+                        rs.getInt(Select.dataLOAPayment),
+                        rs.getInt(Select.dataLOAFacPay), rs.getString(Select.dataLOAPayType)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -208,9 +219,12 @@ public class AccountantUIController {
     public void addActPayAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
-            Main.getStmt().executeQuery(Insert.insertActPay + idAcc + Insert.comma +
+            String resStr = Insert.insertActPay + idAcc + Insert.comma +
                     Insert.toDate + dateCreateEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
-                    Insert.toDate + datePayEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.rbc);
+                    Insert.toDate + datePayEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.rbc;
+            Main.getStmt().executeQuery(Insert.insertActPay + idAcc + Insert.comma +
+                    Insert.toDate + "'" + dateCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Insert.toDate + "'" + datePayEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.rbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -220,9 +234,9 @@ public class AccountantUIController {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
             Main.getStmt().executeQuery(Update.updateActPay + Update.set + Update.setDateCreate +
-                    Insert.toDate + dateCreateEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Insert.toDate + "'" + dateCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Update.setDatePay +
-                    Insert.toDate + datePayEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc +
+                    Insert.toDate + "'" + datePayEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Select.where + Update.whereIdActPay + idSelectActPay);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -246,10 +260,14 @@ public class AccountantUIController {
             if (strToInt(SumPayEdit.getText()) == -1) {
                 return;
             }
-            Main.getStmt().executeQuery(Insert.insertLineOfAct + idSelectActPay + Insert.comma + idDog + Insert.comma +
+            String resStr = Insert.insertLineOfAct + idSelectActPay + Insert.comma + idDog + Insert.comma +
                     Insert.toDate + dateFactEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Insert.toDate + dateSupposeEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
-                    strToInt(SumPayEdit.getText()) + Insert.comma + selectEditTypePay + Insert.rbc);
+                    strToInt(SumPayEdit.getText()) + Insert.comma + selectEditTypePay + Insert.rbc;
+            Main.getStmt().executeQuery(Insert.insertLineOfAct + idSelectActPay + Insert.comma + idDog + Insert.comma +
+                    Insert.toDate + "'" + dateFactEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Insert.toDate + "'" + dateSupposeEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    strToInt(SumPayEdit.getText()) + Insert.comma + "'" + selectEditTypePay + "'" + Insert.rbc);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -266,16 +284,17 @@ public class AccountantUIController {
     public void editLoaAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
+
             if (strToInt(SumPayEdit.getText()) == -1) {
                 return;
             }
             Main.getStmt().executeQuery(Update.updateLOA + Update.setLoaDogovorId + idDog + Insert.comma +
                     Update.setLoaDataFact +
-                    Insert.toDate + dateFactEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Insert.toDate + "'" + dateFactEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Update.setLoaDataSuppose +
-                    Insert.toDate + dateSupposeEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Insert.toDate + "'" + dateSupposeEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Update.setLoaPayment +
-                    strToInt(SumPayEdit.getText()) + Insert.comma + Update.setLoaPayType + selectEditTypePay +
+                    strToInt(SumPayEdit.getText()) + Insert.comma + Update.setLoaPayType + "'" + selectEditTypePay + "'" +
                     Select.where + Update.whereIdLOA + idLOA);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -297,9 +316,44 @@ public class AccountantUIController {
 
     // активация поиска по бланкам оплаты или строкам бланка
     public void searchActPayAction(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        if (isSearchDateStartCreateSuppose.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDateCreate + " >= '" + dateStartCreateSuppose.getValue().format(formatter) + "'";
+        if (isSearchDateEndCreateSuppose.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDateCreate + " <= '" + dateEndCreateSuppose.getValue().format(formatter) + "'";
+        if (isSearchDateStartPayFact.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDatePay + " >= '" + dateStartPayFact.getValue().format(formatter) + "'";
+        if (isSearchDateEndPayFact.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDatePay + " <= '" + dateEndPayFact.getValue().format(formatter) + "'";
+        initTableActPay(addSqlQuestion);
     }
 
     public void searchLOAAction(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        if (isSearchDateStartCreateSuppose.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataLOADateSuppose + " >= '" + dateStartCreateSuppose.getValue().format(formatter) + "'";
+        if (isSearchDateEndCreateSuppose.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataLOADateSuppose + " <= '" + dateEndCreateSuppose.getValue().format(formatter) + "'";
+        if (isSearchDateStartPayFact.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataLOADateFact + " >= '" + dateStartPayFact.getValue().format(formatter) + "'";
+        if (isSearchDateEndPayFact.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataLOADateFact + " <= '" + dateEndPayFact.getValue().format(formatter) + "'";
+        if (isSearchTypePay.isSelected())
+            addSqlQuestion += Select.and + Select.getDataLOAPayType + "'" + selectSearchTypePay + "'";
+        if (!SumPaySearch.getText().equals("") && (More.isSelected() || Less.isSelected())) {
+            String quest = ">";
+            if (More.isSelected()) {
+                if (Equal.isSelected())
+                    quest = ">=";
+            } else {
+                quest = "<";
+                if (Equal.isSelected())
+                    quest = "<=";
+
+            }
+            addSqlQuestion += Select.and + Select.dataLOAPayment + quest + strToInt(SumPaySearch.getText());
+        }
+        refreshSubTable(addSqlQuestion);
     }
 
     // изменение текста в выборке типа оплаты, по нему будет сверка и выбор типа

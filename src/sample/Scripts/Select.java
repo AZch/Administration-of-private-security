@@ -20,17 +20,23 @@ public class Select {
     public static final String getDataActPaying = "select to_char(datacreate_aop, '" + Constants.dateFormat + "') datacreate_aop, " +
             "to_char(datapay_aop, '" + Constants.dateFormat + "') datapay_aop, idactpay from ACTOFPAYING";
     public static final String getDataActPayingIdAcc = "accountant_idaccountant = ";
+    public static final String notEqDataActPayingDatePay = "to_char(datapay_aop, '" + Constants.dateFormat + "')";
+    public static final String notEqDataActPayingDateCreate = "to_char(datacreate_aop, '" + Constants.dateFormat + "')";
 
-    public static final String getDataLOAID = "idiineact";
-    public static final String getDataLOAidDog = "dogovor_iddogovor";
-    public static final String getDataLOADateFact = "datafact_loa";
-    public static final String getDataLOADateSuppose = "datasuppose_loa";
-    public static final String getDataLOAPayment = "payment_loa";
-    public static final String getDataLOAFacPay = "factpay_loa";
-    public static final String getDataLOAPayType = "paytype_loa";
+    public static final String dataLOAID = "idiineact";
+    public static final String dataLOAidDog = "dogovor_iddogovor";
+    public static final String dataLOADateFact = "datafact_loa";
+    public static final String dataLOADateSuppose = "datasuppose_loa";
+    public static final String dataLOAPayment = "payment_loa";
+    public static final String dataLOAFacPay = "factpay_loa";
+    public static final String dataLOAPayType = "paytype_loa";
     public static final String getDataLOA = "select idiineact, dogovor_iddogovor, to_char(datafact_loa, '" + Constants.dateFormat + "') datafact_loa, " +
             "to_char(datasuppose_loa, '" + Constants.dateFormat + "') datasuppose_loa, payment_loa, factpay_loa, paytype_loa from lineofact";
     public static final String getDataLOAidAct = "actofpaying_idactpay = ";
+    public static final String notEqDataLOADateFact = "to_char(datafact_loa, '" + Constants.dateFormat + "')";
+    public static final String notEqDataLOADateSuppose = "to_char(datasuppose_loa, '" + Constants.dateFormat + "')";
+    public static final String getDataLOAPayType = "paytype_loa = ";
+    public static final String getDataLOAPayment = "payment_loa = ";
 
     public static final String dataDogPeriod = "payperiod_dog";
     public static final String dataDogDateStart = "datastart_dog";

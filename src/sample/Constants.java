@@ -1,8 +1,9 @@
 package sample;
 
 public class Constants {
-    public static String payTypeCash = "Наличные";
-    public static String payTypeTransfer = "Перевод";
+    public static final String NoTypePay = "Нет";
+    public static String payTypeCash = "наличные";
+    public static String payTypeTransfer = "перевод";
 
     public static String periodPayMonth = "месяц";
     public static String periodPayDecade = "декада";
