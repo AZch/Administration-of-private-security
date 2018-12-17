@@ -31,6 +31,10 @@ public class Update {
     public static String setDogDataEnd =  "dataend_dog = ";
     public static String setDogPeople =  "peoplecount_dog = ";
     public static String whereIdDogovor = "iddogovor = ";
+    public static String setDogIdClient = "client_idclient = ";
+    public static String setDogIdObj = "objectofprotect_idobject = ";
+    public static String setDogIdCustService = "serviceofficier_idserviceoff = ";
+
 
     public static String updateObject = "update objectofprotect set ";
     public static String setObjAddress =  "address_obj = ";

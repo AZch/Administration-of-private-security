@@ -9,14 +9,20 @@ public class Dogovor {
     public static String columnLives = "Lives";
 
     private Long id;
+    private Long idclient;
+    private Long idserviceoff;
+    private Long idobject;
     private int NumDog;
     private String PayPeriod;
     private String DataCreate;
     private String DataEnd;
     private int Lives;
 
-    public Dogovor(Long id, int NumDog, String PayPeriod, String DataCreate, String DataEnd, int Lives) {
+    public Dogovor(Long id, Long idclient, Long idobject, Long idserviceoff, int NumDog, String PayPeriod, String DataCreate, String DataEnd, int Lives) {
         this.id = id;
+        this.idclient = idclient;
+        this.idobject = idobject;
+        this.idserviceoff = idserviceoff;
         this.NumDog = NumDog;
         this.PayPeriod = PayPeriod;
         this.DataCreate = DataCreate;
@@ -28,6 +34,15 @@ public class Dogovor {
     // set
     public void setId(Long id) {
         this.id = id;
+    }
+    public void setIdClient(Long idclient) {
+        this.id = idclient;
+    }
+    public void setIdObject(Long idobject) {
+        this.id = idobject;
+    }
+    public void setIdServiceOff(Long idserviceoff) {
+        this.id = idserviceoff;
     }
 
     public void setNumDog(int NumDog) {
@@ -53,6 +68,15 @@ public class Dogovor {
     // get
     public Long getId() {
         return id;
+    }
+    public Long getIdClient() {
+        return idclient;
+    }
+    public Long getIdObject() {
+        return idobject;
+    }
+    public Long getIdServiceOff() {
+        return idserviceoff;
     }
 
     public int getNumDog() {

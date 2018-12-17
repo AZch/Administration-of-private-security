@@ -130,68 +130,100 @@ public class CustServiceUIController {
         //initTableActPay("");
         FIOLabel.setText(fio);
 
-        // инициализации таблицы клиентов
-        FIOClient.setCellValueFactory(new PropertyValueFactory<Client, String>(Client.columnFIO));
-        Serial.setCellValueFactory(new PropertyValueFactory<Client, Integer>(Client.columnSerial));
-        Number.setCellValueFactory(new PropertyValueFactory<Client, Integer>(Client.columnNumber));
-        AddressClient.setCellValueFactory(new PropertyValueFactory<Client, String>(Client.columnAddress));
-        DocClient.setCellValueFactory(new PropertyValueFactory<Client, String>(Client.columnDocClient));
+        initTableDogovor();
+        refreshDogovorTable("");
 
+        initTableClient();
+        refreshClientTable("");
 
-        ClientTable.setItems(ClientsData);
-
-        ClientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                idClient = newSelection.getId();
-                FIOClientEdit.setText(newSelection.getFIOClient());
-                serialEdit.setText(String.valueOf(newSelection.getSerial()));
-                numberEdit.setText(String.valueOf(newSelection.getNumber()));
-                AddressLivingEdit.setText(newSelection.getAddressClient());
-                editSobst.setText(newSelection.getDocClient());
-                selecteditSobst = newSelection.getDocClient();
-            }
-        });
-
-        // инициализации таблицы объектов охраны
-        AddressObject.setCellValueFactory(new PropertyValueFactory<ObjectOfProtect, String>(ObjectOfProtect.columnAddressObject));
-        TypeObject.setCellValueFactory(new PropertyValueFactory<ObjectOfProtect, String>(ObjectOfProtect.columnTypeObject));
-        SistemonObject.setCellValueFactory(new PropertyValueFactory<ObjectOfProtect, String>(ObjectOfProtect.columnSistemonObject));
-
-
-        ObjProtectTable.setItems(ObjProtectsData);
-
-        ObjProtectTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                idObj = newSelection.getId();
-                AddressObjectEdit.setText(newSelection.getAddressObject());
-                editTypeObject.setText(newSelection.getTypeObject());
-                selecteditTypeObject = newSelection.getTypeObject();
-                SistemObjectEdit.setText(newSelection.getSistemonObject());
-            }
-        });
-
-        // инициализации таблицы договоров
-        NumDog.setCellValueFactory(new PropertyValueFactory<Dogovor, Integer>(Dogovor.columnNumDog));
-        PayPeriod.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnPayPeriod));
-        DataCreate.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnDataCreate));
-        DataEnd.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnDataEnd));
-        Lives.setCellValueFactory(new PropertyValueFactory<Dogovor, Integer>(Dogovor.columnLives));
-
-
-        DogovorTable.setItems(DogovorsData);
-
-        DogovorTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                idDog = newSelection.getId();
-                NumDogEdit.setText(String.valueOf(newSelection.getNumDog()));
-                payPeriod.setText(newSelection.getPayPeriod());
-                selectpayPeriod = newSelection.getPayPeriod();
-                DataCreateEdit.setValue(LocalDate.parse(newSelection.getDataCreate(), formatter));
-                DataEndEdit.setValue(LocalDate.parse(newSelection.getDataEnd(), formatter));
-                LivesEdit.setText(String.valueOf(newSelection.getLives()));
-            }
-        });
+        initTableObject();
+        refreshObjectTable("");
     }
+
+    // задание начальных данных
+    public void setStartData(Long id, String fio)
+    {
+        this.idCustService = id;
+        this.fio = fio;
+
+        initialize();
+    }
+
+
+    private void initTableClient()
+        {
+            // инициализации таблицы клиентов
+            FIOClient.setCellValueFactory(new PropertyValueFactory<Client, String>(Client.columnFIO));
+            Serial.setCellValueFactory(new PropertyValueFactory<Client, Integer>(Client.columnSerial));
+            Number.setCellValueFactory(new PropertyValueFactory<Client, Integer>(Client.columnNumber));
+            AddressClient.setCellValueFactory(new PropertyValueFactory<Client, String>(Client.columnAddress));
+            DocClient.setCellValueFactory(new PropertyValueFactory<Client, String>(Client.columnDocClient));
+
+
+            ClientTable.setItems(ClientsData);
+
+            ClientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    //idClient = newSelection.getId();
+                    FIOClientEdit.setText(newSelection.getFIOClient());
+                    serialEdit.setText(String.valueOf(newSelection.getSerial()));
+                    numberEdit.setText(String.valueOf(newSelection.getNumber()));
+                    AddressLivingEdit.setText(newSelection.getAddressClient());
+                    editSobst.setText(newSelection.getDocClient());
+                    selecteditSobst = newSelection.getDocClient();
+                }
+            });
+        }
+
+        private void initTableObject()
+        {
+            // инициализации таблицы объектов охраны
+            AddressObject.setCellValueFactory(new PropertyValueFactory<ObjectOfProtect, String>(ObjectOfProtect.columnAddressObject));
+            TypeObject.setCellValueFactory(new PropertyValueFactory<ObjectOfProtect, String>(ObjectOfProtect.columnTypeObject));
+            SistemonObject.setCellValueFactory(new PropertyValueFactory<ObjectOfProtect, String>(ObjectOfProtect.columnSistemonObject));
+
+
+            ObjProtectTable.setItems(ObjProtectsData);
+
+            ObjProtectTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    //idObj = newSelection.getId();
+                    AddressObjectEdit.setText(newSelection.getAddressObject());
+                    editTypeObject.setText(newSelection.getTypeObject());
+                    selecteditTypeObject = newSelection.getTypeObject();
+                    SistemObjectEdit.setText(newSelection.getSistemonObject());
+                }
+            });
+        }
+
+        private void initTableDogovor()
+        {
+            // инициализации таблицы договоров
+            NumDog.setCellValueFactory(new PropertyValueFactory<Dogovor, Integer>(Dogovor.columnNumDog));
+            PayPeriod.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnPayPeriod));
+            DataCreate.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnDataCreate));
+            DataEnd.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnDataEnd));
+            Lives.setCellValueFactory(new PropertyValueFactory<Dogovor, Integer>(Dogovor.columnLives));
+
+
+            DogovorTable.setItems(DogovorsData);
+
+            DogovorTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    idDog = newSelection.getId();
+                    idClient = newSelection.getIdClient();
+                    idObj = newSelection.getIdObject();
+                    NumDogEdit.setText(String.valueOf(newSelection.getNumDog()));
+                    payPeriod.setText(newSelection.getPayPeriod());
+                    selectpayPeriod = newSelection.getPayPeriod();
+                    DataCreateEdit.setValue(LocalDate.parse(newSelection.getDataCreate(), formatter));
+                    DataEndEdit.setValue(LocalDate.parse(newSelection.getDataEnd(), formatter));
+                    LivesEdit.setText(String.valueOf(newSelection.getLives()));
+
+                }
+            });
+        }
+
 
     // обновить объект
     private void refreshObjectTable(String addSqlQuestion) {
@@ -236,20 +268,12 @@ public class CustServiceUIController {
                     Select.getDataDogIdDog + idDog + addSqlQuestion);
             int index = 1;
             if (rs != null && rs.next()) {
-                DogovorsData.add(new Dogovor(rs.getLong(Select.dataDogId), rs.getInt(Select.dataDogSeries), rs.getString(Select.dataDogPeriod),
+                DogovorsData.add(new Dogovor(rs.getLong(Select.dataDogId), idClient, idObj, idCustService, rs.getInt(Select.dataDogSeries), rs.getString(Select.dataDogPeriod),
                         rs.getString(Select.dataDogDateStart), rs.getString(Select.dataDogDateEnd),rs.getInt(Select.dataDogPeople)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    // задание начальных данных
-    public void setStartData(Long id, String fio) {
-        this.idCustService = id;
-        this.fio = fio;
-
-        initialize();
     }
 
     public void addClientAction(ActionEvent actionEvent) {
@@ -288,11 +312,11 @@ public class CustServiceUIController {
     public void addDogovorAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
-            String resStr = Insert.insertDogovor + idCustService + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + selectpayPeriod +
+            String resStr = Insert.insertDogovor + idClient + Insert.comma + idCustService + Insert.comma + idObj + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + selectpayPeriod +
                     Insert.comma + Insert.toDate + DataCreateEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Insert.toDate + DataEndEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + strToInt(LivesEdit.getText()) + Insert.rbc;
-            Main.getStmt().executeQuery(Insert.insertDogovor + idCustService + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + "'" + selectpayPeriod + "'" +
+            Main.getStmt().executeQuery(Insert.insertDogovor + idClient + Insert.comma + idCustService + Insert.comma + idObj + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + "'" + selectpayPeriod + "'" +
                     Insert.comma + Insert.toDate + "'" + DataCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + strToInt(LivesEdit.getText()) + Insert.rbc);
@@ -304,8 +328,8 @@ public class CustServiceUIController {
     public void editDogovorAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
-            Main.getStmt().executeQuery(Update.updateDogovor + Update.set +
-                    Update.setDogSeries + strToInt(NumDogEdit.getText()) + Insert.comma + Update.setDogPayPeriod + "'" + selectpayPeriod + "'" + Insert.comma + Update.setDogDataStart +
+            Main.getStmt().executeQuery(Update.updateDogovor + Update.set + Update.setDogIdClient + Insert.comma + Update.setDogSeries + Insert.comma +
+                    Update.setDogIdObj + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + Update.setDogPayPeriod + "'" + selectpayPeriod + "'" + Insert.comma + Update.setDogDataStart +
                     Insert.toDate + "'" + DataCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Update.setDogDataEnd +
                     Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
