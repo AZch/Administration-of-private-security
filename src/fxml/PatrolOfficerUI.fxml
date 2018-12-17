@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="504.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.PatrolOfficerUIController">
+<AnchorPane prefHeight="763.0" prefWidth="436.00019999999495" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controllers.PatrolOfficerUIController">
   <children>
     <Label fx:id="FIO" labelFor="$FIO" layoutX="14.0" layoutY="6.0" text="ФИО: " />
-    <Label fx:id="Rank" labelFor="$Rank" layoutX="210.0" layoutY="6.0" text="Звание:" />
-    <TableView fx:id="PathTable" layoutX="12.0" layoutY="241.0" prefHeight="130.0" prefWidth="396.0">
+    <Label fx:id="Rank" labelFor="$Rank" layoutX="14.0" layoutY="22.0" text="Звание:" />
+    <Label fx:id="SerGun" layoutX="14.0" layoutY="38.0" text="Табельный номер оружия:" />
+    <TableView fx:id="GraphicTable" layoutX="13.0" layoutY="91.0" prefHeight="130.0" prefWidth="407.0">
       <columns>
-        <TableColumn fx:id="SeriesPathC" editable="false" prefWidth="130.0" text="Номер маршрута" />
-        <TableColumn fx:id="DataCreateC" editable="false" prefWidth="133.0" text="Дата создания" />
-        <TableColumn fx:id="DataEndC" editable="false" prefWidth="132.0" text="Дата окончания" />
+        <TableColumn editable="false" prefWidth="117.0" resizable="false" text="Номер графика" fx:id="SeriesGraphicC" />
+        <TableColumn editable="false" prefWidth="147.0" resizable="false" text="Дата создания" fx:id="DateCreateC" />
+        <TableColumn editable="false" prefWidth="141.0" resizable="false" text="Дата окончания" fx:id="DateEndC" />
       </columns>
     </TableView>
-    <TableView layoutX="12.0" layoutY="371.0" prefHeight="122.0" prefWidth="396.0">
+    <TableView fx:id="PathTable" layoutX="13.0" layoutY="424.0" prefHeight="130.0" prefWidth="407.0">
       <columns>
-        <TableColumn fx:id="ObjPathC" editable="false" prefWidth="395.0" text="Объекты патрулирования" />
+        <TableColumn editable="false" prefWidth="116.0" resizable="false" text="Номер маршрута" fx:id="SeriesPathC" />
+        <TableColumn editable="false" prefWidth="148.0" resizable="false" text="Дата создания" fx:id="DataCreateC" />
+        <TableColumn editable="false" prefWidth="141.0" resizable="false" text="Дата окончания" fx:id="DataEndC" />
       </columns>
     </TableView>
-    <TableView fx:id="GraphicTable" layoutX="12.0" layoutY="30.0" prefHeight="130.0" prefWidth="396.0">
+    <TableView id="TestT" fx:id="SheduleTable" layoutX="14.0" layoutY="259.0" prefHeight="130.0" prefWidth="407.0">
       <columns>
-        <TableColumn fx:id="SeriesGraphicC" editable="false" prefWidth="129.0" text="Номер графика" />
-        <TableColumn fx:id="DateCreateC" editable="false" prefWidth="143.0" text="Дата создания" />
-        <TableColumn fx:id="DateEndC" editable="false" prefWidth="123.0" text="Дата окончания" />
+        <TableColumn editable="false" prefWidth="406.0" resizable="false" text="График патрулирования" fx:id="SheduleC" />
       </columns>
     </TableView>
-    <TableView layoutX="12.0" layoutY="160.0" prefHeight="81.0" prefWidth="396.0">
+    <TableView id="ObjectsPatrolTable" fx:id="ObjectsPathTable" layoutX="13.0" layoutY="591.0" prefHeight="161.0" prefWidth="407.0">
       <columns>
-        <TableColumn fx:id="SheduleC" editable="false" maxWidth="5000.0" minWidth="10.0" prefWidth="394.0" text="График патрулирования" />
+        <TableColumn editable="false" prefWidth="304.0" resizable="false" text="Улица" fx:id="StreetC" />
+        <TableColumn editable="false" prefWidth="105.0" resizable="false" text="Квартира/дом" fx:id="HomeC" />
       </columns>
     </TableView>
+    <Label layoutX="133.0" layoutY="564.0" text="Объекты патрулирования">
+      <font>
+        <Font size="14.0" fx:id="x1" />
+      </font>
+    </Label>
+    <Label font="$x1" layoutX="127.0" layoutY="398.0" text="Маршруты патрулирования" />
+    <Label font="$x1" layoutX="125.0" layoutY="231.0" text="Расписание патрулирования" />
+    <Label font="$x1" layoutX="136.0" layoutY="64.0" text="Графики патрулирования" />
   </children>
 </AnchorPane>

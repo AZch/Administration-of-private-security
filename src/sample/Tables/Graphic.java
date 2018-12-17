@@ -2,9 +2,9 @@ package sample.Tables;
 
 public class Graphic {
 
-    public static String columnSeries = "series";
-    public static String columnDataCreate = "dateCreate";
-    public static String columnDataEnd = "dataEnd";
+    public static String columnSeries = "SerGr";
+    public static String columnDataCreate = "DateCreateG";
+    public static String columnDataEnd = "DateEndG";
     public static String columnShedule = "SheduleG";
 
     private Long idG;
