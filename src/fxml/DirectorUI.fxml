@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="503.0" prefWidth="918.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DirectorUIController">
+<AnchorPane prefHeight="570.0" prefWidth="941.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DirectorUIController">
    <children>
       <Label layoutX="7.0" layoutY="6.0" text="Директор:" />
       <Label fx:id="fio" layoutX="64.0" layoutY="6.0" />
@@ -30,12 +31,12 @@
       <DatePicker fx:id="DateCreatePathEdit" layoutX="13.0" layoutY="285.0" prefHeight="25.0" prefWidth="122.0" />
       <TextArea fx:id="ListObjPathEdit" layoutX="182.0" layoutY="240.0" prefHeight="118.0" prefWidth="283.0" />
       <TextField fx:id="SerPathEdit" layoutX="13.0" layoutY="330.0" prefHeight="25.0" prefWidth="122.0" />
-      <TableView fx:id="TableGraphics" layoutX="490.0" layoutY="23.0" prefHeight="200.0" prefWidth="413.0">
+      <TableView fx:id="TableGraphics" layoutX="490.0" layoutY="23.0" prefHeight="200.0" prefWidth="441.0">
         <columns>
           <TableColumn fx:id="SerGraph" prefWidth="105.0" text="Номер графика" />
           <TableColumn fx:id="DateCreateGraph" prefWidth="99.0" text="Дата создания" />
             <TableColumn fx:id="DateEndGraph" prefWidth="112.0" text="Дата окончания" />
-            <TableColumn fx:id="SheduleGraph" minWidth="0.0" prefWidth="96.0" text="Расписание" />
+            <TableColumn fx:id="SheduleGraph" minWidth="0.0" prefWidth="124.0" text="Расписание" />
         </columns>
       </TableView>
       <Label layoutX="500.0" layoutY="314.0" text="Номер графика" />
@@ -44,17 +45,43 @@
       <Label layoutX="498.0" layoutY="268.0" text="Дата окончания" />
       <DatePicker fx:id="DateCreateGraphEdit" layoutX="498.0" layoutY="240.0" prefHeight="25.0" prefWidth="122.0" />
       <DatePicker fx:id="DateEndGraphEdit" layoutX="500.0" layoutY="287.0" prefHeight="25.0" prefWidth="122.0" />
-      <TextArea fx:id="SheduleGraphEdit" layoutX="639.0" layoutY="283.0" prefHeight="76.0" prefWidth="264.0" />
+      <TextArea fx:id="SheduleGraphEdit" layoutX="639.0" layoutY="283.0" prefHeight="76.0" prefWidth="292.0" />
       <TextField fx:id="SerGraphEdit" layoutX="500.0" layoutY="333.0" prefHeight="25.0" prefWidth="122.0" />
       <Button layoutX="16.0" layoutY="361.0" mnemonicParsing="false" onAction="#addPathAction" prefHeight="25.0" prefWidth="101.0" text="Добавить" />
       <Button layoutX="178.0" layoutY="361.0" mnemonicParsing="false" onAction="#EditPathAction" text="Редактировать " />
       <Button layoutX="363.0" layoutY="361.0" mnemonicParsing="false" onAction="#delPathAction" prefHeight="25.0" prefWidth="101.0" text="Удалить" />
       <Button layoutX="500.0" layoutY="361.0" mnemonicParsing="false" onAction="#addGraphAction" prefHeight="25.0" prefWidth="101.0" text="Добавить" />
       <Button layoutX="639.0" layoutY="361.0" mnemonicParsing="false" onAction="#editGraphAction" prefHeight="25.0" prefWidth="101.0" text="Редактировать " />
-      <Button layoutX="802.0" layoutY="361.0" mnemonicParsing="false" onAction="#delGraphAction" prefHeight="25.0" prefWidth="101.0" text="Удалить" />
+      <Button layoutX="830.0" layoutY="361.0" mnemonicParsing="false" onAction="#delGraphAction" prefHeight="25.0" prefWidth="101.0" text="Удалить" />
       <Label layoutX="639.0" layoutY="223.0" text="Сотрудник патруля" />
-      <ChoiceBox fx:id="PatrolOff" layoutX="754.0" layoutY="222.0" prefHeight="17.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="PatrolOff" layoutX="754.0" layoutY="222.0" prefHeight="25.0" prefWidth="176.0" />
       <Label layoutX="704.0" layoutY="252.0" text="Звание" />
       <Label fx:id="RangPatrolOff" layoutX="755.0" layoutY="252.0" />
+      <DatePicker fx:id="dateStartCreateSearch" layoutX="25.0" layoutY="427.0" prefHeight="25.0" prefWidth="122.0" />
+      <DatePicker fx:id="dateStartEndSearch" layoutX="24.0" layoutY="472.0" prefHeight="25.0" prefWidth="122.0" />
+      <DatePicker fx:id="dateEndCreateSearch" layoutX="186.0" layoutY="427.0" prefHeight="25.0" prefWidth="122.0" />
+      <DatePicker fx:id="dateEndEndSearch" layoutX="185.0" layoutY="472.0" prefHeight="25.0" prefWidth="122.0" />
+      <TextField fx:id="SerSearch" layoutX="24.0" layoutY="528.0" prefHeight="25.0" prefWidth="122.0" />
+      <TextArea fx:id="ShedListSearch" layoutX="348.0" layoutY="422.0" prefHeight="128.0" prefWidth="441.0" />
+      <ChoiceBox fx:id="PatrolOffSearch" layoutX="185.0" layoutY="528.0" prefHeight="25.0" prefWidth="122.0" />
+      <Label layoutX="18.0" layoutY="389.0" text="Поиск" />
+      <Label layoutX="22.0" layoutY="406.0" text="Дата создания:" />
+      <Label layoutX="15.0" layoutY="431.0" text="с" />
+      <Label layoutX="14.0" layoutY="476.0" text="с" />
+      <Label layoutX="19.0" layoutY="454.0" text="Дата окончания" />
+      <Label layoutX="165.0" layoutY="431.0" text="по" />
+      <Label layoutX="164.0" layoutY="476.0" text="по" />
+      <Label layoutX="11.0" layoutY="501.0" text="Номер маршрута" />
+      <Label layoutX="185.0" layoutY="503.0" text="Сотрудник патруля" />
+      <Label layoutX="348.0" layoutY="403.0" text="Точки маршрута/расписние" />
+      <Button layoutX="801.0" layoutY="419.0" mnemonicParsing="false" onAction="#searchPathAction" text="Поиск по маршрутам" />
+      <Button layoutX="802.0" layoutY="450.0" mnemonicParsing="false" onAction="#searchGraphAction" prefHeight="25.0" prefWidth="135.0" text="Поиск по графикам" />
+      <CheckBox fx:id="isDateCreateSearchEnd" layoutX="312.0" layoutY="431.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isDateEndSearchEnd" layoutX="312.0" layoutY="477.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isPatrolOffSearch" layoutX="312.0" layoutY="532.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isSerSearch" layoutX="150.0" layoutY="532.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isShedListSearch" layoutX="507.0" layoutY="403.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isDateCreateSearchStart" layoutX="147.0" layoutY="431.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isDateEndSearchStart" layoutX="146.0" layoutY="477.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>

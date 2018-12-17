@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Constants;
 import sample.Main;
+import sample.Scripts.Delete;
 import sample.Scripts.Insert;
 import sample.Scripts.Select;
+import sample.Scripts.Update;
 import sample.Tables.ActPay;
 import sample.Tables.Graphics;
 import sample.Tables.Path;
@@ -21,6 +23,20 @@ import java.time.format.DateTimeFormatter;
 
 public class DirectorUIController {
     public Label fio;
+    public DatePicker dateStartCreateSearch;
+    public DatePicker dateStartEndSearch;
+    public DatePicker dateEndCreateSearch;
+    public DatePicker dateEndEndSearch;
+    public TextField SerSearch;
+    public TextArea ShedListSearch;
+    public ChoiceBox PatrolOffSearch;
+    public CheckBox isPatrolOffSearch;
+    public CheckBox isSerSearch;
+    public CheckBox isShedListSearch;
+    public CheckBox isDateCreateSearchEnd;
+    public CheckBox isDateEndSearchEnd;
+    public CheckBox isDateCreateSearchStart;
+    public CheckBox isDateEndSearchStart;
 
     private ObservableList<Path> pathData = FXCollections.observableArrayList();
     public TableView<Path> TablePath;
@@ -45,13 +61,15 @@ public class DirectorUIController {
     public DatePicker DateEndGraphEdit;
     public TextArea SheduleGraphEdit;
     public TextField SerGraphEdit;
-    public ChoiceBox PatrolOff;
+    private ObservableList<String> patrolData = FXCollections.observableArrayList();
+    public ChoiceBox<String> PatrolOff;
     public Label RangPatrolOff;
 
     private Long id = Long.valueOf("0");
     private Long pathId = Long.valueOf("0");
     private Long graphId = Long.valueOf("0");
     private Long patrolOfId = Long.valueOf("0");
+    private Long patrolOfIdSearch = Long.valueOf("0");
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
 
@@ -66,10 +84,69 @@ public class DirectorUIController {
         this.id = id;
 
         initTablePath();
-        refreshTablePath();
+        refreshTablePath("");
 
         initTableGraph();
-        refreshTableGraph();
+        refreshTableGraph("");
+
+        initPatrolOf();
+    }
+
+    private void refreshPatrOff() {
+        try {
+            ResultSet rs = null;
+            rs = Main.getStmt().executeQuery(Select.getPatrolOff + Select.where + Select.getPatrolOffId + patrolOfId);
+            if (rs != null && rs.next()) {
+                RangPatrolOff.setText(rs.getString(Select.patrolOfRang) + " " + rs.getString(Select.patrolOfName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initPatrolOf() {
+        patrolData.clear();
+        try {
+            ResultSet rs = null;
+            rs = Main.getStmt().executeQuery(Select.getPatrolOff);
+            while (rs != null && rs.next()) {
+                patrolData.add(rs.getString(Select.patrolOfName));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        PatrolOff.setItems(patrolData);
+        PatrolOff.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                try {
+                    ResultSet rs = null;
+                    rs = Main.getStmt().executeQuery(Select.getPatrolOff + Select.where +
+                            Select.patrolOfName + "='" + newSelection + "'");
+                    if (rs != null && rs.next()) {
+                        patrolOfId = rs.getLong(Select.patrolOfId);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                refreshPatrOff();
+            }
+        });
+
+        PatrolOffSearch.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                try {
+                    ResultSet rs = null;
+                    rs = Main.getStmt().executeQuery(Select.getPatrolOff + Select.where +
+                            Select.patrolOfName + "='" + newSelection + "'");
+                    if (rs != null && rs.next()) {
+                        patrolOfIdSearch = rs.getLong(Select.patrolOfId);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void initTablePath() {
@@ -87,7 +164,7 @@ public class DirectorUIController {
                 DateEndPathEdit.setValue(LocalDate.parse(newSelection.getDateEnd(), formatter));
                 ListObjPathEdit.setText(newSelection.getListObj());
                 SerPathEdit.setText(newSelection.getSeries());
-                refreshTableGraph();
+                refreshTableGraph("");
             }
         });
     }
@@ -108,16 +185,17 @@ public class DirectorUIController {
                 DateEndGraphEdit.setValue(LocalDate.parse(newSelection.getDateEnd(), formatter));
                 SheduleGraphEdit.setText(newSelection.getShedule());
                 SerGraphEdit.setText(newSelection.getSeries());
+                refreshPatrOff();
             }
         });
     }
 
-    private void refreshTablePath() {
+    private void refreshTablePath(String addSqlQuest) {
         pathData.clear();
         try {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataPath + Select.where +
-                    Select.getDataPathDirector + id);
+                    Select.getDataPathDirector + id + addSqlQuest);
             while (rs != null && rs.next()) {
                 pathData.add(new Path(rs.getLong(Select.dataPathID), rs.getString(Select.dataPathDataCreate),
                         rs.getString(Select.dataPathDataEnd), rs.getString(Select.dataPathSeries), rs.getString(Select.dataPathListObj)));
@@ -127,12 +205,12 @@ public class DirectorUIController {
         }
     }
 
-    private void refreshTableGraph() {
+    private void refreshTableGraph(String addSqlQuest) {
         graphData.clear();
         try {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataGraph + Select.where +
-                    Select.getDataGraphPathId + pathId);
+                    Select.getDataGraphPathId + pathId + addSqlQuest);
             while (rs != null && rs.next()) {
                 graphData.add(new Graphics(rs.getLong(Select.dataGraohID), pathId,
                         rs.getLong(Select.dataGraohPatrolId), rs.getString(Select.dataGraohSeries),
@@ -153,12 +231,33 @@ public class DirectorUIController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        refreshTablePath("");
     }
 
     public void EditPathAction(ActionEvent actionEvent) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
+            Main.getStmt().executeQuery(Update.updatePath + Update.set + Update.setPathDateCreate +
+                    Insert.toDate + "'" + DateCreatePathEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Update.setPathDateEnd +
+                    Insert.toDate + "'" + DateEndPathEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Update.setPathIdDir + id + Insert.comma + Update.setPathSeries + "'" + SerPathEdit.getText() + "'" + Insert.comma +
+                    Update.setPathListObj + "'" + ListObjPathEdit.getText() + "'" +
+                    Select.where + Update.wherePathId + pathId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        refreshTablePath("");
     }
 
     public void delPathAction(ActionEvent actionEvent) {
+        try {
+            Main.getStmt().executeQuery(Delete.deletePath +
+                    Select.where + Update.wherePathId + pathId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        refreshTablePath("");
     }
 
     public void addGraphAction(ActionEvent actionEvent) {
@@ -170,11 +269,71 @@ public class DirectorUIController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        refreshTableGraph("");
     }
 
     public void editGraphAction(ActionEvent actionEvent) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
+            Main.getStmt().executeQuery(Update.updateGraph + Update.set + Update.setGraphDateCreate +
+                    Insert.toDate + "'" + DateCreateGraphEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Update.setGraphDateEnd +
+                    Insert.toDate + "'" + DateEndGraphEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                    Update.setGraphIdPath + pathId + Insert.comma + Update.setGraphPatrOff + patrolOfId + Insert.comma +
+                    Update.setShedule + "'" + SheduleGraphEdit.getText() + "'" + Insert.comma +
+                    Update.setSerGraph + "'" + SerGraphEdit.getText() + "'" +
+                    Select.where + Update.whereGrapId + graphId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        refreshTableGraph("");
     }
 
     public void delGraphAction(ActionEvent actionEvent) {
+        try {
+            Main.getStmt().executeQuery(Delete.deleteGraphic +
+                    Select.where + Update.whereGrapId + graphId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        refreshTableGraph("");
+    }
+
+    public void searchPathAction(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        if (isDateCreateSearchStart.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " >= '" + dateStartCreateSearch.getValue().format(formatter) + "'";
+        if (isDateCreateSearchEnd.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " <= '" + dateEndCreateSearch.getValue().format(formatter) + "'";
+        if (isDateEndSearchStart.isSelected())
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " >= '" + dateStartEndSearch.getValue().format(formatter) + "'";
+        if (isDateEndSearchEnd.isSelected())
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " <= '" + dateEndEndSearch.getValue().format(formatter) + "'";
+        if (isSerSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataPathSeries + "='" + SerSearch.getText() + "'";
+        if (isShedListSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataPathListObj + "='" + ShedListSearch.getText() + "'";
+
+        refreshTablePath(addSqlQuestion);
+    }
+
+    public void searchGraphAction(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        if (isDateCreateSearchStart.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " >= '" + dateStartCreateSearch.getValue().format(formatter) + "'";
+        if (isDateCreateSearchEnd.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " <= '" + dateEndCreateSearch.getValue().format(formatter) + "'";
+        if (isDateEndSearchStart.isSelected())
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " >= '" + dateStartEndSearch.getValue().format(formatter) + "'";
+        if (isDateEndSearchEnd.isSelected())
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " <= '" + dateEndEndSearch.getValue().format(formatter) + "'";
+        if (isSerSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataGraohSeries + "='" + SerSearch.getText() + "'";
+        if (isShedListSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataGraohShedule + "='" + ShedListSearch.getText() + "'";
+        if (isPatrolOffSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataGraohPatrolId + "='" + patrolOfIdSearch + "'";
+
+        refreshTableGraph(addSqlQuestion);
     }
 }

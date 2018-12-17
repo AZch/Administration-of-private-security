@@ -22,6 +22,7 @@ public class Update {
     public static String setPathDateEnd = "dateend = ";
     public static String setPathSeries = "series_path = ";
     public static String setPathListObj = "listobj_path = ";
+    public static String wherePathId = "idpath = ";
 
     public static String updateGraph = "update graphic ";
     public static String setGraphIdPath = "path_idpath = ";
@@ -29,4 +30,6 @@ public class Update {
     public static String setGraphDateCreate = "datecreate_graph = ";
     public static String setGraphDateEnd = "dateend_graph = ";
     public static String setShedule = "shedule_graph = ";
+    public static String setSerGraph = "series_graph = ";
+    public static String whereGrapId = "idgraphic = ";
 }

@@ -64,6 +64,8 @@ public class Select {
     public static final String getDataPath = "select idpath, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, " +
             "to_char(DATEEND_PATH, '" + Constants.dateFormat + "') DATEEND_PATH, series_path, listobj_path from path";
     public static final String getDataPathDirector = "DIRECTOR_IDDIRECTOR = ";
+    public static final String notEqDataPathDateCretate = "to_char(datecreate_path, '" + Constants.dateFormat + "')";
+    public static final String notEqPathDataEnd = "to_char(DATEEND_PATH, '" + Constants.dateFormat + "')";
 
     public static final String dataGraohID = "idgraphic";
     public static final String dataGraohPatrolId = "PATROLOFFICIER_IDPATROLOFF";
@@ -76,4 +78,12 @@ public class Select {
             "to_char(DATEEND_GRAPH, '" + Constants.dateFormat + "') DATEEND_GRAPH, " +
             "SHEDULE_GRAPH from graphic";
     public static final String getDataGraphPathId = "PATH_IDPATH = ";
+    public static final String notEqDataGraphCretate = "to_char(DATECREATE_GRAPH, '" + Constants.dateFormat + "')";
+    public static final String notEqGraphDataEnd = "to_char(DATEEND_GRAPH, '" + Constants.dateFormat + "')";
+
+    public static final String patrolOfName = "fio_po";
+    public static final String patrolOfRang = "rank_po";
+    public static final String patrolOfId = "idpatroloff";
+    public static final String getPatrolOff = "select idpatroloff, fio_po, rank_po from patrolofficier";
+    public static final String getPatrolOffId = "idpatroloff = ";
 }
