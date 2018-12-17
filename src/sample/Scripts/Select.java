@@ -63,17 +63,6 @@ public class Select {
     public static final String getDataPatrolOfficerLgn = "login_po = ";
     public static final String getDataPatrolOfficerPsw = "password_po = ";
 
-    //Select для Маршрута патрулирования
-    public static final String dataPathID = "idpath";
-    public static final String dataPathIDD = "director_iddirector";
-    public static final String dataPathDateCreate = "datecreate_path";
-    public static final String dataPathDateEnd = "dateend_path";
-    public static final String dataPathSER = "series_path";
-    public static final String dataPathOBJ = "listobj_path";
-    public static final String getDataPathID = "idpath = ";
-    public static final String getDataPath = "select idpath, director_iddirector, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, "  +
-            "to_char(dateend_path, '" + Constants.dateFormat + "') dateend_path, series_path, listobj_path from path";
-
     //Select для Графика патрулирования
     public static final String dataGraphicID = "idgraphic";
     public static final String dataGraphicIDP = "path_idpath";
@@ -86,4 +75,16 @@ public class Select {
     public static final String getDataGraphic = "select idgraphic, path_idpath, patrolOfficier_idpatroloff, Series_Graph, " +
             "to_char(DateCreate_Graph, '" + Constants.dateFormat + "') DateCreate_Graph, "  +
             "to_char(DateEnd_Graph, '" + Constants.dateFormat + "') DateEnd_Graph, Shedule_Graph from graphic";
+
+    //Select для Маршрута патрулирования
+    public static final String dataPathID = "idpath";
+    public static final String dataPathIDD = "director_iddirector";
+    public static final String dataPathDateCreate = "datecreate_path";
+    public static final String dataPathDateEnd = "dateend_path";
+    public static final String dataPathSER = "series_path";
+    public static final String dataPathOBJ = "listobj_path";
+    public static final String getDataPathID = "idpath = ";
+    public static final String getDataPath = "select idpath, director_iddirector, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, "  +
+            "to_char(dateend_path, '" + Constants.dateFormat + "') dateend_path, series_path, listobj_path from path";
+
 }

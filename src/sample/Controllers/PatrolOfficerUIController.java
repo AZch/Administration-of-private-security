@@ -47,7 +47,7 @@ public class PatrolOfficerUIController {
     //Данные по Патрульному
     private String fioPO = "";
     private String rankPO = "";
-    private String idPO = "";
+    private Long idPO = Long.valueOf("0");
 
     private Long idSelectGraphic= Long.valueOf("0");
 
@@ -62,7 +62,7 @@ public class PatrolOfficerUIController {
     }
 
     // задание начальных данных
-    void setStartData(String id, String fio, String rank) {
+    void setStartData(Long id, String fio, String rank) {
         this.idPO = id;
         this.fioPO = fio;
         this.rankPO = rank;
@@ -75,12 +75,12 @@ public class PatrolOfficerUIController {
 
         try {
             ResultSet rs = null;
+
             rs = Main.getStmt().executeQuery(Select.getDataGraphic + Select.where +
                     Select.getDataGraphicIDPO + idPO + addSqlQuestion);
 
-            int index = 1;
             while (rs != null && rs.next()) {
-                GraphicData.add(new Graphic((long) index++, rs.getLong(Select.dataGraphicIDP), rs.getLong(Select.dataGraphicIDPO),
+                GraphicData.add(new Graphic(rs.getLong(Select.dataGraphicID), rs.getLong(Select.dataGraphicIDP), rs.getLong(Select.dataGraphicIDPO),
                         rs.getString(Select.dataGraphicSER), rs.getString(Select.dataGraphicDateCreate), rs.getString(Select.dataGraphicDateEnd),
                         rs.getString(Select.dataGraphicSHED)));
             }
@@ -92,7 +92,7 @@ public class PatrolOfficerUIController {
 
     // инициализации таблицы
     private void initMainTable() {
-        SeriesGraphicC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnSeriesG));
+        SeriesGraphicC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnSeries));
         DateCreateC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnDataCreate));
         DateEndC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnDataEnd));
         SheduleC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnShedule));

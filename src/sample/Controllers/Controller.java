@@ -55,7 +55,7 @@ public class Controller {
                     Select.getDataPatrolOfficerPsw + "\'" + pswUser.getText() + "\'");
 
             if (rs != null && rs.next()) {
-                openPatrolOfficerForm(rs.getString(Select.dataPatrolOfficerID), rs.getString(Select.dataPatrolOfficerFIO),
+                openPatrolOfficerForm(rs.getLong(Select.dataPatrolOfficerID), rs.getString(Select.dataPatrolOfficerFIO),
                         rs.getString(Select.dataPatrolOfficerRANK));
                 return;
             }
@@ -85,7 +85,7 @@ public class Controller {
         }
     }
 
-    private void openPatrolOfficerForm(String id, String fio, String rank){
+    private void openPatrolOfficerForm(Long id, String fio, String rank){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
             AnchorPane load = loader.load();

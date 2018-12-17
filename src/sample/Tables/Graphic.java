@@ -2,7 +2,7 @@ package sample.Tables;
 
 public class Graphic {
 
-    public static String columnSeriesG = "series";
+    public static String columnSeries = "series";
     public static String columnDataCreate = "dateCreate";
     public static String columnDataEnd = "dataEnd";
     public static String columnShedule = "SheduleG";
