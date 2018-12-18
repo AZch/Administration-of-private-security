@@ -250,7 +250,7 @@ public class CustServiceUIController {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataClient + Select.getDataFromDog + Select.where +
                     Select.getDataDogIdCustService + idCustService + Select.and +
-                    Select.getDataClientId + Select.dataDogClient + addSqlQuestion);
+                    Select.getDataDogIdClient + Select.dataClientId + addSqlQuestion);
             int index = 1;
             while (rs != null && rs.next()) {
                 ClientsData.add(new Client(rs.getLong(Select.dataClientId), rs.getString(Select.dataClientFIO), rs.getInt(Select.dataClientSeries),
@@ -296,7 +296,7 @@ public class CustServiceUIController {
                     Insert.comma + Update.setClientSeries + strToInt(serialEdit.getText()) + Insert.comma + Update.setClientNumber +
                     strToInt(numberEdit.getText()) + Insert.comma + Update.setClientDoc  + "'" + selecteditSobst + "'" + Insert.comma +
                     Update.setClientAddress + "'" + AddressLivingEdit + "'" +
-                    Select.where + Update.whereIdClient + idClient);
+                    Select.where + Update.whereIdClient + Select.dataDogClient + Select.and + Update.setDogIdCustService + idCustService);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -305,7 +305,7 @@ public class CustServiceUIController {
     public void delClientAction(ActionEvent actionEvent) {
         try {
             Main.getStmt().executeQuery(Delete.deleteClient +
-                    Select.where + Update.whereIdClient + idClient);
+                    Select.where + Update.whereIdClient + Select.dataDogClient + Select.and + Update.setDogIdCustService + idCustService);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -336,7 +336,7 @@ public class CustServiceUIController {
                     Update.setDogDataEnd +
                     Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Update.setDogPeople + strToInt(LivesEdit.getText())  +
-                    Select.where + Update.whereIdDogovor + idDog);
+                    Select.where + Update.setDogIdCustService + idCustService);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -346,7 +346,7 @@ public class CustServiceUIController {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
             Main.getStmt().executeQuery(Delete.deleteDogovor +
-                    Select.where + Update.whereIdDogovor + idDog);
+                    Select.where + Update.setDogIdCustService + idCustService);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -367,7 +367,7 @@ public class CustServiceUIController {
             Main.getStmt().executeQuery(Update.updateObject + Update.set + Update.setObjAddress + "'" + AddressObjectEdit + "'" +
                     Insert.comma + Update.setObjType + "'" + selecteditTypeObject + "'" + Insert.comma + Update.setObjSistem +
                     "'" + SistemObjectEdit + "'" +
-                    Select.where + Update.whereIdObject + idObj);
+                    Select.where + Update.whereIdObject + Select.dataDogObject+ Select.and + Update.setDogIdCustService + idCustService);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -376,7 +376,7 @@ public class CustServiceUIController {
     public void delObjectAction(ActionEvent actionEvent) {
         try {
             Main.getStmt().executeQuery(Delete.deleteObject +
-                    Select.where + Update.whereIdObject + idObj);
+                    Select.where + Update.whereIdObject + Select.dataDogObject+ Select.and + Update.setDogIdCustService + idCustService);
         } catch (SQLException e) {
             e.printStackTrace();
         }
