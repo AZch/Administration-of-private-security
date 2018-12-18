@@ -2,27 +2,26 @@ package sample.Tables;
 
 public class Graphic {
 
-    public static String columnSeries = "SerGr";
-    public static String columnDataCreate = "DateCreateG";
-    public static String columnDataEnd = "DateEndG";
-    public static String columnShedule = "SheduleG";
+    public static String columnSeries = "Series";
+    public static String columnDataCreate = "DateCreate";
+    public static String columnDataEnd = "DateEnd";
 
     private Long idG;
     private Long idPath;
     private Long idPO;
-    private String SerGr;
-    private String DateCreateG;
-    private String DateEndG;
-    private String SheduleG;
+    private String Series;
+    private String DateCreate;
+    private String DateEnd;
+    private String Shedule;
 
-    public Graphic(Long idG, Long idPath,Long idPO, String SerGr, String DateCreateG, String DateEndG, String SheduleG){
+    public Graphic(Long idG, Long idPath,Long idPO, String Series, String DateCreate, String DateEnd, String Shedule){
         this.idG = idG;
         this.idPath = idPath;
         this.idPO = idPO;
-        this.SerGr = SerGr;
-        this.DateCreateG = DateCreateG;
-        this.DateEndG = DateEndG;
-        this.SheduleG = SheduleG;
+        this.Series = Series;
+        this.DateCreate = DateCreate;
+        this.DateEnd = DateEnd;
+        this.Shedule = Shedule;
     }
 
     public Long getIdG() {
@@ -49,36 +48,36 @@ public class Graphic {
         this.idPO = idPO;
     }
 
-    public String getSerGr() {
-        return SerGr;
+    public String getSeries() {
+        return Series;
     }
 
-    public void setSerGr(String serGr) {
-        SerGr = serGr;
+    public void setSeries(String Series) {
+        Series = Series;
     }
 
-    public String getDateCreateG() {
-        return DateCreateG;
+    public String getDateCreate() {
+        return DateCreate;
     }
 
-    public void setDateCreateG(String dateCreateG) {
-        DateCreateG = dateCreateG;
+    public void setDateCreate(String DateCreate) {
+        DateCreate = DateCreate;
     }
 
-    public String getDateEndG() {
-        return DateEndG;
+    public String getDateEnd() {
+        return DateEnd;
     }
 
-    public void setDateEndG(String dateEndG) {
-        DateEndG = dateEndG;
+    public void setDateEnd(String dateEnd) {
+        DateEnd = DateEnd;
     }
 
-    public String getSheduleG() {
-        return SheduleG;
+    public String getShedule() {
+        return Shedule;
     }
 
-    public void setSheduleG(String sheduleG) {
-        SheduleG = sheduleG;
+    public void setShedule(String Shedule) {
+        Shedule = Shedule;
     }
 
 }

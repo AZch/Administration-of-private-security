@@ -2,7 +2,7 @@ package sample.Tables;
 
 public class Shedule {
 
-    public static String columnStrS = "strShedule";
+    public static String columnStr = "strShedule";
     private String strShedule;
 
     public String getStrShedule() {

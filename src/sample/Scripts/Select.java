@@ -87,4 +87,18 @@ public class Select {
     public static final String getDataPath = "select idpath, director_iddirector, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, "  +
             "to_char(dateend_path, '" + Constants.dateFormat + "') dateend_path, series_path, listobj_path from path";
 
+    //Select для Заявки на обследование
+    public static final String dataRequestID = "idrequest";
+    public static final String dataRequestidOoP = "objectofprotect_idobject";
+    public static final String dataRequestidO = "operator_idoperator";
+    public static final String dataRequestidPO = "patrolOfficier_idpatroloff";
+    public static final String dataRequestSER = "series_req";
+    public static final String dataRequestTYPE = "type_req";
+    public static final String dataRequestFINE = "fine_req";
+    public static final String dataRequestDataCreate = "datecreate_req";
+    public static final String dataRequestNotes = "notes_req";
+    public static final String getDataRequestPO= "patrolOfficier_idpatroloff = ";
+    public static final String getDataRequest = "select idrequest, objectofprotect_idobject, operator_idoperator, patrolOfficier_idpatroloff, series_req, type_req, fine_req," +
+            " to_char(datecreate_req, '" + Constants.dateFormat + "') datecreate_req, notes_req from request";
+
 }

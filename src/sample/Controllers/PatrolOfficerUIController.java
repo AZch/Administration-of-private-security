@@ -6,27 +6,28 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.Constants;
+import javafx.scene.text.Font;
 import sample.Main;
 import sample.Scripts.Select;
-import sample.Tables.Graphic;
-import sample.Tables.ObjetsPath;
-import sample.Tables.Path;
-import sample.Tables.Shedule;
+import sample.Tables.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 
 public class PatrolOfficerUIController {
+
+    //Шрифт
+    public Font x1;
+    public Font x2;
 
     //Поля таблицы графика патрулирования
     private ObservableList<Graphic> GraphicData = FXCollections.observableArrayList();
     public TableView<Graphic> GraphicTable;
-    public TableColumn<Graphic, String> SeriesGraphicC;
-    public TableColumn<Graphic, String> DateCreateC;
-    public TableColumn<Graphic, String> DateEndC;
+    public TableColumn<Graphic, String> SeriesGC;
+    public TableColumn<Graphic, String> DataCreateGC;
+    public TableColumn<Graphic, String> DataEndGC;
 
     //Поля таблицы расписания
     private ObservableList<Shedule> SheduleData = FXCollections.observableArrayList();
@@ -36,15 +37,23 @@ public class PatrolOfficerUIController {
     // Поля таблицы маршрута патрулирования
     private ObservableList<Path> PathData = FXCollections.observableArrayList();
     public TableView<Path> PathTable;
-    public TableColumn<Path, String> SeriesPathC;
-    public TableColumn<Path, String> DataCreateC;
-    public TableColumn<Path, String> DataEndC;
+    public TableColumn<Path, String> SeriesPC;
+    public TableColumn<Path, String> DataCreatePC;
+    public TableColumn<Path, String> DataEndPC;
 
     //Поля таблицы объектов патруля
     private ObservableList<ObjetsPath> ObjectsPathData = FXCollections.observableArrayList();
     public TableView<ObjetsPath> ObjectsPathTable;
     public TableColumn<ObjetsPath, String> StreetC;
     public TableColumn<ObjetsPath, String> HomeC;
+
+    //Поля таблицы Заявки на обследование
+    private ObservableList<Request> RequestData = FXCollections.observableArrayList();
+    public TableView<Request> RequestTable;
+    public TableColumn<Request, String> SeriesRC;
+    public TableColumn<Request, String> TypeC;
+    public TableColumn<Request, String> DataCreateRC;
+    public TextArea NoteRequest;
 
     @FXML
     private Label FIO;
@@ -67,7 +76,7 @@ public class PatrolOfficerUIController {
         SerGun.setText("Табельный номер оружия: " + serGUN);
 
         refreshTableGraphic();
-        initGraphicTable();
+        refreshTableRequest();
     }
 
     // задание начальных данных
@@ -79,14 +88,13 @@ public class PatrolOfficerUIController {
         initialize();
     }
 
-    // инициализации таблицы с договорами
+    // инициализации таблицы с Графика
     private void refreshTableGraphic() {
         GraphicData.clear();
 
         try {
-            ResultSet rs = null;
 
-            rs = Main.getStmt().executeQuery(Select.getDataGraphic + Select.where + Select.getDataGraphicIDPO + idPO + "");
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDataGraphic + Select.where + Select.getDataGraphicIDPO + idPO + "");
 
             while (rs != null && rs.next()) {
                 GraphicData.add(new Graphic(
@@ -106,11 +114,11 @@ public class PatrolOfficerUIController {
         }
     }
 
-    // инициализации таблицы
+    // инициализации таблицы Графика
     private void initGraphicTable() {
-        SeriesGraphicC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnSeries));
-        DateCreateC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnDataCreate));
-        DateEndC.setCellValueFactory(new PropertyValueFactory<Graphic, String>(Graphic.columnDataEnd));
+        SeriesGC.setCellValueFactory(new PropertyValueFactory<>(Graphic.columnSeries));
+        DataCreateGC.setCellValueFactory(new PropertyValueFactory<>(Graphic.columnDataCreate));
+        DataEndGC.setCellValueFactory(new PropertyValueFactory<>(Graphic.columnDataEnd));
         GraphicTable.setItems(GraphicData);
 
         GraphicTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -124,14 +132,56 @@ public class PatrolOfficerUIController {
         });
     }
 
+    // инициализации таблицы с Заявки
+    private void refreshTableRequest() {
+        RequestData.clear();
+
+        try {
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDataRequest + Select.where + Select.getDataRequestPO + idPO + "");
+
+            while (rs != null && rs.next()) {
+                RequestData.add(new Request(
+                        rs.getLong(Select.dataRequestID),
+                        rs.getLong(Select.dataRequestidOoP),
+                        rs.getLong(Select.dataRequestidO),
+                        rs.getLong(Select.dataRequestidPO),
+                        rs.getString(Select.dataRequestSER),
+                        rs.getString(Select.dataRequestTYPE),
+                        rs.getLong(Select.dataRequestFINE),
+                        rs.getString(Select.dataRequestDataCreate),
+                        rs.getString(Select.dataRequestNotes)
+                ));
+            }
+
+            initRequestTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // инициализации таблицы Заявки
+    private void initRequestTable() {
+        SeriesRC.setCellValueFactory(new PropertyValueFactory<>(Request.columnSeries));
+        TypeC.setCellValueFactory(new PropertyValueFactory<>(Request.columnType));
+        DataCreateRC.setCellValueFactory(new PropertyValueFactory<>(Request.columnDataCreate));
+        RequestTable.setItems(RequestData);
+
+        RequestTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                NoteRequest.clear();
+                NoteRequest.appendText(newSelection.getNotes());
+            }
+        });
+    }
+
     // обновить строки таблицы расписания
     private void initSheduleTable(Graphic cur) {
         SheduleData.clear();
-        String[] obj = cur.getSheduleG().split(" \\| ");
+        String[] obj = cur.getShedule().split(" \\| ");
         for (String s : obj) {
             SheduleData.add(new Shedule(s.replace('>', 'и')));
         }
-        SheduleC.setCellValueFactory(new PropertyValueFactory<Shedule, String>(Shedule.columnStrS));
+        SheduleC.setCellValueFactory(new PropertyValueFactory<>(Shedule.columnStr));
         SheduleTable.setItems(SheduleData);
     }
 
@@ -141,8 +191,7 @@ public class PatrolOfficerUIController {
         PathData.clear();
 
         try {
-            ResultSet rs = null;
-            rs = Main.getStmt().executeQuery(Select.getDataPath + Select.where + Select.getDataPathID + idSelectGraphic + "");
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDataPath + Select.where + Select.getDataPathID + idSelectGraphic + "");
 
             while (rs != null && rs.next()) {
                 PathData.add(new Path(
@@ -162,9 +211,9 @@ public class PatrolOfficerUIController {
 
     // инициализация таблицы маршрутов
     private void initPathTable() {
-        SeriesPathC.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnSeries));
-        DataCreateC.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDataCreate));
-        DataEndC.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDataEnd));
+        SeriesPC.setCellValueFactory(new PropertyValueFactory<>(Path.columnSeries));
+        DataCreatePC.setCellValueFactory(new PropertyValueFactory<>(Path.columnDataCreate));
+        DataEndPC.setCellValueFactory(new PropertyValueFactory<>(Path.columnDataEnd));
         PathTable.setItems(PathData);
 
         PathTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -182,8 +231,8 @@ public class PatrolOfficerUIController {
             String[] obj_setings = s.split("-");
             ObjectsPathData.add(new ObjetsPath(obj_setings[0] + " " + obj_setings[1], obj_setings[2]));
         }
-        StreetC.setCellValueFactory(new PropertyValueFactory<ObjetsPath, String>(ObjetsPath.columnStreetOP));
-        HomeC.setCellValueFactory(new PropertyValueFactory<ObjetsPath, String>(ObjetsPath.columnHomeOP));
+        StreetC.setCellValueFactory(new PropertyValueFactory<>(ObjetsPath.columnStreetOP));
+        HomeC.setCellValueFactory(new PropertyValueFactory<>(ObjetsPath.columnHomeOP));
 
         ObjectsPathTable.setItems(ObjectsPathData);
     }

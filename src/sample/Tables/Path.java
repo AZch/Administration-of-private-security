@@ -2,25 +2,24 @@ package sample.Tables;
 
 public class Path {
 
-    public static String columnSeries = "series";
-    public static String columnDataCreate = "dateCreate";
-    public static String columnDataEnd = "dateEnd";
-    public static String columnObjects = "objects";
+    public static String columnSeries = "Series";
+    public static String columnDataCreate = "DateCreate";
+    public static String columnDataEnd = "DateEnd";
 
     private Long id;
-    private Long idDirector;
-    private String dateCreate;
-    private String dateEnd;
-    private String series;
-    private String objects;
+    private Long idD;
+    private String DateCreate;
+    private String DateEnd;
+    private String Series;
+    private String Objects;
 
-    public Path(Long id, Long idDirector, String dateCreate, String dateEnd, String series, String objects){
+    public Path(Long id, Long idD, String DateCreate, String DateEnd, String Series, String Objects){
         this.id = id;
-        this.idDirector = idDirector;
-        this.dateCreate = dateCreate;
-        this.dateEnd = dateEnd;
-        this.series = series;
-        this.objects = objects;
+        this.idD = idD;
+        this.DateCreate = DateCreate;
+        this.DateEnd = DateEnd;
+        this.Series = Series;
+        this.Objects = Objects;
     }
 
     public Long getId() {
@@ -31,44 +30,44 @@ public class Path {
         this.id = id;
     }
 
-    public Long getIdDirector() {
-        return idDirector;
+    public Long getIdD() {
+        return idD;
     }
 
-    public void setIdDirector(Long idDirector) {
-        this.idDirector = idDirector;
+    public void setIdD(Long idD) {
+        this.idD = idD;
     }
 
     public String getDateCreate() {
-        return dateCreate;
+        return DateCreate;
     }
 
     public void setDateCreate(String dateCreate) {
-        this.dateCreate = dateCreate;
+        DateCreate = dateCreate;
     }
 
     public String getDateEnd() {
-        return dateEnd;
+        return DateEnd;
     }
 
     public void setDateEnd(String dateEnd) {
-        this.dateEnd = dateEnd;
+        DateEnd = dateEnd;
     }
 
     public String getSeries() {
-        return series;
+        return Series;
     }
 
     public void setSeries(String series) {
-        this.series = series;
+        Series = series;
     }
 
     public String getObjects() {
-        return objects;
+        return Objects;
     }
 
     public void setObjects(String objects) {
-        this.objects = objects;
+        Objects = objects;
     }
 
 }
