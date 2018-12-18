@@ -40,8 +40,6 @@ public class CustServiceUIController {
     public MenuItem editSobstVipiska;
     public TextField NumDogEdit;
     public CheckBox isSearchPayPeriod;
-    public CheckBox isSearchDataCreate;
-    public CheckBox isSearchDataEnd;
     public CheckBox isSearchAddress;
     public CheckBox isSearchFIO;
     public CheckBox isSearchPeopleLives;
@@ -69,8 +67,6 @@ public class CustServiceUIController {
     public TextField FIOClientSearch;
     public TextField LivesSearch;
     public TextField PSistemSearch;
-    public DatePicker DataCreateSearch;
-    public DatePicker DataEndSearch;
     public SplitMenuButton searchSobst;
     public MenuItem searchSobstSvidetel;
     public MenuItem searchSobstVipiska;
@@ -96,8 +92,8 @@ public class CustServiceUIController {
     public TableColumn<Client, String> FIOClient;
     public TableColumn<Client, Integer> Serial;
     public TableColumn<Client, Integer> Number;
-    public TableColumn<Client, String> DocClient;
     public TableColumn<Client, String> AddressClient;
+    public TableColumn<Client, String> DocClient;
 
     // поля таблицы договор
     private ObservableList<Dogovor> DogovorsData = FXCollections.observableArrayList();
@@ -205,7 +201,6 @@ public class CustServiceUIController {
             DataEnd.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnDataEnd));
             Lives.setCellValueFactory(new PropertyValueFactory<Dogovor, Integer>(Dogovor.columnLives));
 
-
             DogovorTable.setItems(DogovorsData);
 
             DogovorTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -219,7 +214,6 @@ public class CustServiceUIController {
                     DataCreateEdit.setValue(LocalDate.parse(newSelection.getDataCreate(), formatter));
                     DataEndEdit.setValue(LocalDate.parse(newSelection.getDataEnd(), formatter));
                     LivesEdit.setText(String.valueOf(newSelection.getLives()));
-
                 }
             });
         }
@@ -254,7 +248,7 @@ public class CustServiceUIController {
             int index = 1;
             while (rs != null && rs.next()) {
                 ClientsData.add(new Client(rs.getLong(Select.dataClientId), rs.getString(Select.dataClientFIO), rs.getInt(Select.dataClientSeries),
-                        rs.getInt(Select.dataClientNum), rs.getString(Select.dataClientAddress), rs.getString(Select.getDataClientDoc)));
+                        rs.getInt(Select.dataClientNum), rs.getString(Select.dataClientDoc), rs.getString(Select.dataClientAddress)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -280,9 +274,9 @@ public class CustServiceUIController {
 
     public void addClientAction(ActionEvent actionEvent) {
         try {
-            String resStr = Insert.insertClient + idClient + Insert.comma + FIOClientEdit + Insert.comma + strToInt(serialEdit.getText()) +
+            String resStr = Insert.insertClient + Insert.comma + FIOClientEdit + Insert.comma + strToInt(serialEdit.getText()) +
                     Insert.comma + strToInt(numberEdit.getText()) + Insert.comma + selecteditSobst + Insert.comma + AddressLivingEdit + Insert.rbc;
-            Main.getStmt().executeQuery(Insert.insertClient + idClient + Insert.comma +
+            Main.getStmt().executeQuery(Insert.insertClient + Insert.comma +
                     "'" + FIOClientEdit + "'" + Insert.comma + strToInt(serialEdit.getText()) +
                     Insert.comma + strToInt(numberEdit.getText()) + Insert.comma + "'" + selecteditSobst + "'" + Insert.comma + "'" + AddressLivingEdit + "'" + Insert.rbc);
         } catch (SQLException e) {
@@ -330,8 +324,8 @@ public class CustServiceUIController {
     public void editDogovorAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
-            Main.getStmt().executeQuery(Update.updateDogovor + Update.set + Update.setDogIdClient + Insert.comma + Update.setDogSeries + Insert.comma +
-                    Update.setDogIdObj + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + Update.setDogPayPeriod + "'" + selectpayPeriod + "'" + Insert.comma + Update.setDogDataStart +
+            Main.getStmt().executeQuery(Update.updateDogovor + Update.set + Update.setDogIdClient + idClient + Insert.comma + Update.setDogSeries + strToInt(NumDogEdit.getText()) + Insert.comma +
+                    Update.setDogIdObj + idObj + Insert.comma  + Insert.comma + Update.setDogPayPeriod + "'" + selectpayPeriod + "'" + Insert.comma + Update.setDogDataStart +
                     Insert.toDate + "'" + DataCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Update.setDogDataEnd +
                     Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +

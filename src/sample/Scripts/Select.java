@@ -78,8 +78,6 @@ public class Select {
     public static final String getDataClientAddress = "address_client = ";
 
     public static final String dataObjId = "idobject";
-    //public static final String dataObjIdOper = "operator_idoperator";
-    //public static final String dataObjIdPath = "path_idpath";
     public static final String dataObjAddress = "address_obj";
     public static final String dataObjType = "type_obj";
     public static final String dataObjListSys = "listsecsys_obj";

@@ -11,17 +11,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane id=" " prefHeight="731.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.CustServiceUIController">
    <children>
       <Label fx:id="FIOLabel" layoutX="23.0" layoutY="22.0" text="ФИО" />
       <TableView fx:id="DogovorTable" layoutX="23.0" layoutY="47.0" prefHeight="200.0" prefWidth="526.0">
         <columns>
-          <TableColumn fx:id="NumDog" prefWidth="121.0" text="Номер договора" />
-          <TableColumn fx:id="PayPeriod" prefWidth="99.0" text="Период оплаты" />
-            <TableColumn fx:id="DataCreate" prefWidth="98.0" text="Дата создания" />
-            <TableColumn fx:id="DataEnd" prefWidth="125.0" text="Дата окончания" />
-            <TableColumn fx:id="Lives" prefWidth="82.0" text="Проживающие лица" />
+          <TableColumn fx:id="NumDog" prefWidth="108.0" text="Номер договора" />
+          <TableColumn fx:id="PayPeriod" prefWidth="110.0" text="Период оплаты" />
+            <TableColumn fx:id="DataCreate" prefWidth="97.0" text="Дата создания" />
+            <TableColumn fx:id="DataEnd" prefWidth="109.0" text="Дата окончания" />
+            <TableColumn fx:id="Lives" minWidth="9.0" prefWidth="101.0" text="Проживающие лица" />
         </columns>
       </TableView>
       <TableView fx:id="ClientTable" layoutX="26.0" layoutY="395.0" prefHeight="200.0" prefWidth="484.0">
@@ -29,8 +28,8 @@
           <TableColumn fx:id="FIOClient" prefWidth="109.0" text="ФИО" />
             <TableColumn fx:id="Serial" prefWidth="90.0" text="Серия паспорта" />
             <TableColumn fx:id="Number" prefWidth="90.0" text="Номер паспорта" />
-            <TableColumn fx:id="DocClient" prefWidth="88.0" text="Документ о праве собственности" />
           <TableColumn fx:id="AddressClient" prefWidth="106.0" text="Адрес проживания" />
+            <TableColumn fx:id="DocClient" prefWidth="88.0" text="Документ о праве собственности" />
         </columns>
       </TableView>
       <TableView fx:id="ObjProtectTable" layoutX="525.0" layoutY="395.0" prefHeight="200.0" prefWidth="353.0">

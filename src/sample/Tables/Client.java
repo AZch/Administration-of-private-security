@@ -4,17 +4,17 @@ public class Client {
     public static String columnFIO = "FIOClient";
     public static String columnSerial = "Serial";
     public static String columnNumber = "Number";
-    public static String columnAddress = "AddressClient";
     public static String columnDocClient = "DocClient";
+    public static String columnAddress = "AddressClient";
 
     private Long id;
     private String FIOClient;
     private int Serial;
     private int Number;
-    private String AddressClient;
     private String DocClient;
+    private String AddressClient;
 
-    public Client (Long id, String FIOClient, int Serial, int Number, String AddressClient, String DocClient) {
+    public Client (Long id, String FIOClient, int Serial, int Number, String DocClient, String AddressClient) {
         this.id = id;
         this.FIOClient = FIOClient;
         this.Serial = Serial;
