@@ -3,6 +3,7 @@ package sample.Scripts;
 import sample.Constants;
 
 public class Select {
+    public static String comma = ", ";
     public static final String where = " where ";
     public static final String and = " and ";
 
@@ -45,10 +46,15 @@ public class Select {
     public static final String dataDogId = "iddogovor";
     public static final String dataDogPeople = "peoplecount_dog";
     public static final String dataDogCustService = "serviceofficier_idserviceoff";
+    public static final String dataDogClient = "client_idclient";
+    public static final String dataDogObject = "objectofprotect_idobject";
+
     public static final String getDataDog = "select iddogovor, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog from dogovor";
+
     public static final String getFullDataDog = "select iddogovor, client_idclient, objectofprotect_idobject, serviceofficier_idserviceoff, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog, peoplecount_dog from dogovor";
+
     public static final String getDataDogIdDog = "iddogovor = ";
     public static final String getDataDogSerDog = "series_dog = ";
     public static final String notEqDataDogDataCreate = "to_char(datastart_dog, '" + Constants.dateFormat + "')";
@@ -77,12 +83,13 @@ public class Select {
     public static final String dataObjAddress = "address_obj";
     public static final String dataObjType = "type_obj";
     public static final String dataObjListSys = "listsecsys_obj";
-    public static final String getDataObj = "select idobject, address_obj, type_obj, listsecsys_obj from client";
+    public static final String getDataObj = "select idobject, address_obj, type_obj, listsecsys_obj from objectofprotect";
     public static final String getDataObjId = "idobject = ";
     public static final String getDataObjAddress = "address_obj = ";
     public static final String getDataObjType = "type_obj = ";
     public static final String getDataObjSistem = "listsecsys_obj = ";
 
+    public static final String getDataFromDog = ", dogovor";
 
     public static final String dataCustServiceID = "IDSERVICEOFF";
     public static final String dataCustServiceFIO = "fio_so";

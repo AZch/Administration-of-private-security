@@ -38,7 +38,7 @@ public class Controller {
 
     public void loginAction(ActionEvent actionEvent) {
         try {
-            ResultSet rs = null, rs2 = null;
+            ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataAccountant + Select.where +
                     Select.getDataAccountantLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
                     Select.getDataAccountantPsw + "\'" + pswUser.getText() + "\'");
@@ -46,10 +46,10 @@ public class Controller {
                 openAccountatnForm(rs.getLong(Select.dataAccountantID), rs.getString(Select.dataAccountantFIO),
                         rs.getLong(Select.dataAccountantNUM), rs.getLong(Select.dataAccountantSer));
             }
-            rs2 = Main.getStmt().executeQuery(Select.getDataCustService + Select.where +
+            rs = Main.getStmt().executeQuery(Select.getDataCustService + Select.where +
                     Select.getDataCustServiceLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
                     Select.getDataCustServicePsw + "\'" + pswUser.getText() + "\'");
-            if (rs2 != null && rs2.next()) {
+            if (rs != null && rs.next()) {
                 openCustServiceForm(rs.getLong(Select.dataCustServiceID), rs.getString(Select.dataCustServiceFIO),
                         rs.getLong(Select.dataCustServiceNUM), rs.getLong(Select.dataCustServiceSer));
             }

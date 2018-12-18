@@ -12,13 +12,13 @@ public class Dogovor {
     private Long idclient;
     private Long idserviceoff;
     private Long idobject;
-    private int NumDog;
+    private String NumDog;
     private String PayPeriod;
     private String DataCreate;
     private String DataEnd;
     private int Lives;
 
-    public Dogovor(Long id, Long idclient, Long idobject, Long idserviceoff, int NumDog, String PayPeriod, String DataCreate, String DataEnd, int Lives) {
+    public Dogovor(Long id, Long idclient, Long idobject, Long idserviceoff, String NumDog, String PayPeriod, String DataCreate, String DataEnd, int Lives) {
         this.id = id;
         this.idclient = idclient;
         this.idobject = idobject;
@@ -45,7 +45,7 @@ public class Dogovor {
         this.id = idserviceoff;
     }
 
-    public void setNumDog(int NumDog) {
+    public void setNumDog(String NumDog) {
         this.NumDog = NumDog;
     }
 
@@ -79,7 +79,7 @@ public class Dogovor {
         return idserviceoff;
     }
 
-    public int getNumDog() {
+    public String getNumDog() {
         return NumDog;
     }
 

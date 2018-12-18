@@ -102,7 +102,7 @@ public class CustServiceUIController {
     // поля таблицы договор
     private ObservableList<Dogovor> DogovorsData = FXCollections.observableArrayList();
     public TableView<Dogovor> DogovorTable;
-    public TableColumn<Dogovor, Integer> NumDog;
+    public TableColumn<Dogovor, String> NumDog;
     public TableColumn<Dogovor, String> PayPeriod;
     public TableColumn<Dogovor, String> DataCreate;
     public TableColumn<Dogovor, String> DataEnd;
@@ -199,7 +199,7 @@ public class CustServiceUIController {
         private void initTableDogovor()
         {
             // инициализации таблицы договоров
-            NumDog.setCellValueFactory(new PropertyValueFactory<Dogovor, Integer>(Dogovor.columnNumDog));
+            NumDog.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnNumDog));
             PayPeriod.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnPayPeriod));
             DataCreate.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnDataCreate));
             DataEnd.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnDataEnd));
@@ -230,10 +230,11 @@ public class CustServiceUIController {
         ObjProtectsData.clear();
         try {
             ResultSet rs = null;
-            rs = Main.getStmt().executeQuery(Select.getDataObj + Select.where +
-                    Select.getDataObjId + idObj + addSqlQuestion);
+            rs = Main.getStmt().executeQuery(Select.getDataObj + Select.getDataFromDog + Select.where +
+                    Select.getDataDogIdCustService + idCustService + Select.and +
+                    Select.getDataDogIdObj + Select.dataObjId + addSqlQuestion);
             int index = 1;
-            if (rs != null && rs.next()) {
+            while (rs != null && rs.next()) {
                 ObjProtectsData.add(new ObjectOfProtect(rs.getLong(Select.dataObjId), rs.getString(Select.dataObjAddress), rs.getString(Select.dataObjType),
                         rs.getString(Select.dataObjListSys)));
             }
@@ -247,10 +248,11 @@ public class CustServiceUIController {
         ClientsData.clear();
         try {
             ResultSet rs = null;
-            rs = Main.getStmt().executeQuery(Select.getDataClient + Select.where +
-                    Select.getDataClientId + idClient + addSqlQuestion);
+            rs = Main.getStmt().executeQuery(Select.getDataClient + Select.getDataFromDog + Select.where +
+                    Select.getDataDogIdCustService + idCustService + Select.and +
+                    Select.getDataClientId + Select.dataDogClient + addSqlQuestion);
             int index = 1;
-            if (rs != null && rs.next()) {
+            while (rs != null && rs.next()) {
                 ClientsData.add(new Client(rs.getLong(Select.dataClientId), rs.getString(Select.dataClientFIO), rs.getInt(Select.dataClientSeries),
                         rs.getInt(Select.dataClientNum), rs.getString(Select.dataClientAddress), rs.getString(Select.getDataClientDoc)));
             }
@@ -265,10 +267,10 @@ public class CustServiceUIController {
         try {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getFullDataDog + Select.where +
-                    Select.getDataDogIdDog + idDog + addSqlQuestion);
+                    Select.getDataDogIdCustService + idCustService + addSqlQuestion);
             int index = 1;
-            if (rs != null && rs.next()) {
-                DogovorsData.add(new Dogovor(rs.getLong(Select.dataDogId), idClient, idObj, idCustService, rs.getInt(Select.dataDogSeries), rs.getString(Select.dataDogPeriod),
+            while (rs != null && rs.next()) {
+                DogovorsData.add(new Dogovor(rs.getLong(Select.dataDogId), idClient, idObj, idCustService, rs.getString(Select.dataDogSeries), rs.getString(Select.dataDogPeriod),
                         rs.getString(Select.dataDogDateStart), rs.getString(Select.dataDogDateEnd),rs.getInt(Select.dataDogPeople)));
             }
         } catch (SQLException e) {
