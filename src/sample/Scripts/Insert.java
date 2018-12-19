@@ -12,4 +12,9 @@ public class Insert {
             "values(";
     public static String insertLineOfAct = "insert into lineofact (actofpaying_idactpay, dogovor_iddogovor, datafact_loa, " +
             "datasuppose_loa, payment_loa, paytype_loa) values (";
+
+    public static String insertPath = "insert into path (director_iddirector, datecreate_path, dateend_path, series_path, " +
+            "listobj_path) values (";
+    public static String insertGraphic = "insert into graphic (path_idpath, patrolofficier_idpatroloff, series_graph, " +
+            "datecreate_graph, dateend_graph, shedule_graph) values (";
 }

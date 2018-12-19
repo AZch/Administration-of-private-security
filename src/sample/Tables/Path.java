@@ -1,7 +1,6 @@
 package sample.Tables;
 
 public class Path {
-
     public static String columnSeries = "Series";
     public static String columnDataCreate = "DateCreate";
     public static String columnDataEnd = "DateEnd";

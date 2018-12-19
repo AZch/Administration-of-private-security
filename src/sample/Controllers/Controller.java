@@ -49,6 +49,16 @@ public class Controller {
                 return;
             }
 
+            // открытие директора
+            rs = Main.getStmt().executeQuery(Select.getDataDir + Select.where +
+                    Select.getDataDirLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getDataDirPsw + "\'" + pswUser.getText() + "\'");
+            if (rs != null && rs.next()) {
+                openDirForm(rs.getLong(Select.dataDirID), rs.getString(Select.dataDirFIO),
+                        rs.getLong(Select.dataDirNUM), rs.getLong(Select.dataDirSer));
+                return;
+            }
+
             //Открытие формы Патрульного
             rs = Main.getStmt().executeQuery(Select.getDataPatrolOfficer + Select.where +
                     Select.getDataPatrolOfficerLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
@@ -85,6 +95,7 @@ public class Controller {
         }
     }
 
+
     private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
@@ -101,7 +112,27 @@ public class Controller {
 
             stage.showAndWait();
         }catch (Exception e){
-            e.printStackTrace();
+              e.printStackTrace();
         }
     }
+  private void openDirForm(Long id, String fio, Long num, Long ser) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
+            AnchorPane load = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Б О С С");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            DirectorUIController directorUIController = loader.getController();
+            directorUIController.setStartData(id, fio);
+
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+   }
+        
 }
