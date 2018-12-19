@@ -19,7 +19,7 @@ public class Update {
     public static String updatePath = "update path ";
     public static String setPathIdDir = "director_iddirector = ";
     public static String setPathDateCreate = "datecreate_path = ";
-    public static String setPathDateEnd = "dateend = ";
+    public static String setPathDateEnd = "dateend_path = ";
     public static String setPathSeries = "series_path = ";
     public static String setPathListObj = "listobj_path = ";
     public static String wherePathId = "idpath = ";

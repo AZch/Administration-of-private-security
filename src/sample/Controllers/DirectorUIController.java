@@ -117,6 +117,7 @@ public class DirectorUIController {
         }
 
         PatrolOff.setItems(patrolData);
+        PatrolOffSearch.setItems(patrolData);
         PatrolOff.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 try {
