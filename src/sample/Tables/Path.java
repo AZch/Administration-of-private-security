@@ -1,65 +1,72 @@
 package sample.Tables;
 
 public class Path {
-    public static String columnDateCreate = "dateCreate";
-    public static String columnDateEnd = "dateEnd";
-    public static String columnSeries = "series";
-    public static String columnListObj = "listObj";
+    public static String columnSeries = "Series";
+    public static String columnDataCreate = "DateCreate";
+    public static String columnDataEnd = "DateEnd";
 
     private Long id;
-    private String dateCreate;
-    private String dateEnd;
-    private String series;
-    private String listObj;
+    private Long idD;
+    private String DateCreate;
+    private String DateEnd;
+    private String Series;
+    private String Objects;
 
-    public Path(Long id, String dateCreate, String dateEnd, String series, String listObj) {
+    public Path(Long id, Long idD, String DateCreate, String DateEnd, String Series, String Objects){
         this.id = id;
-        this.dateCreate = dateCreate;
-        this.dateEnd = dateEnd;
-        this.series = series;
-        this.listObj = listObj;
+        this.idD = idD;
+        this.DateCreate = DateCreate;
+        this.DateEnd = DateEnd;
+        this.Series = Series;
+        this.Objects = Objects;
     }
 
-    // Set and get methods
-    //set
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setDateCreate(String dateCreate) {
-        this.dateCreate = dateCreate;
-    }
-
-    public void setDateEnd(String dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    public void setListObj(String listObj) {
-        this.listObj = listObj;
-    }
-
-    public void setSeries(String series) {
-        this.series = series;
-    }
-
-    //get
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getIdD() {
+        return idD;
+    }
+
+    public void setIdD(Long idD) {
+        this.idD = idD;
+    }
+
     public String getDateCreate() {
-        return dateCreate;
+        return DateCreate;
+    }
+
+    public void setDateCreate(String dateCreate) {
+        DateCreate = dateCreate;
     }
 
     public String getDateEnd() {
-        return dateEnd;
+        return DateEnd;
     }
 
-    public String getListObj() {
-        return listObj;
+    public void setDateEnd(String dateEnd) {
+        DateEnd = dateEnd;
     }
 
     public String getSeries() {
-        return series;
+        return Series;
     }
+
+    public void setSeries(String series) {
+        Series = series;
+    }
+
+    public String getObjects() {
+        return Objects;
+    }
+
+    public void setObjects(String objects) {
+        Objects = objects;
+    }
+
 }

@@ -32,22 +32,24 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public void loginAction(ActionEvent actionEvent) {
         try {
             ResultSet rs = null;
+
+            //Открытие формы Бухгалтера
             rs = Main.getStmt().executeQuery(Select.getDataAccountant + Select.where +
                         Select.getDataAccountantLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
                         Select.getDataAccountantPsw + "\'" + pswUser.getText() + "\'");
+
             if (rs != null && rs.next()) {
                 openAccountatnForm(rs.getLong(Select.dataAccountantID), rs.getString(Select.dataAccountantFIO),
                         rs.getLong(Select.dataAccountantNUM), rs.getLong(Select.dataAccountantSer));
                 return;
             }
 
+            // открытие директора
             rs = Main.getStmt().executeQuery(Select.getDataDir + Select.where +
                     Select.getDataDirLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
                     Select.getDataDirPsw + "\'" + pswUser.getText() + "\'");
@@ -56,6 +58,18 @@ public class Controller {
                         rs.getLong(Select.dataDirNUM), rs.getLong(Select.dataDirSer));
                 return;
             }
+
+            //Открытие формы Патрульного
+            rs = Main.getStmt().executeQuery(Select.getDataPatrolOfficer + Select.where +
+                    Select.getDataPatrolOfficerLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getDataPatrolOfficerPsw + "\'" + pswUser.getText() + "\'");
+
+            if (rs != null && rs.next()) {
+                openPatrolOfficerForm(rs.getLong(Select.dataPatrolOfficerID), rs.getString(Select.dataPatrolOfficerFIO),
+                        rs.getString(Select.dataPatrolOfficerRANK), rs.getString(Select.dataPatrolOfficerSERG));
+                return;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -81,7 +95,27 @@ public class Controller {
         }
     }
 
-    private void openDirForm(Long id, String fio, Long num, Long ser) {
+
+    private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
+            AnchorPane load = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("П А Т Р У Л Ь Н Ы Й");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            PatrolOfficerUIController patrolOfficerUIController = loader.getController();
+            patrolOfficerUIController.setStartData(id, fio, rank, sergun);
+
+            stage.showAndWait();
+        }catch (Exception e){
+              e.printStackTrace();
+        }
+    }
+  private void openDirForm(Long id, String fio, Long num, Long ser) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
             AnchorPane load = loader.load();
@@ -99,5 +133,6 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+   }
+        
 }
