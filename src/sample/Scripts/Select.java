@@ -6,6 +6,8 @@ public class Select {
     public static String comma = ", ";
     public static final String where = " where ";
     public static final String and = " and ";
+    public static final String dogovor = ", dogovor ";
+
 
     public static final String dataAccountantID = "IDACCOUNTANT";
     public static final String dataAccountantFIO = "fio_acc";
@@ -72,6 +74,7 @@ public class Select {
     public static final String dataClientDoc = "doc_client";
     public static final String dataClientAddress = "address_client";
     public static final String getDataClient = "select idclient, fio_client, series_client, num_client, doc_client, address_client from client";
+    public static final String getClient = "select fio_client from client";
     public static final String getDataClientId = "idclient = ";
     public static final String getDataClientFIO = "fio_client = ";
     public static final String getDataClientDoc = "doc_client = ";
@@ -86,6 +89,7 @@ public class Select {
     public static final String getDataObjAddress = "address_obj = ";
     public static final String getDataObjType = "type_obj = ";
     public static final String getDataObjSistem = "listsecsys_obj = ";
+    public static final String getObj = "select address_obj from objectofprotect";
 
     public static final String getDataFromDog = ", dogovor";
 

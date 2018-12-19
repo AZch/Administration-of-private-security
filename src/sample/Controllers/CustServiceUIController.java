@@ -54,6 +54,8 @@ public class CustServiceUIController {
     public CheckBox isSearchDataEndFin;
     public DatePicker DataCreateSearchStart;
     public DatePicker DataEndSearchStart;
+    public TextField DogClientEdit;
+    public TextField DogAddressEdit;
     private String selecteditSobst;
 
     public TextField AddressObjectEdit;
@@ -114,9 +116,9 @@ public class CustServiceUIController {
 
     private Long idCustService = Long.valueOf("0");
     private String fio = "";
-    private Long idClient = Long.valueOf("0");
+    private Long idCurClient = Long.valueOf("0");
     private Long idDog = Long.valueOf("0");
-    private Long idObj = Long.valueOf("0");
+    private Long idCurObj = Long.valueOf("0");
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
 
@@ -160,13 +162,16 @@ public class CustServiceUIController {
 
             ClientTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
-                    //idClient = newSelection.getId();
+                    idCurClient = newSelection.getId();
                     FIOClientEdit.setText(newSelection.getFIOClient());
                     serialEdit.setText(String.valueOf(newSelection.getSerial()));
                     numberEdit.setText(String.valueOf(newSelection.getNumber()));
                     AddressLivingEdit.setText(newSelection.getAddressClient());
                     editSobst.setText(newSelection.getDocClient());
                     selecteditSobst = newSelection.getDocClient();
+                    refreshObjectTable("");
+                    DogClientEdit.setText(newSelection.getFIOClient());
+                    //DogAddressEdit = newSelection.getAddressClient();
                 }
             });
         }
@@ -183,17 +188,19 @@ public class CustServiceUIController {
 
             ObjProtectTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
-                    //idObj = newSelection.getId();
+                    idCurObj = newSelection.getId();
                     AddressObjectEdit.setText(newSelection.getAddressObject());
                     editTypeObject.setText(newSelection.getTypeObject());
                     selecteditTypeObject = newSelection.getTypeObject();
                     SistemObjectEdit.setText(newSelection.getSistemonObject());
+                    DogAddressEdit.setText(newSelection.getAddressObject());
                 }
             });
         }
 
         private void initTableDogovor()
         {
+            //String fio = "null";
             // инициализации таблицы договоров
             NumDog.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnNumDog));
             PayPeriod.setCellValueFactory(new PropertyValueFactory<Dogovor, String>(Dogovor.columnPayPeriod));
@@ -203,17 +210,35 @@ public class CustServiceUIController {
 
             DogovorTable.setItems(DogovorsData);
 
+
             DogovorTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
                     idDog = newSelection.getId();
-                    idClient = newSelection.getIdClient();
-                    idObj = newSelection.getIdObject();
+                    idCurClient = newSelection.getIdClient();
+                    try {
+                        ResultSet rs = Main.getStmt().executeQuery(Select.getClient + Select.where + Select.getDataClientId + idCurClient);
+                        String fiocl = "null";
+                        if(rs != null && rs.next())
+                            fiocl = rs.getString(Select.dataClientFIO);
+                        rs = Main.getStmt().executeQuery(Select.getObj + Select.where + Select.getDataObjId + idCurObj);
+                        String addrcl = "null";
+                        if(rs != null && rs.next()) addrcl = rs.getString(Select.dataObjAddress);
+
+                        DogClientEdit.setText(fiocl);
+                        DogAddressEdit.setText(addrcl);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    //DogClientEdit.setText(String.valueOf(idClient));
+                    //DogAddressEdit.setText(String.valueOf(idObj));
+                    idCurObj = newSelection.getIdObject();
                     NumDogEdit.setText(String.valueOf(newSelection.getNumDog()));
                     payPeriod.setText(newSelection.getPayPeriod());
                     selectpayPeriod = newSelection.getPayPeriod();
                     DataCreateEdit.setValue(LocalDate.parse(newSelection.getDataCreate(), formatter));
                     DataEndEdit.setValue(LocalDate.parse(newSelection.getDataEnd(), formatter));
                     LivesEdit.setText(String.valueOf(newSelection.getLives()));
+
                 }
             });
         }
@@ -226,6 +251,7 @@ public class CustServiceUIController {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataObj + Select.getDataFromDog + Select.where +
                     Select.getDataDogIdCustService + idCustService + Select.and +
+                    Select.getDataDogIdClient + idCurClient + Select.and +
                     Select.getDataDogIdObj + Select.dataObjId + addSqlQuestion);
             int index = 1;
             while (rs != null && rs.next()) {
@@ -264,7 +290,7 @@ public class CustServiceUIController {
                     Select.getDataDogIdCustService + idCustService + addSqlQuestion);
             int index = 1;
             while (rs != null && rs.next()) {
-                DogovorsData.add(new Dogovor(rs.getLong(Select.dataDogId), idClient, idObj, idCustService, rs.getString(Select.dataDogSeries), rs.getString(Select.dataDogPeriod),
+                DogovorsData.add(new Dogovor(rs.getLong(Select.dataDogId), rs.getLong(Select.dataDogClient), rs.getLong(Select.dataDogObject), idCustService, rs.getString(Select.dataDogSeries), rs.getString(Select.dataDogPeriod),
                         rs.getString(Select.dataDogDateStart), rs.getString(Select.dataDogDateEnd),rs.getInt(Select.dataDogPeople)));
             }
         } catch (SQLException e) {
@@ -274,11 +300,12 @@ public class CustServiceUIController {
 
     public void addClientAction(ActionEvent actionEvent) {
         try {
-            String resStr = Insert.insertClient + Insert.comma + FIOClientEdit + Insert.comma + strToInt(serialEdit.getText()) +
-                    Insert.comma + strToInt(numberEdit.getText()) + Insert.comma + selecteditSobst + Insert.comma + AddressLivingEdit + Insert.rbc;
+            String resStr = Insert.insertClient + FIOClientEdit.getText() + Insert.comma + strToInt(serialEdit.getText()) +
+                    Insert.comma + strToInt(numberEdit.getText()) + Insert.comma + selecteditSobst + Insert.comma + AddressLivingEdit.getText() + Insert.rbc;
             Main.getStmt().executeQuery(Insert.insertClient + Insert.comma +
-                    "'" + FIOClientEdit + "'" + Insert.comma + strToInt(serialEdit.getText()) +
-                    Insert.comma + strToInt(numberEdit.getText()) + Insert.comma + "'" + selecteditSobst + "'" + Insert.comma + "'" + AddressLivingEdit + "'" + Insert.rbc);
+                    "'" + FIOClientEdit.getText() + "'" + Insert.comma + strToInt(serialEdit.getText()) +
+                    Insert.comma + strToInt(numberEdit.getText()) + Insert.comma + "'" + selecteditSobst + "'" + Insert.comma + "'" + AddressLivingEdit.getText() + "'" + Insert.rbc);
+            refreshClientTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -286,11 +313,12 @@ public class CustServiceUIController {
 
     public void editClientAction(ActionEvent actionEvent) {
         try {
-            Main.getStmt().executeQuery(Update.updateClient + Update.set + Update.setClientFIO + "'" + FIOClientEdit + "'" +
+            Main.getStmt().executeQuery(Update.updateClient + Update.setClientFIO + "'" + FIOClientEdit.getText() + "'" +
                     Insert.comma + Update.setClientSeries + strToInt(serialEdit.getText()) + Insert.comma + Update.setClientNumber +
                     strToInt(numberEdit.getText()) + Insert.comma + Update.setClientDoc  + "'" + selecteditSobst + "'" + Insert.comma +
-                    Update.setClientAddress + "'" + AddressLivingEdit + "'" +
-                    Select.where + Update.whereIdClient + Select.dataDogClient + Select.and + Update.setDogIdCustService + idCustService);
+                    Update.setClientAddress + "'" + AddressLivingEdit.getText() + "'" +
+                    Select.where + Update.whereIdClient + idCurClient);
+            refreshClientTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -299,7 +327,8 @@ public class CustServiceUIController {
     public void delClientAction(ActionEvent actionEvent) {
         try {
             Main.getStmt().executeQuery(Delete.deleteClient +
-                    Select.where + Update.whereIdClient + Select.dataDogClient + Select.and + Update.setDogIdCustService + idCustService);
+                    Select.where + Update.whereIdClient + idCurClient);
+            refreshClientTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -308,14 +337,15 @@ public class CustServiceUIController {
     public void addDogovorAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
-            String resStr = Insert.insertDogovor + idClient + Insert.comma + idCustService + Insert.comma + idObj + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + selectpayPeriod +
+            String resStr = Insert.insertDogovor + idCurClient + Insert.comma + idCustService + Insert.comma + idCurObj + Insert.comma + NumDogEdit.getText() + Insert.comma + selectpayPeriod +
                     Insert.comma + Insert.toDate + DataCreateEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Insert.toDate + DataEndEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + strToInt(LivesEdit.getText()) + Insert.rbc;
-            Main.getStmt().executeQuery(Insert.insertDogovor + idClient + Insert.comma + idCustService + Insert.comma + idObj + Insert.comma + strToInt(NumDogEdit.getText()) + Insert.comma + "'" + selectpayPeriod + "'" +
+            Main.getStmt().executeQuery(Insert.insertDogovor + idCurClient + Insert.comma + idCustService + Insert.comma + idCurObj + Insert.comma + "'" + NumDogEdit.getText() + "'" + Insert.comma + "'" + selectpayPeriod + "'" +
                     Insert.comma + Insert.toDate + "'" + DataCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + strToInt(LivesEdit.getText()) + Insert.rbc);
+            refreshDogovorTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -324,13 +354,14 @@ public class CustServiceUIController {
     public void editDogovorAction(ActionEvent actionEvent) {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
-            Main.getStmt().executeQuery(Update.updateDogovor + Update.set + Update.setDogIdClient + idClient + Insert.comma + Update.setDogSeries + strToInt(NumDogEdit.getText()) + Insert.comma +
-                    Update.setDogIdObj + idObj + Insert.comma  + Insert.comma + Update.setDogPayPeriod + "'" + selectpayPeriod + "'" + Insert.comma + Update.setDogDataStart +
+            Main.getStmt().executeQuery(Update.updateDogovor + Update.setDogIdClient + idCurClient + Insert.comma + Update.setDogIdCustService + idCustService + Insert.comma + Update.setDogIdObj + idCurObj + Insert.comma +
+                    Update.setDogSeries + "'" + NumDogEdit.getText() + "'" + Insert.comma +
+                    Update.setDogPayPeriod + "'" + selectpayPeriod + "'" + Insert.comma + Update.setDogDataStart +
                     Insert.toDate + "'" + DataCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
-                    Update.setDogDataEnd +
-                    Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
+                    Update.setDogDataEnd + Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Update.setDogPeople + strToInt(LivesEdit.getText())  +
-                    Select.where + Update.setDogIdCustService + idCustService);
+                    Select.where + Update.setDogIdCustService + idCustService + Select.and + Update.whereIdDogovor + idDog);
+            refreshDogovorTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -341,6 +372,7 @@ public class CustServiceUIController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
             Main.getStmt().executeQuery(Delete.deleteDogovor +
                     Select.where + Update.setDogIdCustService + idCustService);
+            refreshDogovorTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -348,9 +380,10 @@ public class CustServiceUIController {
 
     public void addObjectAction(ActionEvent actionEvent) {
         try {
-            String resStr = Insert.insertObject + idObj + Insert.comma + AddressObjectEdit + Insert.comma + selecteditTypeObject + Insert.comma + SistemObjectEdit + Insert.rbc;
-            Main.getStmt().executeQuery(Insert.insertObject + idObj + Insert.comma + "'" + AddressObjectEdit + "'" + Insert.comma + "'" + selecteditTypeObject + "'" +
-                                             Insert.comma + "'" + SistemObjectEdit + "'" + Insert.rbc);
+            String resStr = Insert.insertObject + AddressObjectEdit.getText() + Insert.comma + selecteditTypeObject + Insert.comma + SistemObjectEdit.getText() + Insert.rbc;
+            Main.getStmt().executeQuery(Insert.insertObject + idCurObj + Insert.comma + "'" + AddressObjectEdit.getText() + "'" + Insert.comma + "'" + selecteditTypeObject + "'" +
+                                             Insert.comma + "'" + SistemObjectEdit.getText() + "'" + Insert.rbc);
+            refreshObjectTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -358,10 +391,11 @@ public class CustServiceUIController {
 
     public void editObjectAction(ActionEvent actionEvent) {
         try {
-            Main.getStmt().executeQuery(Update.updateObject + Update.set + Update.setObjAddress + "'" + AddressObjectEdit + "'" +
+            Main.getStmt().executeQuery(Update.updateObject + Update.setObjAddress + "'" + AddressObjectEdit.getText() + "'" +
                     Insert.comma + Update.setObjType + "'" + selecteditTypeObject + "'" + Insert.comma + Update.setObjSistem +
-                    "'" + SistemObjectEdit + "'" +
-                    Select.where + Update.whereIdObject + Select.dataDogObject+ Select.and + Update.setDogIdCustService + idCustService);
+                    "'" + SistemObjectEdit.getText() + "'" +
+                    Select.where + Update.whereIdObject + idCurObj);
+            refreshObjectTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -370,7 +404,8 @@ public class CustServiceUIController {
     public void delObjectAction(ActionEvent actionEvent) {
         try {
             Main.getStmt().executeQuery(Delete.deleteObject +
-                    Select.where + Update.whereIdObject + Select.dataDogObject+ Select.and + Update.setDogIdCustService + idCustService);
+                    Select.where + Update.whereIdObject + idCurObj);
+            refreshObjectTable("");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -379,18 +414,18 @@ public class CustServiceUIController {
     public void searchClientAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
         if (isSearchFIO.isSelected())
-            addSqlQuestion += Select.and + Select.getDataClientFIO + "'" + FIOClientSearch + "'";
+            addSqlQuestion += Select.and + Select.getDataClientFIO + "'" + FIOClientSearch.getText() + "'";
         if (isSearchDoc.isSelected())
             addSqlQuestion += Select.and + Select.getDataClientDoc + "'" + selectsearchSobst + "'";
         if (isSearchAddress.isSelected())
-            addSqlQuestion += Select.and + Select.getDataClientAddress + "'" + AddressSearch + "'";
+            addSqlQuestion += Select.and + Select.getDataClientAddress + "'" + AddressSearch.getText() + "'";
         refreshClientTable(addSqlQuestion);
     }
 
     public void searchDogovorAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
         if (isSearchPeopleLives.isSelected())
-            addSqlQuestion += Select.and + Select.getDataDogPeople + "'" + LivesSearch + "'";
+            addSqlQuestion += Select.and + Select.getDataDogPeople + "'" + LivesSearch.getText() + "'";
         if (isSearchPayPeriod.isSelected())
             addSqlQuestion += Select.and + Select.getDataDogPeriod + "'" + selectpayPeriodSearch + "'";
 
@@ -409,11 +444,11 @@ public class CustServiceUIController {
     public void searchObjectAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
         if (isSearchAddress.isSelected())
-            addSqlQuestion += Select.and + Select.getDataObjAddress + "'" + AddressSearch + "'";
+            addSqlQuestion += Select.and + Select.getDataObjAddress + "'" + AddressSearch.getText() + "'";
         if (isSearchTypeObj.isSelected())
             addSqlQuestion += Select.and + Select.getDataObjType + "'" + selectsearchType + "'";
         if (isSearchSistem.isSelected())
-            addSqlQuestion += Select.and + Select.getDataObjSistem + "'" + PSistemSearch + "'";
+            addSqlQuestion += Select.and + Select.getDataObjSistem + "'" + PSistemSearch.getText() + "'";
         refreshObjectTable(addSqlQuestion);
     }
 
@@ -423,5 +458,76 @@ public class CustServiceUIController {
         } catch (Exception e) {
             return -1;
         }
+    }
+
+    // изменение текста в выборке типа оплаты, по нему будет сверка и выбор типа
+    public void ChangepayPeriodMonth(ActionEvent actionEvent) {
+        payPeriod.setText(Constants.periodPayMonth);
+        selectpayPeriod = Constants.periodPayMonth;
+    }
+
+    public void ChangepayPeriodDecade(ActionEvent actionEvent) {
+        payPeriod.setText(Constants.periodPayDecade);
+        selectpayPeriod = Constants.periodPayDecade;
+    }
+
+    public void ChangepayPeriodYear(ActionEvent actionEvent) {
+        payPeriod.setText(Constants.periodPayYear);
+        selectpayPeriod = Constants.periodPayYear;
+    }
+    public void ChangesearchpayPeriodMonth(ActionEvent actionEvent) {
+        payPeriodSearch.setText(Constants.periodPayMonth);
+        selectpayPeriodSearch = Constants.periodPayMonth;
+    }
+
+    public void ChangesearchpayPeriodDecade(ActionEvent actionEvent) {
+        payPeriodSearch.setText(Constants.periodPayDecade);
+        selectpayPeriodSearch = Constants.periodPayDecade;
+    }
+
+    public void ChangesearchpayPeriodYear(ActionEvent actionEvent) {
+        payPeriodSearch.setText(Constants.periodPayYear);
+        selectpayPeriodSearch = Constants.periodPayYear;
+    }
+
+
+    public void ChangeeditTypeKvartira(ActionEvent actionEvent) {
+        editTypeObject.setText(Constants.TypeKvartira);
+        selecteditTypeObject = Constants.TypeKvartira;
+    }
+
+    public void ChangeeditTypeGarage(ActionEvent actionEvent) {
+        editTypeObject.setText(Constants.TypeGarage);
+        selecteditTypeObject = Constants.TypeGarage;
+    }
+    public void ChangesearchTypeKvartira(ActionEvent actionEvent) {
+        searchType.setText(Constants.TypeKvartira);
+        selectpayPeriodSearch = Constants.TypeKvartira;
+    }
+
+    public void ChangesearchTypeGarage(ActionEvent actionEvent) {
+        searchType.setText(Constants.TypeGarage);
+        selectsearchType = Constants.TypeGarage;
+    }
+
+
+
+    public void ChangeeditSobstSvidetel(ActionEvent actionEvent) {
+        editSobst.setText(Constants.SobstSvidetel);
+        selecteditSobst = Constants.SobstSvidetel;
+    }
+
+    public void ChangeeditSobstVipiska(ActionEvent actionEvent) {
+        editSobst.setText(Constants.SobstVipiska);
+        selecteditSobst = Constants.SobstVipiska;
+    }
+    public void ChangesearchSobstSvidetel(ActionEvent actionEvent) {
+        searchSobst.setText(Constants.SobstSvidetel);
+        selectsearchSobst = Constants.SobstSvidetel;
+    }
+
+    public void ChangesearchSobstVipiska(ActionEvent actionEvent) {
+        searchSobst.setText(Constants.SobstVipiska);
+        selectsearchSobst = Constants.SobstVipiska;
     }
 }
