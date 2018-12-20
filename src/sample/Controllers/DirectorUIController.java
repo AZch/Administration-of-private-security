@@ -151,8 +151,8 @@ public class DirectorUIController {
     }
 
     private void initTablePath() {
-        DateEndPath.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDateEnd));
-        DateCreatePath.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDateCreate));
+        DateEndPath.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDataEnd));
+        DateCreatePath.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnDataCreate));
         SerPath.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnSeries));
         ListObjPath.setCellValueFactory(new PropertyValueFactory<Path, String>(Path.columnListObj));
 
@@ -163,7 +163,7 @@ public class DirectorUIController {
                 pathId = newSelection.getId();
                 DateCreatePathEdit.setValue(LocalDate.parse(newSelection.getDateCreate(), formatter));
                 DateEndPathEdit.setValue(LocalDate.parse(newSelection.getDateEnd(), formatter));
-                ListObjPathEdit.setText(newSelection.getListObj());
+                ListObjPathEdit.setText(newSelection.getObjects());
                 SerPathEdit.setText(newSelection.getSeries());
                 refreshTableGraph("");
             }
@@ -198,7 +198,7 @@ public class DirectorUIController {
             rs = Main.getStmt().executeQuery(Select.getDataPath + Select.where +
                     Select.getDataPathDirector + id + addSqlQuest);
             while (rs != null && rs.next()) {
-                pathData.add(new Path(rs.getLong(Select.dataPathID), rs.getString(Select.dataPathDataCreate),
+                pathData.add(new Path(rs.getLong(Select.dataPathID), rs.getLong(Select.dataPathIDD), rs.getString(Select.dataPathDataCreate),
                         rs.getString(Select.dataPathDataEnd), rs.getString(Select.dataPathSeries), rs.getString(Select.dataPathListObj)));
             }
         } catch (SQLException e) {

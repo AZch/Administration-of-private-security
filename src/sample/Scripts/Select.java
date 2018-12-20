@@ -109,13 +109,12 @@ public class Select {
     public static final String getDataRequest = "select idrequest, objectofprotect_idobject, operator_idoperator, patrolOfficier_idpatroloff, series_req, type_req, fine_req," +
             " to_char(datecreate_req, '" + Constants.dateFormat + "') datecreate_req, notes_req from request";
 
-    public static final String dataPathID = "idpath";
     public static final String dataPathDataCreate = "datecreate_path";
     public static final String dataPathDataEnd = "DATEEND_PATH";
     public static final String dataPathSeries = "series_path";
     public static final String dataPathListObj = "listobj_path";
-    public static final String getDataPath = "select idpath, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, " +
-            "to_char(DATEEND_PATH, '" + Constants.dateFormat + "') DATEEND_PATH, series_path, listobj_path from path";
+    //public static final String getDataPath = "select idpath, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, " +
+    //        "to_char(DATEEND_PATH, '" + Constants.dateFormat + "') DATEEND_PATH, series_path, listobj_path from path";
     public static final String getDataPathDirector = "DIRECTOR_IDDIRECTOR = ";
     public static final String notEqDataPathDateCretate = "to_char(datecreate_path, '" + Constants.dateFormat + "')";
     public static final String notEqPathDataEnd = "to_char(DATEEND_PATH, '" + Constants.dateFormat + "')";

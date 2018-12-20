@@ -4,6 +4,7 @@ public class Path {
     public static String columnSeries = "Series";
     public static String columnDataCreate = "DateCreate";
     public static String columnDataEnd = "DateEnd";
+    public static String columnListObj = "Objects";
 
     private Long id;
     private Long idD;
