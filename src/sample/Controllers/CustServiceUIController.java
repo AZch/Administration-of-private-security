@@ -207,7 +207,7 @@ public class CustServiceUIController {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getPath);
             while (rs != null && rs.next()) {
-                AllSerPath.add(rs.getString(Select.DataSerPath));
+                AllSerPath.add(rs.getString(Select.dataPathSER));
             }
         } catch (SQLException e) {
             e.printStackTrace();
