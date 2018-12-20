@@ -6,8 +6,6 @@ public class Select {
     public static String comma = ", ";
     public static final String where = " where ";
     public static final String and = " and ";
-    public static final String dogovor = ", dogovor ";
-
 
     public static final String dataAccountantID = "IDACCOUNTANT";
     public static final String dataAccountantFIO = "fio_acc";
@@ -54,6 +52,8 @@ public class Select {
     public static final String getDataDog = "select iddogovor, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog from dogovor";
 
+    public static final String getDog = "select iddogovor from dogovor";
+
     public static final String getFullDataDog = "select iddogovor, client_idclient, objectofprotect_idobject, serviceofficier_idserviceoff, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog, peoplecount_dog from dogovor";
 
@@ -75,8 +75,11 @@ public class Select {
     public static final String dataClientAddress = "address_client";
     public static final String getDataClient = "select idclient, fio_client, series_client, num_client, doc_client, address_client from client";
     public static final String getClient = "select fio_client from client";
+    public static final String getClientId = "select idclient from client";
     public static final String getDataClientId = "idclient = ";
     public static final String getDataClientFIO = "fio_client = ";
+    public static final String getDataClientNum = "num_client = ";
+    public static final String getDataClientSer = "series_client = ";
     public static final String getDataClientDoc = "doc_client = ";
     public static final String getDataClientAddress = "address_client = ";
 
@@ -90,6 +93,8 @@ public class Select {
     public static final String getDataObjType = "type_obj = ";
     public static final String getDataObjSistem = "listsecsys_obj = ";
     public static final String getObj = "select address_obj from objectofprotect";
+    public static final String getObjId = "select idobject from objectofprotect";
+
 
     public static final String getDataFromDog = ", dogovor";
 
@@ -100,5 +105,14 @@ public class Select {
     public static final String getDataCustService = "select IDSERVICEOFF, fio_so, series_so, num_so from serviceofficier";
     public static final String getDataCustServiceLgn = "login_so = ";
     public static final String getDataCustServicePsw = "password_so = ";
+
+    public static final String getPath = "select idpath, series_path from path";
+    public static final String getOperator = "select idoperator, fio_oper from operator";
+    public static final String dataOperatorID = "idoperator";
+    public static final String dataPathID = "idpath";
+    public static final String getDataOperatorFIO = "fio_oper = ";
+    public static final String getDataSerPath = "series_path = ";
+    public static final String DataOperatorFIO = "fio_oper";
+    public static final String DataSerPath = "series_path";
 
 }
