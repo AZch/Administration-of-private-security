@@ -21,7 +21,8 @@ public class Controller {
     public void openDirectorAction(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
-            AnchorPane load = loader.load();
+            AnchorPane load;
+            load = loader.load();
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -70,6 +71,17 @@ public class Controller {
                 return;
             }
 
+            //Открытие формы Дежурного
+            rs = Main.getStmt().executeQuery(Select.getDataOperator + Select.where +
+                    Select.getOperatorLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getOperatorPsw + "\'" + pswUser.getText() + "\'");
+
+            if (rs != null && rs.next()) {
+                openOperatorForm(rs.getLong(Select.dataOperatorID), rs.getString(Select.dataOperatorFIO),
+                        rs.getString(Select.dataOperatorSER), rs.getString(Select.dataOperatorNUM));
+                return;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,7 +107,6 @@ public class Controller {
         }
     }
 
-
     private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
@@ -115,7 +126,30 @@ public class Controller {
               e.printStackTrace();
         }
     }
-  private void openDirForm(Long id, String fio, Long num, Long ser) {
+
+
+    private void openOperatorForm(Long id, String fio, String ser, String num){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DutyUI.fxml"));
+            AnchorPane load = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Д Е Ж У Р Н Ы Й");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            DutyUIController dutyUIController = loader.getController();
+            dutyUIController.setStartData(id, fio);
+
+            stage.showAndWait();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    private void openDirForm(Long id, String fio, Long num, Long ser) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
             AnchorPane load = loader.load();
