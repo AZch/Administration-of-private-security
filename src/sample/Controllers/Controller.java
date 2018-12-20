@@ -70,7 +70,36 @@ public class Controller {
                 return;
             }
 
+            // открытие формы админа
+            rs = Main.getStmt().executeQuery(Select.getDataAdmin + Select.where +
+                    Select.getDataAdminLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getDataAdminPsw + "\'" + pswUser.getText() + "\'");
+
+            if (rs != null && rs.next()) {
+                openAdminForm(rs.getLong(Select.dataAdminId), rs.getString(Select.dataAdminFio));
+                return;
+            }
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openAdminForm(Long id, String fio) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/AdminUI.fxml"));
+            AnchorPane load = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("А Д М И Н");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            AdminUIController adminUIController = loader.getController();
+            adminUIController.setStartData(id, fio);
+
+            stage.showAndWait();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -115,7 +144,8 @@ public class Controller {
               e.printStackTrace();
         }
     }
-  private void openDirForm(Long id, String fio, Long num, Long ser) {
+
+    private void openDirForm(Long id, String fio, Long num, Long ser) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
             AnchorPane load = loader.load();
