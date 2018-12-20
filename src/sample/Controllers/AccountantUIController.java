@@ -87,7 +87,33 @@ public class AccountantUIController {
         initTableActPay("");
         FIO.setText(fio);
 
-        // инициализация выборки договора
+        initDog();
+
+        initMainTable();
+
+        initSubTable();
+    }
+
+    // инициализации таблицы актов
+    private void initMainTable() {
+        NumAct.setCellValueFactory(new PropertyValueFactory<ActPay, Integer>(ActPay.columnNum));
+        DateCreate.setCellValueFactory(new PropertyValueFactory<ActPay, String>(ActPay.columnDateCreate));
+        DatePayAct.setCellValueFactory(new PropertyValueFactory<ActPay, String>(ActPay.columnDateSuppose));
+
+        ActPayTable.setItems(actPaysData);
+
+        ActPayTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                idSelectActPay = newSelection.getId();
+                refreshSubTable("");
+                dateCreateEdit.setValue(LocalDate.parse(newSelection.getDateCreate(), formatter));
+                datePayEdit.setValue(LocalDate.parse(newSelection.getDateSuppose(), formatter));
+            }
+        });
+    }
+
+    // инициализация выборки договора
+    private void initDog() {
         allSerDogovor.clear();
         try {
             ResultSet rs = null;
@@ -115,24 +141,10 @@ public class AccountantUIController {
                 refreshDog();
             }
         });
+    }
 
-        // инициализации таблицы актов
-        NumAct.setCellValueFactory(new PropertyValueFactory<ActPay, Integer>(ActPay.columnNum));
-        DateCreate.setCellValueFactory(new PropertyValueFactory<ActPay, String>(ActPay.columnDateCreate));
-        DatePayAct.setCellValueFactory(new PropertyValueFactory<ActPay, String>(ActPay.columnDateSuppose));
-
-        ActPayTable.setItems(actPaysData);
-
-        ActPayTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                idSelectActPay = newSelection.getId();
-                refreshSubTable("");
-                dateCreateEdit.setValue(LocalDate.parse(newSelection.getDateCreate(), formatter));
-                datePayEdit.setValue(LocalDate.parse(newSelection.getDateSuppose(), formatter));
-            }
-        });
-
-        // инициализация таблицы строк актов
+    // инициализация таблицы строк актов
+    private void initSubTable() {
         DateSuppose.setCellValueFactory(new PropertyValueFactory<LOA, String>(LOA.columnDateSuppose));
         DateFactPay.setCellValueFactory(new PropertyValueFactory<LOA, String>(LOA.columnDateFact));
         SumPay.setCellValueFactory(new PropertyValueFactory<LOA, Integer>(LOA.columnPayment));
@@ -169,6 +181,14 @@ public class AccountantUIController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private int strToInt(String num) {
+        try {
+            return Integer.parseInt(num);
+        } catch (Exception e) {
+            return -1;
         }
     }
 
@@ -270,14 +290,6 @@ public class AccountantUIController {
                     strToInt(SumPayEdit.getText()) + Insert.comma + "'" + selectEditTypePay + "'" + Insert.rbc);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    private int strToInt(String num) {
-        try {
-            return Integer.parseInt(num);
-        } catch (Exception e) {
-            return -1;
         }
     }
 
