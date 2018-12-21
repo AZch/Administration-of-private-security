@@ -40,9 +40,8 @@ public class Controller {
 
             //Открытие формы Бухгалтера
             rs = Main.getStmt().executeQuery(Select.getDataAccountant + Select.where +
-                        Select.getDataAccountantLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
-                        Select.getDataAccountantPsw + "\'" + pswUser.getText() + "\'");
-
+                    Select.getDataAccountantLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getDataAccountantPsw + "\'" + pswUser.getText() + "\'");
             if (rs != null && rs.next()) {
                 openAccountatnForm(rs.getLong(Select.dataAccountantID), rs.getString(Select.dataAccountantFIO),
                         rs.getLong(Select.dataAccountantNUM), rs.getLong(Select.dataAccountantSer));
@@ -77,6 +76,18 @@ public class Controller {
 
             if (rs != null && rs.next()) {
                 openAdminForm(rs.getLong(Select.dataAdminId), rs.getString(Select.dataAdminFio));
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+          // открытие формы Менеджера по работе с клиентами
+            rs = Main.getStmt().executeQuery(Select.getDataCustService + Select.where +
+                    Select.getDataCustServiceLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getDataCustServicePsw + "\'" + pswUser.getText() + "\'");
+            if (rs != null && rs.next()) {
+                openCustServiceForm(rs.getLong(Select.dataCustServiceID), rs.getString(Select.dataCustServiceFIO),
+                        rs.getLong(Select.dataCustServiceNUM), rs.getLong(Select.dataCustServiceSer));
                 return;
             }
         } catch (SQLException e) {
@@ -123,9 +134,8 @@ public class Controller {
             e.printStackTrace();
         }
     }
-
-
-    private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun){
+  
+  private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
             AnchorPane load = loader.load();
@@ -145,7 +155,29 @@ public class Controller {
         }
     }
 
-    private void openDirForm(Long id, String fio, Long num, Long ser) {
+
+    private void openCustServiceForm(Long id, String fio, Long num, Long ser) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/CustServiceUI.fxml"));
+            AnchorPane load = loader.load();  
+            
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("МЕНЕДЖЕР ПО РАБОТЕ С КЛИЕНТАМИ");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            CustServiceUIController custServiceUIController = loader.getController();
+            custServiceUIController.setStartData(id, fio);
+          
+            stage.showAndWait();
+          }catch (Exception e) {
+            e.printStackTrace();
+    }
+}
+
+    
+  private void openDirForm(Long id, String fio, Long num, Long ser) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
             AnchorPane load = loader.load();
@@ -162,7 +194,7 @@ public class Controller {
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+    }
    }
         
-}
+

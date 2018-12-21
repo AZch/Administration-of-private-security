@@ -3,6 +3,7 @@ package sample.Scripts;
 import sample.Constants;
 
 public class Select {
+    public static String comma = ", ";
     public static final String where = " where ";
     public static final String and = " and ";
 
@@ -105,10 +106,87 @@ public class Select {
     public static final String dataDogDateEnd = "dataend_dog";
     public static final String dataDogSeries = "series_dog";
     public static final String dataDogId = "iddogovor";
-    public static final String getDataDogIdDog = "iddogovor = ";
-    public static final String getDataDogSerDog = "series_dog = ";
+    public static final String dataDogPeople = "peoplecount_dog";
+    public static final String dataDogCustService = "serviceofficier_idserviceoff";
+    public static final String dataDogClient = "client_idclient";
+    public static final String dataDogObject = "objectofprotect_idobject";
+
     public static final String getDataDog = "select iddogovor, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog from dogovor";
+
+    public static final String getDog = "select iddogovor from dogovor";
+
+    public static final String getFullDataDog = "select iddogovor, client_idclient, objectofprotect_idobject, serviceofficier_idserviceoff, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
+            "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog, peoplecount_dog from dogovor";
+
+    public static final String getDataDogIdDog = "iddogovor = ";
+    public static final String getDataDogSerDog = "series_dog = ";
+    public static final String notEqDataDogDataCreate = "to_char(datastart_dog, '" + Constants.dateFormat + "')";
+    public static final String notEqDataDogDataEnd = "to_char(dataend_dog, '" + Constants.dateFormat + "')";
+    public static final String getDataDogPeople = "peoplecount_dog = ";
+    public static final String getDataDogPeriod = "payperiod_dog = ";
+    public static final String getDataDogIdCustService = "serviceofficier_idserviceoff = ";
+    public static String getDataDogIdClient = "client_idclient = ";
+    public static String getDataDogIdObj = "objectofprotect_idobject = ";
+  
+
+    public static final String dataClientId = "idclient";
+    public static final String dataClientFIO = "fio_client";
+    public static final String dataClientSeries = "series_client";
+    public static final String dataClientNum = "num_client";
+    public static final String dataClientDoc = "doc_client";
+    public static final String dataClientAddress = "address_client";
+    public static final String getDataClient = "select idclient, fio_client, series_client, num_client, doc_client, address_client from client";
+    public static final String getClient = "select fio_client from client";
+    public static final String getClientId = "select idclient from client";
+    public static final String getDataClientId = "idclient = ";
+    public static final String getDataClientFIO = "fio_client = ";
+    public static final String getDataClientNum = "num_client = ";
+    public static final String getDataClientSer = "series_client = ";
+    public static final String getDataClientDoc = "doc_client = ";
+    public static final String getDataClientAddress = "address_client = ";
+
+    public static final String dataObjId = "idobject";
+    public static final String dataObjAddress = "address_obj";
+    public static final String dataObjType = "type_obj";
+    public static final String dataObjListSys = "listsecsys_obj";
+    public static final String getDataObj = "select idobject, address_obj, type_obj, listsecsys_obj from objectofprotect";
+    public static final String getDataObjId = "idobject = ";
+    public static final String getDataObjAddress = "address_obj = ";
+    public static final String getDataObjType = "type_obj = ";
+    public static final String getDataObjSistem = "listsecsys_obj = ";
+    public static final String getObj = "select address_obj from objectofprotect";
+    public static final String getObjId = "select idobject from objectofprotect";
+
+
+    public static final String getDataFromDog = ", dogovor";
+
+    public static final String dataCustServiceID = "IDSERVICEOFF";
+    public static final String dataCustServiceFIO = "fio_so";
+    public static final String dataCustServiceNUM = "num_so";
+    public static final String dataCustServiceSer = "series_so";
+    public static final String getDataCustService = "select IDSERVICEOFF, fio_so, series_so, num_so from serviceofficier";
+    public static final String getDataCustServiceLgn = "login_so = ";
+    public static final String getDataCustServicePsw = "password_so = ";
+
+    public static final String getPath = "select idpath, series_path from path";
+    public static final String getOperator = "select idoperator, fio_oper from operator";
+    public static final String dataOperatorID = "idoperator";
+    public static final String getDataOperatorFIO = "fio_oper = ";
+    public static final String getDataSerPath = "series_path = ";
+    public static final String DataOperatorFIO = "fio_oper";
+
+
+    //Select для Патрульного
+    public static final String dataPatrolOfficerID = "idpatroloff";
+    public static final String dataPatrolOfficerFIO = "fio_po";
+    public static final String dataPatrolOfficerSER = "series_po";
+    public static final String dataPatrolOfficerNUM = "num_po";
+    public static final String dataPatrolOfficerRANK = "rank_po";
+    public static final String dataPatrolOfficerSERG = "seriesgun_po";
+    public static final String getDataPatrolOfficer = "select idpatroloff, fio_po, series_po, num_po, rank_po, seriesgun_po from patrolofficier";
+    public static final String getDataPatrolOfficerLgn = "login_po = ";
+    public static final String getDataPatrolOfficerPsw = "password_po = ";
 
     //Select для Графика патрулирования
     public static final String dataGraphicID = "idgraphic";
