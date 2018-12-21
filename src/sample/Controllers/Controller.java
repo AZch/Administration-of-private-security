@@ -78,10 +78,7 @@ public class Controller {
                 openAdminForm(rs.getLong(Select.dataAdminId), rs.getString(Select.dataAdminFio));
                 return;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-          // открытие формы Менеджера по работе с клиентами
+            // открытие формы Менеджера по работе с клиентами
             rs = Main.getStmt().executeQuery(Select.getDataCustService + Select.where +
                     Select.getDataCustServiceLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
                     Select.getDataCustServicePsw + "\'" + pswUser.getText() + "\'");
@@ -134,9 +131,9 @@ public class Controller {
             e.printStackTrace();
         }
     }
-  
-  private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun){
-        try{
+
+    private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun) {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
             AnchorPane load = loader.load();
 
@@ -150,8 +147,8 @@ public class Controller {
             patrolOfficerUIController.setStartData(id, fio, rank, sergun);
 
             stage.showAndWait();
-        }catch (Exception e){
-              e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -159,8 +156,8 @@ public class Controller {
     private void openCustServiceForm(Long id, String fio, Long num, Long ser) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/CustServiceUI.fxml"));
-            AnchorPane load = loader.load();  
-            
+            AnchorPane load = loader.load();
+
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("МЕНЕДЖЕР ПО РАБОТЕ С КЛИЕНТАМИ");
@@ -169,15 +166,15 @@ public class Controller {
 
             CustServiceUIController custServiceUIController = loader.getController();
             custServiceUIController.setStartData(id, fio);
-          
-            stage.showAndWait();
-          }catch (Exception e) {
-            e.printStackTrace();
-    }
-}
 
-    
-  private void openDirForm(Long id, String fio, Long num, Long ser) {
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void openDirForm(Long id, String fio, Long num, Long ser) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
             AnchorPane load = loader.load();
@@ -194,7 +191,8 @@ public class Controller {
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+        }
     }
-   }
+}
         
 

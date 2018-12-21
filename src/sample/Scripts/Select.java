@@ -66,9 +66,9 @@ public class Select {
     //Select для сотрудника по работе с клиентами
     public static final String dataServOffLgn = "login_so";
     public static final String dataServOffPsw = "password_so";
-    public static final String dataServOffFio = "fio_off";
+    public static final String dataServOffFio = "fio_so";
     public static final String dataServOffId = "idserviceoff";
-    public static final String getDataServOff = "select idserviceoff, fio_off, series_so, num_so, login_so, password_so " +
+    public static final String getDataServOff = "select idserviceoff, fio_so, series_so, num_so, login_so, password_so " +
             "from serviceofficier";
     public static final String getDataServOffLgn = "login_so = ";
     public static final String getDataServOffPsw = "password_so = ";
@@ -175,18 +175,6 @@ public class Select {
     public static final String getDataOperatorFIO = "fio_oper = ";
     public static final String getDataSerPath = "series_path = ";
     public static final String DataOperatorFIO = "fio_oper";
-
-
-    //Select для Патрульного
-    public static final String dataPatrolOfficerID = "idpatroloff";
-    public static final String dataPatrolOfficerFIO = "fio_po";
-    public static final String dataPatrolOfficerSER = "series_po";
-    public static final String dataPatrolOfficerNUM = "num_po";
-    public static final String dataPatrolOfficerRANK = "rank_po";
-    public static final String dataPatrolOfficerSERG = "seriesgun_po";
-    public static final String getDataPatrolOfficer = "select idpatroloff, fio_po, series_po, num_po, rank_po, seriesgun_po from patrolofficier";
-    public static final String getDataPatrolOfficerLgn = "login_po = ";
-    public static final String getDataPatrolOfficerPsw = "password_po = ";
 
     //Select для Графика патрулирования
     public static final String dataGraphicID = "idgraphic";
