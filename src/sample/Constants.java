@@ -17,4 +17,7 @@ public class Constants {
     public static final String staffDuty = "Дежурный";
     public static final String staffPatrolOff = "Патрульный";
     public static final String staffCustSerrv = "Работник с клиентами";
+
+    public static final Integer startSer = 0;
+    public static final Integer startNum = 0;
 }

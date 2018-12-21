@@ -9,17 +9,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AdminUIController">
+<AnchorPane prefHeight="426.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AdminUIController">
    <children>
       <ChoiceBox fx:id="WhatStaffBox" layoutX="14.0" layoutY="37.0" prefWidth="150.0" />
       <Label layoutX="14.0" layoutY="14.0" text="Ваш логин:" />
       <Label fx:id="NicknameAdmin" layoutX="75.0" layoutY="14.0" />
-      <TableView fx:id="tableStaff" layoutX="14.0" layoutY="62.0" prefHeight="200.0" prefWidth="443.0">
+      <TableView fx:id="tableStaff" layoutX="14.0" layoutY="62.0" prefHeight="200.0" prefWidth="522.0">
         <columns>
           <TableColumn fx:id="fioStaff" prefWidth="155.0" text="Ф.И.О." />
           <TableColumn fx:id="lgnStaff" prefWidth="147.0" text="Логин" />
             <TableColumn fx:id="pswStaff" prefWidth="140.0" text="Пароль" />
+            <TableColumn fx:id="Rank" prefWidth="79.0" text="Звание" />
         </columns>
       </TableView>
       <Label layoutX="171.0" layoutY="41.0" text="Должность:" />
@@ -30,20 +30,25 @@
       <TextField fx:id="fioEdit" layoutX="48.0" layoutY="293.0" prefHeight="25.0" prefWidth="125.0" />
       <TextField fx:id="lgnEdit" layoutX="48.0" layoutY="326.0" prefHeight="25.0" prefWidth="125.0" />
       <TextField fx:id="pswEdit" layoutX="48.0" layoutY="361.0" prefHeight="25.0" prefWidth="125.0" />
-      <TextField fx:id="lgnSearch" layoutX="308.0" layoutY="330.0" prefHeight="25.0" prefWidth="125.0" />
-      <TextField fx:id="fioSearch" layoutX="308.0" layoutY="298.0" prefHeight="25.0" prefWidth="125.0" />
-      <TextField fx:id="pswSearch" layoutX="308.0" layoutY="361.0" prefHeight="25.0" prefWidth="125.0" />
-      <Label layoutX="264.0" layoutY="270.0" text="Поиск:" />
-      <Label layoutX="265.0" layoutY="306.0" text="Ф.И.О." />
-      <Label layoutX="266.0" layoutY="334.0" text="Логин" />
+      <TextField fx:id="lgnSearch" layoutX="343.0" layoutY="330.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="fioSearch" layoutX="343.0" layoutY="302.0" prefHeight="25.0" prefWidth="163.0" />
+      <TextField fx:id="pswSearch" layoutX="343.0" layoutY="361.0" prefHeight="25.0" prefWidth="163.0" />
+      <Label layoutX="300.0" layoutY="270.0" text="Поиск:" />
+      <Label layoutX="301.0" layoutY="306.0" text="Ф.И.О." />
+      <Label layoutX="302.0" layoutY="334.0" text="Логин" />
       <Label layoutX="34.0" layoutY="270.0" text="Работа с данными" />
-      <Label layoutX="262.0" layoutY="365.0" text="Пароль" />
-      <Button layoutX="177.0" layoutY="293.0" mnemonicParsing="false" onAction="#addStaffAction" prefHeight="25.0" prefWidth="70.0" text="Добавить" />
-      <Button layoutX="177.0" layoutY="326.0" mnemonicParsing="false" onAction="#changeStaffAction" text="Изменить" />
-      <Button layoutX="177.0" layoutY="361.0" mnemonicParsing="false" onAction="#delStaffAction" prefHeight="25.0" prefWidth="70.0" text="Удалить" />
-      <Button layoutX="308.0" layoutY="266.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="150.0" text="Искать" />
-      <CheckBox fx:id="isFioSearch" layoutX="439.0" layoutY="302.0" mnemonicParsing="false" />
-      <CheckBox fx:id="isLgnSearch" layoutX="439.0" layoutY="334.0" mnemonicParsing="false" />
-      <CheckBox fx:id="isPswSearch" layoutX="439.0" layoutY="365.0" mnemonicParsing="false" />
+      <Label layoutX="298.0" layoutY="365.0" text="Пароль" />
+      <Button layoutX="177.0" layoutY="293.0" mnemonicParsing="false" onAction="#addStaffAction" prefHeight="25.0" prefWidth="101.0" text="Добавить" />
+      <Button layoutX="177.0" layoutY="326.0" mnemonicParsing="false" onAction="#changeStaffAction" prefHeight="25.0" prefWidth="101.0" text="Изменить" />
+      <Button layoutX="177.0" layoutY="361.0" mnemonicParsing="false" onAction="#delStaffAction" prefHeight="25.0" prefWidth="101.0" text="Удалить" />
+      <Button layoutX="343.0" layoutY="266.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="183.0" text="Искать" />
+      <CheckBox fx:id="isFioSearch" layoutX="512.0" layoutY="302.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isLgnSearch" layoutX="512.0" layoutY="334.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isPswSearch" layoutX="512.0" layoutY="365.0" mnemonicParsing="false" />
+      <TextField fx:id="rankEdit" layoutX="48.0" layoutY="394.0" prefHeight="25.0" prefWidth="125.0" />
+      <TextField fx:id="rankSearch" layoutX="343.0" layoutY="392.0" prefHeight="25.0" prefWidth="163.0" />
+      <Label layoutX="299.0" layoutY="396.0" text="Звание" />
+      <Label layoutX="6.0" layoutY="398.0" text="Звание" />
+      <CheckBox fx:id="isRankSearch" layoutX="512.0" layoutY="396.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>
