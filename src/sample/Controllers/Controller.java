@@ -68,6 +68,19 @@ public class Controller {
                         rs.getString(Select.dataPatrolOfficerRANK), rs.getString(Select.dataPatrolOfficerSERG));
                 return;
             }
+
+            // открытие формы админа
+            rs = Main.getStmt().executeQuery(Select.getDataAdmin + Select.where +
+                    Select.getDataAdminLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getDataAdminPsw + "\'" + pswUser.getText() + "\'");
+
+            if (rs != null && rs.next()) {
+                openAdminForm(rs.getLong(Select.dataAdminId), rs.getString(Select.dataAdminFio));
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
           // открытие формы Менеджера по работе с клиентами
             rs = Main.getStmt().executeQuery(Select.getDataCustService + Select.where +
                     Select.getDataCustServiceLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
@@ -77,7 +90,27 @@ public class Controller {
                         rs.getLong(Select.dataCustServiceNUM), rs.getLong(Select.dataCustServiceSer));
                 return;
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openAdminForm(Long id, String fio) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/AdminUI.fxml"));
+            AnchorPane load = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("А Д М И Н");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            AdminUIController adminUIController = loader.getController();
+            adminUIController.setStartData(id, fio);
+
+            stage.showAndWait();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -12,17 +12,67 @@ public class Select {
     public static final String dataAccountantFIO = "fio_acc";
     public static final String dataAccountantNUM = "num_acc";
     public static final String dataAccountantSer = "series_acc";
-    public static final String getDataAccountant = "select IDACCOUNTANT, fio_acc, series_acc, num_acc from ACCOUNTANT";
+    public static final String dataAccountantLgn = "login_acc";
+    public static final String dataAccountantPsw = "password_acc";
+    public static final String getDataAccountant = "select IDACCOUNTANT, fio_acc, series_acc, num_acc, login_acc, password_acc from ACCOUNTANT";
     public static final String getDataAccountantLgn = "login_acc = ";
     public static final String getDataAccountantPsw = "password_acc = ";
 
+    //Select для Директора
     public static final String dataDirID = "iddirector";
     public static final String dataDirFIO = "fio_dir";
     public static final String dataDirNUM = "num_dir";
     public static final String dataDirSer = "series_dir";
-    public static final String getDataDir = "select iddirector, fio_dir, series_dir, num_dir from director";
+    public static final String dataDirLgn = "login_dir";
+    public static final String dataDirPsw = "password_dir";
+    public static final String getDataDir = "select iddirector, fio_dir, series_dir, num_dir, login_dir, password_dir from director";
     public static final String getDataDirLgn = "login_dir = ";
     public static final String getDataDirPsw = "password_dir = ";
+
+    //Select для Патрульного
+    public static final String dataPatrolOfficerID = "idpatroloff";
+    public static final String dataPatrolOfficerFIO = "fio_po";
+    public static final String dataPatrolOfficerSER = "series_po";
+    public static final String dataPatrolOfficerNUM = "num_po";
+    public static final String dataPatrolOfficerRANK = "rank_po";
+    public static final String dataPatrolOfficerSERG = "seriesgun_po";
+    public static final String dataPatrolOfficerLgn = "login_po";
+    public static final String dataPatrolOfficerPsw = "password_po";
+    public static final String getDataPatrolOfficer = "select idpatroloff, fio_po, series_po, num_po, rank_po, login_po, password_po, seriesgun_po from patrolofficier";
+    public static final String getDataPatrolOfficerLgn = "login_po = ";
+    public static final String getDataPatrolOfficerPsw = "password_po = ";
+
+    //Select для администратора
+    public static final String dataAdminLgn = "lgn_admin";
+    public static final String dataAdminPsw = "psw_admin";
+    public static final String dataAdminFio = "fio_admin";
+    public static final String dataAdminId = "idadmin";
+    public static final String getDataAdmin = "select idadmin, fio_admin, lgn_admin, psw_admin from admin";
+    public static final String getDataAdminLgn = "lgn_admin = ";
+    public static final String getDataAdminPsw = "psw_admin = ";
+    public static final String getDataAdminId = "idadmin = ";
+
+    //Select для дежурного
+    public static final String dataOperLgn = "login_oper";
+    public static final String dataOperPsw = "password_oper";
+    public static final String dataOperFio = "fio_oper";
+    public static final String dataOperId = "idoperator";
+    public static final String getDataDuty = "select idoperator, fio_oper, series_oper, num_oper, login_oper, " +
+            "password_oper from operator";
+    public static final String getDataOperLgn = "login_oper = ";
+    public static final String getDataOperPsw = "password_oper = ";
+    public static final String getDataOperId = "idoperator = ";
+
+    //Select для сотрудника по работе с клиентами
+    public static final String dataServOffLgn = "login_so";
+    public static final String dataServOffPsw = "password_so";
+    public static final String dataServOffFio = "fio_off";
+    public static final String dataServOffId = "idserviceoff";
+    public static final String getDataServOff = "select idserviceoff, fio_off, series_so, num_so, login_so, password_so " +
+            "from serviceofficier";
+    public static final String getDataServOffLgn = "login_so = ";
+    public static final String getDataServOffPsw = "password_so = ";
+    public static final String getDataServOffId = "idserviceoff = ";
 
     //Select для Акта об оплате
     public static final String dataActPayingDateCreate = "datacreate_aop";
