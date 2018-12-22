@@ -9,10 +9,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="426.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AdminUIController">
+<AnchorPane prefHeight="459.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AdminUIController">
    <children>
       <ChoiceBox fx:id="WhatStaffBox" layoutX="14.0" layoutY="37.0" prefWidth="150.0" />
-      <Label layoutX="14.0" layoutY="14.0" text="Ваш логин:" />
+      <Label layoutX="14.0" layoutY="14.0" text="ФИО:" />
       <Label fx:id="NicknameAdmin" layoutX="75.0" layoutY="14.0" />
       <TableView fx:id="tableStaff" layoutX="14.0" layoutY="62.0" prefHeight="200.0" prefWidth="522.0">
         <columns>
@@ -41,7 +41,7 @@
       <Button layoutX="177.0" layoutY="293.0" mnemonicParsing="false" onAction="#addStaffAction" prefHeight="25.0" prefWidth="101.0" text="Добавить" />
       <Button layoutX="177.0" layoutY="326.0" mnemonicParsing="false" onAction="#changeStaffAction" prefHeight="25.0" prefWidth="101.0" text="Изменить" />
       <Button layoutX="177.0" layoutY="361.0" mnemonicParsing="false" onAction="#delStaffAction" prefHeight="25.0" prefWidth="101.0" text="Удалить" />
-      <Button layoutX="343.0" layoutY="266.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="183.0" text="Искать" />
+      <Button layoutX="343.0" layoutY="266.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="25.0" prefWidth="77.0" text="Искать" />
       <CheckBox fx:id="isFioSearch" layoutX="512.0" layoutY="302.0" mnemonicParsing="false" />
       <CheckBox fx:id="isLgnSearch" layoutX="512.0" layoutY="334.0" mnemonicParsing="false" />
       <CheckBox fx:id="isPswSearch" layoutX="512.0" layoutY="365.0" mnemonicParsing="false" />
@@ -50,5 +50,9 @@
       <Label layoutX="299.0" layoutY="396.0" text="Звание" />
       <Label layoutX="6.0" layoutY="398.0" text="Звание" />
       <CheckBox fx:id="isRankSearch" layoutX="512.0" layoutY="396.0" mnemonicParsing="false" />
+      <Label layoutX="9.0" layoutY="419.0" text="Сообщение:" />
+      <Label fx:id="msg" layoutX="80.0" layoutY="419.0" />
+      <Button fx:id="btnExit" layoutX="474.0" layoutY="424.0" mnemonicParsing="false" onAction="#exitAction" text="Выход" />
+      <Button layoutX="422.0" layoutY="266.0" mnemonicParsing="false" onAction="#clearSearch" text="Сбросить поиск" />
    </children>
 </AnchorPane>

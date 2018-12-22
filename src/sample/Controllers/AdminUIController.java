@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import oracle.jdbc.driver.Const;
 import sample.Constants;
 import sample.Main;
@@ -23,6 +24,8 @@ public class AdminUIController {
     public TextField rankEdit;
     public TextField rankSearch;
     public CheckBox isRankSearch;
+    public Label msg;
+    public Button btnExit;
     private ObservableList<String> workNameList = FXCollections.observableArrayList();
     public ChoiceBox<String> WhatStaffBox;
     public Label NicknameAdmin;
@@ -50,7 +53,7 @@ public class AdminUIController {
     public void setStartData(Long id, String fio) {
         NicknameAdmin.setText(fio);
         WhatStaffBox.setItems(workNameList);
-        workNameList.add(Constants.staffAdmin);
+        //workNameList.add(Constants.staffAdmin);
         workNameList.add(Constants.staffAccountant);
         workNameList.add(Constants.staffCustSerrv);
         workNameList.add(Constants.staffDirector);
@@ -134,22 +137,34 @@ public class AdminUIController {
                     dataStaff.add(new Staff(rs.getLong(id), rs.getString(fio), rs.getString(lgn), rs.getString(psw), rs.getString(rank)));
             }
         } catch (SQLException e) {
+            msg.setText("Не удалось заоплнить таблицу");
             e.printStackTrace();
         }
     }
 
     private void executeStript(String sql) {
-        try {
-            Main.getStmt().execute(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Подтвердите опреацию");
+        alert.setTitle("Подтвердите опреацию");
+        alert.setContentText("Подтвердите опреацию?");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                try {
+                    Main.getStmt().execute(sql);
+                } catch (SQLException e) {
+                    msg.setText("Не удалось выполнить операцию");
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     public void addStaffAction(ActionEvent actionEvent) {
         switch (WorkName.getText()) {
             case Constants.staffAdmin:
-                executeStript(Insert.insertAdmin + "'" + fioEdit.getText() + "', '" + lgnEdit.getText() + "', '" + pswEdit.getText() + "')");
+                //executeStript(Insert.insertAdmin + "'" + fioEdit.getText() + "', '" + lgnEdit.getText() + "', '" + pswEdit.getText() + "')");
+                msg.setText("Нельзя выполнить опреацию");
                 break;
             case Constants.staffAccountant:
                 executeStript(Insert.insertAccountant + "'" + fioEdit.getText() + "'," + Constants.startSer + ", " +
@@ -179,9 +194,10 @@ public class AdminUIController {
     public void changeStaffAction(ActionEvent actionEvent) {
         switch (WorkName.getText()) {
             case Constants.staffAdmin:
-                executeStript(Update.updateAdmin + Update.setFioAdmin + "'" + fioEdit.getText() + "', " +
+                /*executeStript(Update.updateAdmin + Update.setFioAdmin + "'" + fioEdit.getText() + "', " +
                         Update.setLgnAdmin + "'" + lgnEdit.getText() + "', " + Update.setPswAdmin + "'" + pswEdit.getText() + "'" +
-                        Select.where + Update.whereAdmin + idSelect);
+                        Select.where + Update.whereAdmin + idSelect);*/
+                msg.setText("Нельзя изменить данные админа");
                 break;
             case Constants.staffAccountant:
                 executeStript(Update.updateAccountant + Update.setFioAccountant + "'" + fioEdit.getText() + "', " +
@@ -216,7 +232,8 @@ public class AdminUIController {
     public void delStaffAction(ActionEvent actionEvent) {
         switch (WorkName.getText()) {
             case Constants.staffAdmin:
-                executeStript(Delete.deleteAdmin + Select.where + Update.whereAdmin + idSelect);
+                //executeStript(Delete.deleteAdmin + Select.where + Update.whereAdmin + idSelect);
+                msg.setText("Нельзя изменять администраторов");
                 break;
             case Constants.staffAccountant:
                 executeStript(Delete.deleteAccountant + Select.where + Update.whereAccountantId + idSelect);
@@ -293,5 +310,21 @@ public class AdminUIController {
                 break;
         }
         refreshTable(addSqlQuestion);
+    }
+
+    public void exitAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Выход");
+        alert.setTitle("Выход");
+        alert.setContentText("Выход?");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                ((Stage) (btnExit.getScene().getWindow())).close();
+            }
+        });
+    }
+
+    public void clearSearch(ActionEvent actionEvent) {
+        refreshTable("");
     }
 }
