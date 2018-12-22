@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sample.Constants;
 import sample.Main;
 import sample.Scripts.Delete;
@@ -29,7 +30,7 @@ public class DirectorUIController {
     public DatePicker dateEndEndSearch;
     public TextField SerSearch;
     public TextArea ShedListSearch;
-    public ChoiceBox PatrolOffSearch;
+    public ChoiceBox<String> PatrolOffSearch;
     public CheckBox isPatrolOffSearch;
     public CheckBox isSerSearch;
     public CheckBox isShedListSearch;
@@ -37,6 +38,8 @@ public class DirectorUIController {
     public CheckBox isDateEndSearchEnd;
     public CheckBox isDateCreateSearchStart;
     public CheckBox isDateEndSearchStart;
+    public Button btnExit;
+    public Label msg;
 
     private ObservableList<Path> pathData = FXCollections.observableArrayList();
     public TableView<Path> TablePath;
@@ -100,6 +103,7 @@ public class DirectorUIController {
                 RangPatrolOff.setText(rs.getString(Select.patrolOfRang) + " " + rs.getString(Select.patrolOfName));
             }
         } catch (SQLException e) {
+            msg.setText("Не удалось обновить патрули");
             e.printStackTrace();
         }
     }
@@ -113,6 +117,7 @@ public class DirectorUIController {
                 patrolData.add(rs.getString(Select.patrolOfName));
             }
         } catch (SQLException e) {
+            msg.setText("Не удалось обновить патрули");
             e.printStackTrace();
         }
 
@@ -128,6 +133,7 @@ public class DirectorUIController {
                         patrolOfId = rs.getLong(Select.patrolOfId);
                     }
                 } catch (SQLException e) {
+                    msg.setText("Ошибка при поиске патруля");
                     e.printStackTrace();
                 }
                 refreshPatrOff();
@@ -145,6 +151,7 @@ public class DirectorUIController {
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    msg.setText("Патрули обновить не удалось");
                 }
             }
         });
@@ -202,6 +209,7 @@ public class DirectorUIController {
                         rs.getString(Select.dataPathDataEnd), rs.getString(Select.dataPathSeries), rs.getString(Select.dataPathListObj)));
             }
         } catch (SQLException e) {
+            msg.setText("Не удалось загрузить маршруты патрулирования");
             e.printStackTrace();
         }
     }
@@ -219,6 +227,7 @@ public class DirectorUIController {
                         rs.getString(Select.dataGraohShedule)));
             }
         } catch (SQLException e) {
+            msg.setText("Не удалось загрузить графики патрулирования");
             e.printStackTrace();
         }
     }
@@ -229,7 +238,9 @@ public class DirectorUIController {
                     Insert.toDate + "'" + DateCreatePathEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Insert.toDate + "'" + DateEndPathEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     "'" + SerPathEdit.getText() + "'" + Insert.comma + "'" + ListObjPathEdit.getText() + "'" + Insert.rbc);
+            msg.setText("Маршрут патрулирования добавлен");
         } catch (SQLException e) {
+            msg.setText("Не удалось добавть маршрут патрулирования");
             e.printStackTrace();
         }
         refreshTablePath("");
@@ -245,7 +256,9 @@ public class DirectorUIController {
                     Update.setPathIdDir + id + Insert.comma + Update.setPathSeries + "'" + SerPathEdit.getText() + "'" + Insert.comma +
                     Update.setPathListObj + "'" + ListObjPathEdit.getText() + "'" +
                     Select.where + Update.wherePathId + pathId);
+            msg.setText("Маршрут патрулирвоания изменен");
         } catch (SQLException e) {
+            msg.setText("Маршрут патрулирования изменить не удалось");
             e.printStackTrace();
         }
         refreshTablePath("");
@@ -255,7 +268,9 @@ public class DirectorUIController {
         try {
             Main.getStmt().executeQuery(Delete.deletePath +
                     Select.where + Update.wherePathId + pathId);
+            msg.setText("Маршрут патрулирования удален");
         } catch (SQLException e) {
+            msg.setText("Не удалось удалить маршрут патрулирования");
             e.printStackTrace();
         }
         refreshTablePath("");
@@ -267,7 +282,9 @@ public class DirectorUIController {
                     Insert.toDate + "'" + DateCreateGraphEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Insert.toDate + "'" + DateEndGraphEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     "'" + SheduleGraphEdit.getText() + "'" + Insert.rbc);
+            msg.setText("График патрулирования добавлен");
         } catch (SQLException e) {
+            msg.setText("Не удалось добавить график патрулирования");
             e.printStackTrace();
         }
         refreshTableGraph("");
@@ -284,7 +301,9 @@ public class DirectorUIController {
                     Update.setShedule + "'" + SheduleGraphEdit.getText() + "'" + Insert.comma +
                     Update.setSerGraph + "'" + SerGraphEdit.getText() + "'" +
                     Select.where + Update.whereGrapId + graphId);
+            msg.setText("График патрулирования изменен");
         } catch (SQLException e) {
+            msg.setText("Не удалось изменить график патрулирования");
             e.printStackTrace();
         }
         refreshTableGraph("");
@@ -294,7 +313,9 @@ public class DirectorUIController {
         try {
             Main.getStmt().executeQuery(Delete.deleteGraphic +
                     Select.where + Update.whereGrapId + graphId);
+            msg.setText("Не удалось удалить график патрулирования");
         } catch (SQLException e) {
+            msg.setText("График патрулирования удален");
             e.printStackTrace();
         }
         refreshTableGraph("");
@@ -336,5 +357,25 @@ public class DirectorUIController {
             addSqlQuestion += Select.and + Select.dataGraohPatrolId + "='" + patrolOfIdSearch + "'";
 
         refreshTableGraph(addSqlQuestion);
+    }
+
+    public void clearSearchPathAction(ActionEvent actionEvent) {
+        refreshTablePath("");
+    }
+
+    public void clearSearchGraphAction(ActionEvent actionEvent) {
+        refreshTableGraph("");
+    }
+
+    public void btnExitAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Выход");
+        alert.setTitle("Выход");
+        alert.setContentText("Выход?");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                ((Stage) (btnExit.getScene().getWindow())).close();
+            }
+        });
     }
 }
