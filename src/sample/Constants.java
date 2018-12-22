@@ -11,6 +11,9 @@ public class Constants {
     public static String TypeKvartira = "квартира";
     public static String TypeGarage = "гараж";
 
+    public static String typeReqSign = "Сигнализация";
+    public static String typeReqFire = "Пожарный датчик";
+
     public static String periodPayMonth = "месяц";
     public static String periodPayDecade = "декада";
     public static String periodPayYear = "год";

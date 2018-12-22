@@ -93,15 +93,7 @@ public class AccountUIController {
     }
 
     public void exitAction(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Выход");
-        alert.setTitle("Выход");
-        alert.setContentText("Выход?");
-        alert.showAndWait().ifPresent(rs -> {
-            if (rs == ButtonType.OK) {
-                ((Stage) (extBtn.getScene().getWindow())).close();
-            }
-        });
+        Main.closeWnd(extBtn);
     }
 
     private void executeStript(String sql) {

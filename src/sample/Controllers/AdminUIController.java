@@ -313,15 +313,7 @@ public class AdminUIController {
     }
 
     public void exitAction(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Выход");
-        alert.setTitle("Выход");
-        alert.setContentText("Выход?");
-        alert.showAndWait().ifPresent(rs -> {
-            if (rs == ButtonType.OK) {
-                ((Stage) (btnExit.getScene().getWindow())).close();
-            }
-        });
+        Main.closeWnd(btnExit);
     }
 
     public void clearSearch(ActionEvent actionEvent) {

@@ -255,15 +255,7 @@ public class Controller {
     }
 
     public void exitAction(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Выход");
-        alert.setTitle("Выход");
-        alert.setContentText("Выход?");
-        alert.showAndWait().ifPresent(rs -> {
-            if (rs == ButtonType.OK) {
-                ((Stage) (exitBtn.getScene().getWindow())).close();
-            }
-        });
+        Main.closeWnd(exitBtn);
     }
 
 

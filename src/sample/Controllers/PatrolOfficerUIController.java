@@ -2,25 +2,56 @@ package sample.Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
+import sample.Constants;
 import sample.Main;
 import sample.Scripts.Select;
+import sample.Scripts.Update;
 import sample.Tables.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 
 public class PatrolOfficerUIController {
 
     //Шрифт
     public Font x1;
     public Font x2;
+    public TextArea graphSearch;
+    public TextField addressObjSearch;
+    public TextField numReqSearch;
+    public TextField numGraphPathSearch;
+    public TextArea notesSearch;
+    public CheckBox isNotesSearch;
+    public CheckBox isTypeReqSearch;
+    public CheckBox isNumReqSearch;
+    public CheckBox isWhatTypeObjSearch;
+    public CheckBox isAddressObjSearch;
+    public CheckBox isNumGraphPathSearch;
+    public ChoiceBox whatTypeObjSearch;
+    private ObservableList<String> typeReqData = FXCollections.observableArrayList();
+    public ChoiceBox<String> typeReqSearch;
+    private String selectTypeSearch = "";
+
+    public Button btnExit;
+    public CheckBox isEndDateCreateReqSearch;
+    public CheckBox isStartDateEndGraphSearch;
+    public CheckBox isStartDateCreateGraphSearch;
+    public CheckBox isStartDateCreateReqSearch;
+    public CheckBox isEndDateEndGraphSearch;
+    public CheckBox isEndDateCreateGraphSearch;
+    public DatePicker dateEndCreateGraphSearch;
+    public DatePicker dateStartEndGraphSearch;
+    public DatePicker dateStartCreateGraphSearch;
+    public DatePicker dateEndEndGraphSearch;
+    public DatePicker startDateCreateReq;
+    public DatePicker endDateCreateReq;
 
     //Поля таблицы графика патрулирования
     private ObservableList<Graphic> GraphicData = FXCollections.observableArrayList();
@@ -70,13 +101,30 @@ public class PatrolOfficerUIController {
 
     private Long idSelectGraphic= Long.valueOf("0");
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
+
     private void initialize() {
         FIO.setText("ФИО: " + fioPO);
         Rank.setText("Звание: " + rankPO);
         SerGun.setText("Табельный номер оружия: " + serGUN);
 
-        refreshTableGraphic();
-        refreshTableRequest();
+        refreshTableGraphic("");
+        refreshTableRequest("");
+        initTypeReqSearch();
+    }
+
+    // инициализация типов заявки
+    private void initTypeReqSearch() {
+        typeReqData.add(Constants.typeReqSign);
+        typeReqData.add(Constants.typeReqFire);
+
+        typeReqSearch.setItems(typeReqData);
+
+        typeReqSearch.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                selectTypeSearch = newSelection;
+            }
+        });
     }
 
     // задание начальных данных
@@ -89,12 +137,12 @@ public class PatrolOfficerUIController {
     }
 
     // инициализации таблицы с Графика
-    private void refreshTableGraphic() {
+    private void refreshTableGraphic(String addSqlQuestion) {
         GraphicData.clear();
 
         try {
 
-            ResultSet rs = Main.getStmt().executeQuery(Select.getDataGraphic + Select.where + Select.getDataGraphicIDPO + idPO + "");
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDataGraphic + Select.where + Select.getDataGraphicIDPO + idPO + addSqlQuestion);
 
             while (rs != null && rs.next()) {
                 GraphicData.add(new Graphic(
@@ -123,21 +171,21 @@ public class PatrolOfficerUIController {
 
         GraphicTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                initSheduleTable(newSelection);
+                initSheduleTable(newSelection.getShedule());
 
                 idSelectGraphic = newSelection.getIdPath();
-                refreshPathTable();
+                refreshPathTable("");
                 initPathTable();
             }
         });
     }
 
     // инициализации таблицы с Заявки
-    private void refreshTableRequest() {
+    private void refreshTableRequest(String addSqlQuestion) {
         RequestData.clear();
 
         try {
-            ResultSet rs = Main.getStmt().executeQuery(Select.getDataRequest + Select.where + Select.getDataRequestPO + idPO + "");
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDataRequest + Select.where + Select.getDataRequestPO + idPO + addSqlQuestion);
 
             while (rs != null && rs.next()) {
                 RequestData.add(new Request(
@@ -175,9 +223,9 @@ public class PatrolOfficerUIController {
     }
 
     // обновить строки таблицы расписания
-    private void initSheduleTable(Graphic cur) {
+    private void initSheduleTable(String shedule) {
         SheduleData.clear();
-        String[] obj = cur.getShedule().split(" \\| ");
+        String[] obj = shedule.split(" \\| ");
         for (String s : obj) {
             SheduleData.add(new Shedule(s.replace('>', 'и')));
         }
@@ -187,11 +235,11 @@ public class PatrolOfficerUIController {
 
 
     // обновить строки таблицы маршрутов
-    private void refreshPathTable() {
+    private void refreshPathTable(String addSqlQuestion) {
         PathData.clear();
 
         try {
-            ResultSet rs = Main.getStmt().executeQuery(Select.getDataPath + Select.where + Select.getDataPathID + idSelectGraphic + "");
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDataPath + Select.where + Select.getDataPathID + idSelectGraphic + addSqlQuestion);
 
             while (rs != null && rs.next()) {
                 PathData.add(new Path(
@@ -237,4 +285,77 @@ public class PatrolOfficerUIController {
         ObjectsPathTable.setItems(ObjectsPathData);
     }
 
+    public void searchGraphAction(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        if (isNumGraphPathSearch.isSelected())
+            addSqlQuestion += Select.and + Update.setSerGraph + "'" + numGraphPathSearch.getText() + "'";
+        if (isStartDateCreateGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " >= '" + dateStartCreateGraphSearch.getValue().format(formatter) + "'";
+        if (isEndDateCreateGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " <= '" + dateEndCreateGraphSearch.getValue().format(formatter) + "'";
+        if (isStartDateEndGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " >= '" + dateStartEndGraphSearch.getValue().format(formatter) + "'";
+        if (isEndDateEndGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " <= '" + dateEndEndGraphSearch.getValue().format(formatter) + "'";
+        refreshTableGraphic(addSqlQuestion);
+    }
+
+    public void clearGraphAction(ActionEvent actionEvent) {
+        refreshTableGraphic("");
+    }
+
+    public void searchPathAction(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        if (isNumGraphPathSearch.isSelected())
+            addSqlQuestion += Select.and + Update.setPathSeries + "'" + numGraphPathSearch.getText() + "'";
+        if (isStartDateCreateGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " >= '" + dateStartCreateGraphSearch.getValue().format(formatter) + "'";
+        if (isEndDateCreateGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " <= '" + dateEndCreateGraphSearch.getValue().format(formatter) + "'";
+        if (isStartDateEndGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " >= '" + dateStartEndGraphSearch.getValue().format(formatter) + "'";
+        if (isEndDateEndGraphSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " <= '" + dateEndEndGraphSearch.getValue().format(formatter) + "'";
+        refreshPathTable(addSqlQuestion);
+    }
+
+    public void clearSearchPathAction(ActionEvent actionEvent) {
+        refreshPathTable("");
+    }
+
+    public void searchObjAction(ActionEvent actionEvent) {
+
+    }
+
+    public void clearSearchObjAction(ActionEvent actionEvent) {
+    }
+
+    public void searchReqAction(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        if (isNumReqSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataRequestSER + "= '" + numReqSearch.getText() + "'";
+        if (isStartDateCreateReqSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " >= '" + startDateCreateReq.getValue().format(formatter) + "'";
+        if (isEndDateCreateReqSearch.isSelected())
+            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " <= '" + endDateCreateReq.getValue().format(formatter) + "'";
+        if (isTypeReqSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataRequestTYPE + " = '" + selectTypeSearch + "'";
+        if (isNotesSearch.isSelected())
+            addSqlQuestion += Select.and + Select.dataRequestNotes + " = '" + notesSearch.getText() + "'";
+        refreshTableRequest(addSqlQuestion);
+    }
+
+    public void clearReqAction(ActionEvent actionEvent) {
+        refreshTableRequest("");
+    }
+
+    public void exitAction(ActionEvent actionEvent) {
+        Main.closeWnd(btnExit);
+    }
+
+    public void searchGraphShedAction(ActionEvent actionEvent) {
+    }
+
+    public void clearGraphShedAction(ActionEvent actionEvent) {
+    }
 }
