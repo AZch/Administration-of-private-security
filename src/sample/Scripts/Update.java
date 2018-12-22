@@ -106,4 +106,5 @@ public class Update {
     public static String setPswPatrOff = "password_po = ";
     public static String setRankPatrOff = "rank_po = ";
     public static String wherePatrOffId = "idpatroloff = ";
+    public static String setPatrOffSerGun = "seriesgun_po = ";
 }

@@ -222,7 +222,7 @@ public class AdminUIController {
             case Constants.staffPatrolOff:
                 executeStript(Update.updatePatrOff + Update.setFioPatrOff + "'" + fioEdit.getText() + "', " +
                         Update.setLgnPatrOff + "'" + lgnEdit.getText() + "', " + Update.setPswPatrOff + "'" + pswEdit.getText() + "', " +
-                        Update.setRankPatrOff + "'" + rankEdit.getText() + "'" +
+                        Update.setRankPatrOff + "'" + rankEdit.getText() + "' " +
                         Select.where + Update.wherePatrOffId + idSelect);
                 break;
         }
