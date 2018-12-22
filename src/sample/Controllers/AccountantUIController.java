@@ -6,10 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sample.Constants;
 import sample.Main;
 import sample.Scripts.Delete;
@@ -53,6 +55,8 @@ public class AccountantUIController {
     public CheckBox isSearchDateStartPayFact;
     public CheckBox isSearchDateEndPayFact;
     public CheckBox isSearchTypePay;
+    public Button ExitBtn;
+    public Label msg;
     private String selectSearchTypePay;
     public MenuItem editTypePayCash;
     public MenuItem editTypePayTrans;
@@ -123,6 +127,7 @@ public class AccountantUIController {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            msg.setText("При формировании списка договоров произошла ошибка");
         }
 
         allDogovor.setItems(allSerDogovor);
@@ -137,7 +142,9 @@ public class AccountantUIController {
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    msg.setText("При извлечении договора произошла ошибка");
                 }
+                msg.setText("Договор успешно извлечен");
                 refreshDog();
             }
         });
@@ -180,14 +187,17 @@ public class AccountantUIController {
                         rs.getString(Select.dataActPayingDatePay), rs.getLong(Select.dataActPayingDateId)));
             }
         } catch (SQLException e) {
+            msg.setText("При формировании таблицы актов произошла ошибка");
             e.printStackTrace();
         }
+        msg.setText("Табилца актов успешно сформирована");
     }
 
     private int strToInt(String num) {
         try {
             return Integer.parseInt(num);
         } catch (Exception e) {
+            msg.setText("Не число");
             return -1;
         }
     }
@@ -214,6 +224,7 @@ public class AccountantUIController {
                         rs.getInt(Select.dataLOAFacPay), rs.getString(Select.dataLOAPayType)));
             }
         } catch (SQLException e) {
+            msg.setText("При формировании строк акта произошла ошибка");
             e.printStackTrace();
         }
     }
@@ -231,6 +242,7 @@ public class AccountantUIController {
                 DateEnd.setText(rs.getString(Select.dataDogDateEnd));
             }
         } catch (SQLException e) {
+            msg.setText("При заполнения договора произошла ошибка");
             e.printStackTrace();
         }
     }
@@ -245,7 +257,10 @@ public class AccountantUIController {
             Main.getStmt().executeQuery(Insert.insertActPay + idAcc + Insert.comma +
                     Insert.toDate + "'" + dateCreateEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Insert.toDate + "'" + datePayEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.rbc);
+            initTableActPay("");
+            msg.setText("запись добавлена");
         } catch (SQLException e) {
+            msg.setText("При добавлении записи произошла ошибка");
             e.printStackTrace();
         }
     }
@@ -258,17 +273,27 @@ public class AccountantUIController {
                     Update.setDatePay +
                     Insert.toDate + "'" + datePayEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Select.where + Update.whereIdActPay + idSelectActPay);
+            initTableActPay("");
+            msg.setText("Редактирование записи прошло успешно");
         } catch (SQLException e) {
+            msg.setText("При редактировании записи произошла ошибка");
             e.printStackTrace();
         }
     }
 
     public void delActPayAction(ActionEvent actionEvent) {
         try {
+            if (loaData.size() > 0) {
+                msg.setText("Невозможно удалить запись");
+                return;
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
             Main.getStmt().executeQuery(Delete.deleteActPay +
                     Select.where + Update.whereIdActPay + idSelectActPay);
+            initTableActPay("");
+            msg.setText("Запись удалена");
         } catch (SQLException e) {
+            msg.setText("Невозможно удалить запись");
             e.printStackTrace();
         }
     }
@@ -280,6 +305,8 @@ public class AccountantUIController {
             if (strToInt(SumPayEdit.getText()) == -1) {
                 return;
             }
+            int startSize = loaData.size();
+            //Main.getStmt().execute("set transaction insert only name 'check'");
             String resStr = Insert.insertLineOfAct + idSelectActPay + Insert.comma + idDog + Insert.comma +
                     Insert.toDate + dateFactEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Insert.toDate + dateSupposeEdit.getValue().format(formatter) + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
@@ -288,7 +315,14 @@ public class AccountantUIController {
                     Insert.toDate + "'" + dateFactEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     Insert.toDate + "'" + dateSupposeEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
                     strToInt(SumPayEdit.getText()) + Insert.comma + "'" + selectEditTypePay + "'" + Insert.rbc);
+            refreshSubTable("");
+            msg.setText("Строка акта добавлена");
+            //if (loaData.size() == startSize)
+           //     Main.getStmt().execute("rollback");
+           // else
+           //     Main.getStmt().execute("commit");
         } catch (SQLException e) {
+            msg.setText("Не получилось добавить строку акта");
             e.printStackTrace();
         }
     }
@@ -308,20 +342,25 @@ public class AccountantUIController {
                     Update.setLoaPayment +
                     strToInt(SumPayEdit.getText()) + Insert.comma + Update.setLoaPayType + "'" + selectEditTypePay + "'" +
                     Select.where + Update.whereIdLOA + idLOA);
+            refreshSubTable("");
+            msg.setText("Строка акта отредактирована");
         } catch (SQLException e) {
+            msg.setText("Не получилось редактировать строку акта");
             e.printStackTrace();
         }
     }
 
     public void delLoaAction(ActionEvent actionEvent) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
             if (strToInt(SumPayEdit.getText()) == -1) {
                 return;
             }
             Main.getStmt().executeQuery(Delete.deleteLOA +
                     Select.where + Update.whereIdLOA + idLOA);
+            refreshSubTable("");
+            msg.setText("Строка акта удалена");
         } catch (SQLException e) {
+            msg.setText("Не получилось удалить строку акта");
             e.printStackTrace();
         }
     }
@@ -387,5 +426,25 @@ public class AccountantUIController {
     public void ChangeEditTypePayTrans(ActionEvent actionEvent) {
         TypePayEdit.setText(Constants.payTypeTransfer);
         selectEditTypePay = Constants.payTypeTransfer;
+    }
+
+    public void ExitBtnAction(ActionEvent actionEvent) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Выход");
+            alert.setTitle("Выход");
+            alert.setContentText("Выход?");
+            alert.showAndWait().ifPresent(rs -> {
+                if (rs == ButtonType.OK) {
+                    ((Stage) (ExitBtn.getScene().getWindow())).close();
+                }
+            });
+    }
+
+    public void ClearLineAction(ActionEvent actionEvent) {
+        refreshSubTable("");
+    }
+
+    public void clearActAction(ActionEvent actionEvent) {
+        initTableActPay("");
     }
 }
