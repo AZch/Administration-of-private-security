@@ -82,6 +82,7 @@ public class DutyUIController {
         FIO.setText("ФИО: " + _fio);
         msg.setText(msgForm.Sign);
         refreshTableObjectsOP();
+        initPO();
     }
 
     // задание начальных данных
@@ -120,6 +121,7 @@ public class DutyUIController {
         addressC.setCellValueFactory(new PropertyValueFactory<>(ObjectOfProtect.columnAdress));
         typeObjC.setCellValueFactory(new PropertyValueFactory<>(ObjectOfProtect.columnType));
         TableObjects.setItems(ObjectOfProtectData);
+        initPO();
 
         TableObjects.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             Notes.clear();
@@ -180,6 +182,7 @@ public class DutyUIController {
         DateCreateC.setCellValueFactory(new PropertyValueFactory<>(Request.columnDataCreate));
         FineC.setCellValueFactory(new PropertyValueFactory<>(Request.columnFine));
         TableRequests.setItems(RequestData);
+        initPO();
 
         TableRequests.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
