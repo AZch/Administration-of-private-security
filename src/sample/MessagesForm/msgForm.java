@@ -1,6 +1,6 @@
-package sample.Messages;
+package sample.MessagesForm;
 
-public class msg {
+public class msgForm {
     public static final String Sign = "Вход выполнен успешно.";
     public static final String TablesDown = "Таблицы загружены.";
     public static final String GoodFind = "Поиск выполнен успешно.";

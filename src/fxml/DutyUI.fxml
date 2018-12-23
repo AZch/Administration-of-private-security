@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -9,47 +10,80 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="599.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DutyUIController">
+<AnchorPane prefHeight="767.0" prefWidth="648.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DutyUIController">
    <children>
-      <Label fx:id="FIO" layoutX="14.0" layoutY="14.0" text="ФИО:" />
-      <TableView fx:id="TableObjects" layoutX="12.0" layoutY="38.0" prefHeight="200.0" prefWidth="407.0">
+      <Label fx:id="FIO" layoutX="14.0" layoutY="14.0" text="ФИО:">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <TableView fx:id="TableObjects" layoutX="12.0" layoutY="59.0" prefHeight="200.0" prefWidth="407.0">
         <columns>
           <TableColumn fx:id="addressC" prefWidth="250.0" resizable="false" text="Адрес" />
           <TableColumn fx:id="typeObjC" minWidth="9.0" prefWidth="155.0" resizable="false" text="Тип" />
         </columns>
       </TableView>
-      <TableView fx:id="TableRequests" layoutX="12.0" layoutY="238.0" prefHeight="200.0" prefWidth="407.0">
+      <TableView fx:id="TableRequests" layoutX="12.0" layoutY="293.0" prefHeight="200.0" prefWidth="457.0">
         <columns>
-          <TableColumn fx:id="SeriesReqC" prefWidth="100.0" resizable="false" text="Номер заявки" />
+          <TableColumn fx:id="SeriesReqC" prefWidth="90.0" resizable="false" text="Номер заявки" />
           <TableColumn fx:id="TypeReqC" prefWidth="150.0" resizable="false" text="Тип заявки" />
-            <TableColumn fx:id="DateCreateC" minWidth="0.0" prefWidth="155.0" resizable="false" text="Дата создания" />
+            <TableColumn fx:id="DateCreateC" minWidth="0.0" prefWidth="115.0" resizable="false" text="Дата создания" />
+            <TableColumn fx:id="FineC" editable="false" prefWidth="100.0" resizable="false" text="Штраф" />
         </columns>
       </TableView>
-      <Label layoutX="27.0" layoutY="451.0" text="Номер заявки" />
-      <Label layoutX="208.0" layoutY="451.0" text="Тип заявки" />
-      <Label layoutX="44.0" layoutY="505.0" text="Штраф" />
-      <Label layoutX="194.0" layoutY="507.0" text="Дата создания" />
-      <Label layoutX="348.0" layoutY="451.0" text="Примечания" />
-      <TextField fx:id="SerReqT" layoutX="14.0" layoutY="468.0" prefHeight="25.0" prefWidth="116.0" />
-      <TextField fx:id="setFineReqT" layoutX="14.0" layoutY="527.0" prefHeight="25.0" prefWidth="116.0" />
-      <DatePicker fx:id="setdateCreateReqDTP" layoutX="180.0" layoutY="527.0" prefHeight="25.0" prefWidth="116.0" />
-      <TextArea fx:id="setNotesReqTF" layoutX="305.0" layoutY="467.0" prefHeight="120.0" prefWidth="177.0" />
-      <ChoiceBox fx:id="PatrolOffChoice" layoutX="504.0" layoutY="468.0" prefHeight="25.0" prefWidth="116.0" />
-      <Label layoutX="509.0" layoutY="451.0" text="Сотрудник патруля" />
-      <Label layoutX="488.0" layoutY="505.0" text="Звание:" />
+      <Label layoutX="25.0" layoutY="501.0" text="Номер заявки" />
+      <Label layoutX="204.0" layoutY="501.0" text="Тип заявки" />
+      <Label layoutX="48.0" layoutY="557.0" text="Штраф" />
+      <Label layoutX="193.0" layoutY="559.0" text="Дата создания" />
+      <Label layoutX="352.0" layoutY="501.0" text="Примечания" />
+      <TextField fx:id="SerReqT" layoutX="12.0" layoutY="518.0" prefHeight="25.0" prefWidth="116.0" />
+      <TextField fx:id="setFineReqT" layoutX="12.0" layoutY="577.0" prefHeight="25.0" prefWidth="116.0" />
+      <DatePicker fx:id="setdateCreateReqDTP" layoutX="178.0" layoutY="577.0" prefHeight="25.0" prefWidth="116.0" />
+      <TextArea fx:id="setNotesReqTF" editable="false" layoutX="303.0" layoutY="517.0" prefHeight="120.0" prefWidth="177.0" wrapText="true" />
+      <ChoiceBox fx:id="PatrolOffChoice" layoutX="502.0" layoutY="518.0" prefHeight="25.0" prefWidth="116.0" />
+      <Label layoutX="507.0" layoutY="501.0" text="Сотрудник патруля" />
+      <Label layoutX="540.0" layoutY="555.0" text="Звание:" />
       <Label fx:id="fioPatrolOfficer" layoutX="459.0" layoutY="513.0" />
       <Label fx:id="RangPatrolOfficer" layoutX="503.0" layoutY="531.0" />
-      <Button layoutX="12.0" layoutY="560.0" mnemonicParsing="false" onAction="#addReqAction" prefHeight="25.0" prefWidth="93.0" text="Добавить" />
-      <Button layoutX="108.0" layoutY="560.0" mnemonicParsing="false" onAction="#editReqAction" prefHeight="25.0" prefWidth="93.0" text="Изменить" />
-      <Button layoutX="203.0" layoutY="560.0" mnemonicParsing="false" onAction="#delReqAction" prefHeight="25.0" prefWidth="93.0" text="Удалить" />
-      <TextArea fx:id="Notes" layoutX="419.0" layoutY="238.0" prefHeight="200.0" prefWidth="200.0" />
-      <TableView fx:id="OSecurityTable" layoutX="417.0" layoutY="38.0" prefHeight="200.0" prefWidth="202.0">
+      <Button layoutX="12.0" layoutY="610.0" mnemonicParsing="false" onAction="#addReqAction" prefHeight="25.0" prefWidth="93.0" text="Добавить" />
+      <Button layoutX="107.0" layoutY="610.0" mnemonicParsing="false" onAction="#editReqAction" prefHeight="25.0" prefWidth="93.0" text="Изменить" />
+      <Button layoutX="202.0" layoutY="610.0" mnemonicParsing="false" onAction="#delReqAction" prefHeight="25.0" prefWidth="93.0" text="Удалить" />
+      <TextArea fx:id="Notes" editable="false" layoutX="469.0" layoutY="293.0" prefHeight="200.0" prefWidth="150.0" wrapText="true" />
+      <TableView fx:id="OSecurityTable" layoutX="417.0" layoutY="59.0" prefHeight="200.0" prefWidth="202.0">
         <columns>
           <TableColumn fx:id="OSecurityC" editable="false" prefWidth="200.0" resizable="false" text="Охранные системы" />
         </columns>
       </TableView>
-      <TextField fx:id="setTypeReq" layoutX="180.0" layoutY="468.0" prefHeight="25.0" prefWidth="116.0" />
-      <Label fx:id="RankPO" layoutX="490.0" layoutY="523.0" prefHeight="17.0" prefWidth="148.0" />
+      <TextField fx:id="setTypeReq" layoutX="178.0" layoutY="518.0" prefHeight="25.0" prefWidth="116.0" />
+      <Label fx:id="RankPO" layoutX="488.0" layoutY="573.0" prefHeight="17.0" prefWidth="148.0" />
+      <Label layoutX="16.0" layoutY="731.0" text="Сообщение:">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="msg" layoutX="96.0" layoutY="732.0" prefHeight="17.0" prefWidth="390.0" />
+      <Button fx:id="ExitBtn" layoutX="585.0" layoutY="728.0" mnemonicParsing="false" onAction="#ExitBtnAction" text="Выход" />
+      <Label layoutX="253.0" layoutY="33.0" text="Объекты охраны">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="231.0" layoutY="266.0" text="Заявки на обследование">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="75.0" layoutY="648.0" text="Поиск по таблице &quot;Заявки на осбледование&quot;">
+         <font>
+            <Font name="System Italic" size="13.0" />
+         </font></Label>
+      <DatePicker fx:id="dateStartCreateSuppose" disable="true" layoutX="50.0" layoutY="674.0" prefHeight="25.0" prefWidth="116.0" />
+      <DatePicker fx:id="dateEndCreateSuppose" disable="true" layoutX="219.0" layoutY="674.0" prefHeight="25.0" prefWidth="116.0" />
+      <Label layoutX="39.0" layoutY="677.0" text="с" />
+      <Label layoutX="202.0" layoutY="678.0" text="по" />
+      <CheckBox fx:id="isSearchDateStartRequest" layoutX="20.0" layoutY="677.0" mnemonicParsing="false" onAction="#on_off_st" />
+      <CheckBox fx:id="isSearchDateEndRequest" layoutX="183.0" layoutY="678.0" mnemonicParsing="false" onAction="#on_off_en" />
+      <Button fx:id="FindBtn" layoutX="341.0" layoutY="673.0" mnemonicParsing="false" onAction="#clickFindBtn" text="Поиск" />
    </children>
 </AnchorPane>

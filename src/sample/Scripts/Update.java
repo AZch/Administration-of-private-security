@@ -32,4 +32,16 @@ public class Update {
     public static String setShedule = "shedule_graph = ";
     public static String setSerGraph = "series_graph = ";
     public static String whereGrapId = "idgraphic = ";
+
+    public static String updateRequest = "update request ";
+    public static String setRequestIDOoP = "objectofprotect_idobject = ";
+    public static String setRequestidO = "operator_idoperator = ";
+    public static String setRequestIDPO = "patrolOfficier_idpatroloff = ";
+    public static String setRequestSER = "series_req = ";
+    public static String setRequestTYPE = "type_req = ";
+    public static String setRequestFINE = "fine_req = ";
+    public static String setRequestDataCreate = "datecreate_req = ";
+    public static String setRequestNOTES = "notes_req = ";
+    public static String whereRequestId = "idrequest = ";
+
 }

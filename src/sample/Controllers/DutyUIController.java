@@ -6,11 +6,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sample.Constants;
 import sample.Main;
+import sample.Scripts.Delete;
 import sample.Scripts.Insert;
 import sample.Scripts.Select;
+import sample.Scripts.Update;
 import sample.Tables.*;
+import sample.MessagesForm.*;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +26,15 @@ public class DutyUIController {
 
     public Label FIO;
     public Label RankPO;
+    public Label msg;
+    public Button ExitBtn;
+
+    //Поиск
+    public DatePicker dateStartCreateSuppose;
+    public DatePicker dateEndCreateSuppose;
+    public CheckBox isSearchDateStartRequest;
+    public CheckBox isSearchDateEndRequest;
+    public Button FindBtn;
 
     //Поля таблицы Объектов охраны
     private ObservableList<ObjectsSecurity> ObjectsSecurityData = FXCollections.observableArrayList();
@@ -39,6 +53,7 @@ public class DutyUIController {
     public TableColumn<Request, String> SeriesReqC;
     public TableColumn<Request, String> TypeReqC;
     public TableColumn<Request, String> DateCreateC;
+    public TableColumn<Request, String> FineC;
 
     private ObservableList<String> PatrolOfficerData = FXCollections.observableArrayList();
     public ChoiceBox<String> PatrolOffChoice;
@@ -58,12 +73,14 @@ public class DutyUIController {
     private Long idPO = Long.valueOf("0");
     private Long idSelectObjectOP = Long.valueOf("0");
     private Long idSelectObjectPO = Long.valueOf("0");
+    private Long idSelectRequest = Long.valueOf("0");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
 
 
     @FXML
     private void initialize() {
         FIO.setText("ФИО: " + _fio);
+        msg.setText(msgForm.Sign);
         refreshTableObjectsOP();
     }
 
@@ -110,7 +127,7 @@ public class DutyUIController {
             delFields();
             if (newSelection != null) {
                 idSelectObjectOP = newSelection.getId();
-                refreshTableRequest();
+                refreshTableRequest("");
                 initOSecurityTable(newSelection);
             }
 
@@ -129,12 +146,12 @@ public class DutyUIController {
     }
 
     // инициализации таблицы с Заявки
-    private void refreshTableRequest() {
+    private void refreshTableRequest(String sql) {
         RequestData.clear();
 
         try {
             ResultSet rs = Main.getStmt().executeQuery(Select.getDataRequest + Select.where + Select.getDataRequestO + _id +
-                    Select.and +  Select.getDdataRequestidOoP + idSelectObjectOP + "");
+                    Select.and +  Select.getDdataRequestidOoP + idSelectObjectOP + sql);
 
             while (rs != null && rs.next()) {
                 RequestData.add(new Request(
@@ -161,11 +178,14 @@ public class DutyUIController {
         SeriesReqC.setCellValueFactory(new PropertyValueFactory<>(Request.columnSeries));
         TypeReqC.setCellValueFactory(new PropertyValueFactory<>(Request.columnType));
         DateCreateC.setCellValueFactory(new PropertyValueFactory<>(Request.columnDataCreate));
+        FineC.setCellValueFactory(new PropertyValueFactory<>(Request.columnFine));
         TableRequests.setItems(RequestData);
 
         TableRequests.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 Notes.clear();
+                idPO = newSelection.getIdPO();
+                idSelectRequest = newSelection.getId();
                 Notes.appendText(newSelection.getNotes());
                 initFields(newSelection);
             }
@@ -197,17 +217,28 @@ public class DutyUIController {
     // инициализация выборки Патрульного
     private void initPO() {
         PatrolOfficerData.clear();
+        String fio_po = "";
+
         try {
             ResultSet rs = null;
             rs = Main.getStmt().executeQuery(Select.getDataPatrolOfficerALL);
             while (rs != null && rs.next()) {
-                PatrolOfficerData.add(rs.getString(Select.dataPatrolOfficerFIO));
+                if(rs.getLong(Select.dataPatrolOfficerID) == idPO){
+                    fio_po = rs.getString(Select.dataPatrolOfficerFIO);
+                    PatrolOfficerData.add(rs.getString(Select.dataPatrolOfficerFIO));
+                }
+                else{
+                    PatrolOfficerData.add(rs.getString(Select.dataPatrolOfficerFIO));
+                }
+
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         PatrolOffChoice.setItems(PatrolOfficerData);
+        PatrolOffChoice.setValue(fio_po);
 
         PatrolOffChoice.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -224,32 +255,121 @@ public class DutyUIController {
                 }
             }
         });
-
     }
 
 
     public void addReqAction(ActionEvent actionEvent) {
         try {
-            String resStr = Insert.insertRequest + idSelectObjectOP + Insert.comma + _id + Insert.comma +
-                    idSelectObjectPO + Insert.comma + "'" + SerReqT.getText() + "'" + Insert.comma +
-                    "'" + setTypeReq.getText() + "'" + Insert.comma + "'" + setFineReqT.getText() + "'" + Insert.comma +
-                    Insert.toDate + setdateCreateReqDTP.getValue().format(formatter) + Insert.comma +  Insert.formatDate + Insert.rbc + Insert.comma +
-                    "'" + setNotesReqTF + "'" + Insert.rbc;
 
-            Main.getStmt().executeQuery(Insert.insertRequest + idSelectObjectOP + Insert.comma + _id + Insert.comma +
-                    idSelectObjectPO + Insert.comma + "'" + SerReqT.getText() + "'" + Insert.comma +
-                    "'" + setTypeReq.getText() + "'" + Insert.comma + "'" + setFineReqT.getText() + "'" + Insert.comma +
-                    Insert.toDate + setdateCreateReqDTP.getValue().format(formatter) + Insert.comma +  Insert.formatDate + Insert.rbc + Insert.comma +
-                    "'" + setNotesReqTF + "'" + Insert.rbc);
+            Main.getStmt().executeQuery(Insert.insertRequest +
+                    idSelectObjectOP + Insert.comma +
+                    _id + Insert.comma +
+                    idSelectObjectPO + Insert.comma +
+                    "'" + SerReqT.getText() + "'" + Insert.comma +
+                    "'" + setTypeReq.getText() + "'" + Insert.comma +
+                    setFineReqT.getText()  + Insert.comma +
+                    Insert.toDate +  "'" + setdateCreateReqDTP.getValue().format(formatter) + "'"  + Insert.comma +  Insert.formatDate + Insert.rbc + Insert.comma +
+                    "'" + setNotesReqTF.getText() + "'" + Insert.rbc);
 
+            refreshTableRequest("");
+
+            msg.setText(msgForm.GoodAdd);
         } catch (SQLException e) {
+            msg.setText(msgForm.BadAdd);
             e.printStackTrace();
         }
     }
 
     public void editReqAction(ActionEvent actionEvent) {
+        try {
+            Main.getStmt().executeQuery(Update.updateRequest + Update.set +
+                Update.setRequestIDOoP + idSelectObjectOP + Insert.comma +
+                Update.setRequestIDPO + idSelectObjectPO + Insert.comma +
+                Update.setRequestSER + "'" + SerReqT.getText() + "'" + Insert.comma +
+                Update.setRequestTYPE + "'" + setTypeReq.getText() + "'" + Insert.comma +
+                Update.setRequestFINE + "'" + setFineReqT.getText() + "'" + Insert.comma +
+                Update.setRequestDataCreate +
+                Insert.toDate + "'" + setdateCreateReqDTP.getValue().format(formatter)+ "'" + Insert.comma +  Insert.formatDate + Insert.rbc + Insert.comma +
+                Update.setRequestNOTES + "'" + setNotesReqTF.getText() + "'" +
+                Select.where + Update.whereRequestId + idSelectRequest);
+
+            refreshTableRequest("");
+
+            msg.setText(msgForm.GoodEdit);
+        } catch (SQLException e) {
+            msg.setText(msgForm.BadEdit);
+            e.printStackTrace();
+        }
     }
 
     public void delReqAction(ActionEvent actionEvent) {
+        try {
+            Main.getStmt().executeQuery(Delete.deleteRequest +
+                    Select.where + Update.whereRequestId + idSelectRequest);
+
+            refreshTableRequest("");
+
+            msg.setText(msgForm.GoddDelete);
+        } catch (SQLException e) {
+            msg.setText(msgForm.BadDelete);
+            e.printStackTrace();
+        }
+    }
+
+    public void ExitBtnAction(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Выход");
+        alert.setHeaderText("");
+        alert.setContentText("Вы точно хотите выйти?");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                ((Stage) (ExitBtn.getScene().getWindow())).close();
+            }
+        });
+    }
+
+
+    public void on_off_st(ActionEvent actionEvent) {
+        if(isSearchDateStartRequest.isSelected()){
+            dateStartCreateSuppose.setDisable(false);
+        }
+        else{
+            dateStartCreateSuppose.setDisable(true);
+        }
+
+    }
+
+    public void on_off_en(ActionEvent actionEvent) {
+        if(isSearchDateEndRequest.isSelected()){
+            dateEndCreateSuppose.setDisable(false);
+        }
+        else{
+            dateEndCreateSuppose.setDisable(true);
+        }
+    }
+
+
+    public void clickFindBtn(ActionEvent actionEvent) {
+        String addSqlQuestion = "";
+        Boolean sql_f = false;
+
+        if (!dateStartCreateSuppose.isDisable()) {
+            addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " >= '" + dateStartCreateSuppose.getValue().format(formatter) + "'";
+            sql_f = true;
+        }
+
+        if (!dateEndCreateSuppose.isDisable()) {
+            addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " <= '" + dateEndCreateSuppose.getValue().format(formatter) + "'";
+            sql_f = true;
+        }
+
+        if(sql_f) {
+            refreshTableRequest(addSqlQuestion);
+            msg.setText(msgForm.GoodFind);
+        }
+        else{
+            msg.setText(msgForm.BadFind);
+        }
+
     }
 }

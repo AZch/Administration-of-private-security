@@ -73,7 +73,9 @@ public class Select {
     public static final String getDataPatrolOfficerLgn = "login_po = ";
     public static final String getDataPatrolOfficerPsw = "password_po = ";
     public static final String getDataPatrolOfficerFIO = "fio_po = ";
+    public static final String getDataPatrolOfficerFIOС = "select fio_po from patrolofficier where idpatroloff = ";
     public static final String getDataPatrolOfficerALL = "select idpatroloff, fio_po, series_po, num_po, login_po, password_po, rank_po, seriesgun_po from patrolofficier";
+
 
     //Select для Графика патрулирования
     public static final String dataGraphicID = "idgraphic";
@@ -114,6 +116,7 @@ public class Select {
     public static final String getDdataRequestidOoP = "objectofprotect_idobject = ";
     public static final String getDataRequest = "select idrequest, objectofprotect_idobject, operator_idoperator, patrolOfficier_idpatroloff, series_req, type_req, fine_req," +
             " to_char(datecreate_req, '" + Constants.dateFormat + "') datecreate_req, notes_req from request";
+    public static final String notEqDataRequestDateCreate = "to_char(datecreate_req, '" + Constants.dateFormat + "')";
 
 
     public static final String dataPathDataCreate = "datecreate_path";

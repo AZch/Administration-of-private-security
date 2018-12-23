@@ -7,4 +7,6 @@ public class Delete {
 
     public static String deletePath = "delete from path";
     public static String deleteGraphic = "delete from graphic";
+
+    public static String deleteRequest = "delete from request";
 }
