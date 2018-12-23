@@ -111,6 +111,7 @@ public class Controller {
                 ser = rs.getLong(Select.dataOperatorSER);
                 return Constants.staffDuty;
             }
+
             // открытие формы админа
             rs = Main.getStmt().executeQuery(Select.getDataAdmin + Select.where +
                     Select.getDataAdminLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
@@ -123,6 +124,7 @@ public class Controller {
                 psw = pswUser.getText();
                 return Constants.staffAdmin;
             }
+
             // открытие формы Менеджера по работе с клиентами
             rs = Main.getStmt().executeQuery(Select.getDataCustService + Select.where +
                     Select.getDataCustServiceLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
@@ -206,7 +208,6 @@ public class Controller {
             e.printStackTrace();
         }
     }
-                                 
     private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
@@ -286,6 +287,7 @@ public class Controller {
             e.printStackTrace();
         }
     }
+        
 
     public void exitAction(ActionEvent actionEvent) {
         Main.closeWnd(exitBtn);

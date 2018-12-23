@@ -4,6 +4,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Constants;
 import sample.Main;
@@ -50,6 +56,8 @@ public class CustServiceUIController {
     public CheckBox isSearchDataEndFin;
     public DatePicker DataCreateSearchStart;
     public DatePicker DataEndSearchStart;
+    public Button CancelSearch;
+    public Label Messedge;
     private String selecteditSobst;
 
     public TextField AddressObjectEdit;
@@ -457,6 +465,7 @@ public class CustServiceUIController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            Messedge.setText("Клиент добавлен");
             AddressObjectEdit.setText(AddressLivingEdit.getText());
             DogClientEdit.setValue(FIOClientEdit.getText());
             DogAddressEdit.setValue(AddressLivingEdit.getText());
@@ -474,6 +483,7 @@ public class CustServiceUIController {
                     strToInt(numberEdit.getText()) + Insert.comma + Update.setClientDoc  + "'" + selecteditSobst + "'" + Insert.comma +
                     Update.setClientAddress + "'" + AddressLivingEdit.getText() + "'" +
                     Select.where + Update.whereIdClient + idCurClient);
+            Messedge.setText("Информация о клиенте изменена");
             refreshClientTable("");
             initDogClient();
         } catch (SQLException e) {
@@ -483,10 +493,30 @@ public class CustServiceUIController {
 
     public void delClientAction(ActionEvent actionEvent) {
         try {
-            Main.getStmt().executeQuery(Delete.deleteClient +
+            Messedge.setText(String.valueOf(idCurClient));
+
+            Long idob = Long.valueOf("0");
+            try {
+                ResultSet rs = Main.getStmt().executeQuery(Select.getDogObj + Select.where + Select.getDataDogIdCustService + idCustService + Select.and +
+                        Select.getDataDogIdClient + idCurClient);
+                if(rs != null && rs.next())
+                    idob = rs.getLong(Select.dataObjId);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDog + Select.where + Select.getDataDogIdClient + idCurClient + Select.and +
+                    Select.getDataDogIdObj + idob );
+            if(rs == null)
+            {
+                Main.getStmt().executeQuery(Delete.deleteClient +
                     Select.where + Update.whereIdClient + idCurClient);
-            refreshClientTable("");
-            initDogClient();
+                Messedge.setText("Клиент удален");
+                refreshClientTable("");
+                initDogClient();
+            }
+            else
+                Messedge.setText("Невозможно удалить клиента с действительным договором");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -515,6 +545,7 @@ public class CustServiceUIController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            Messedge.setText("Договор добавлен");
             //refreshDogovorTable("");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -531,6 +562,7 @@ public class CustServiceUIController {
                     Update.setDogDataEnd + Insert.toDate + "'" + DataEndEdit.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc +
                     Insert.comma + Update.setDogPeople + strToInt(LivesEdit.getText())  +
                     Select.where + Update.setDogIdCustService + idCustService + Select.and + Update.whereIdDogovor + idDog);
+            Messedge.setText("Договор изменен");
             refreshDogovorTable("");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -542,6 +574,7 @@ public class CustServiceUIController {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
             Main.getStmt().executeQuery(Delete.deleteDogovor +
                     Select.where + Update.setDogIdCustService + idCustService);
+            Messedge.setText("Договор удален");
             refreshDogovorTable("");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -564,6 +597,7 @@ public class CustServiceUIController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            Messedge.setText("Объект добавлен");
             initDogAddress();
             //refreshObjectTable("");
         } catch (SQLException e) {
@@ -577,6 +611,7 @@ public class CustServiceUIController {
                     Insert.comma + Update.setObjType + "'" + selecteditTypeObject + "'" + Insert.comma + Update.setObjSistem +
                     "'" + SistemObjectEdit.getText() + "'" +
                     Select.where + Update.whereIdObject + idCurObj);
+            Messedge.setText("Объект изменен");
             refreshObjectTable("");
             initDogAddress();
         } catch (SQLException e) {
@@ -586,54 +621,80 @@ public class CustServiceUIController {
 
     public void delObjectAction(ActionEvent actionEvent) {
         try {
-            Main.getStmt().executeQuery(Delete.deleteObject +
-                    Select.where + Update.whereIdObject + idCurObj);
-            refreshObjectTable("");
-            initDogAddress();
+
+            Messedge.setText(String.valueOf(idCurObj));
+
+
+            ResultSet rs = Main.getStmt().executeQuery(Select.getDog + Select.where + Select.getDataDogIdObj + idCurObj );
+            if(rs == null)
+            {
+                Main.getStmt().executeQuery(Delete.deleteObject +
+                        Select.where + Update.whereIdObject + idCurObj);
+                Messedge.setText("Объект удален");
+                refreshObjectTable("");
+                initDogAddress();
+            }
+            else
+                Messedge.setText("Невозможно удалить объект с действительным договором");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public void searchClientAction(ActionEvent actionEvent) {
-        String addSqlQuestion = "";
-        if (isSearchFIO.isSelected())
-            addSqlQuestion += Select.and + Select.getDataClientFIO + "'" + FIOClientSearch.getText() + "'";
-        if (isSearchDoc.isSelected())
-            addSqlQuestion += Select.and + Select.getDataClientDoc + "'" + selectsearchSobst + "'";
-        if (isSearchAddress.isSelected())
-            addSqlQuestion += Select.and + Select.getDataClientAddress + "'" + AddressSearch.getText() + "'";
-        refreshClientTable(addSqlQuestion);
+        try {
+            String addSqlQuestion = "";
+            if (isSearchFIO.isSelected())
+                addSqlQuestion += Select.and + Select.getDataClientFIO + "'" + FIOClientSearch.getText() + "'";
+            if (isSearchDoc.isSelected())
+                addSqlQuestion += Select.and + Select.getDataClientDoc + "'" + selectsearchSobst + "'";
+            if (isSearchAddress.isSelected())
+                addSqlQuestion += Select.and + Select.getDataClientAddress + "'" + AddressSearch.getText() + "'";
+            Messedge.setText("Поиск клиента успешно завершен");
+            refreshClientTable(addSqlQuestion);
+        } catch (Exception e)
+        {
+            Messedge.setText("Ошибка при поиске клиента");
+        }
     }
 
     public void searchDogovorAction(ActionEvent actionEvent) {
-        String addSqlQuestion = "";
-        if (isSearchPeopleLives.isSelected())
-            addSqlQuestion += Select.and + Select.getDataDogPeople + "'" + LivesSearch.getText() + "'";
-        if (isSearchPayPeriod.isSelected())
-            addSqlQuestion += Select.and + Select.getDataDogPeriod + "'" + selectpayPeriodSearch + "'";
+        try {
+            String addSqlQuestion = "";
+            if (isSearchPeopleLives.isSelected())
+                addSqlQuestion += Select.and + Select.getDataDogPeople + "'" + LivesSearch.getText() + "'";
+            if (isSearchPayPeriod.isSelected())
+                addSqlQuestion += Select.and + Select.getDataDogPeriod + "'" + selectpayPeriodSearch + "'";
 
-        if (isSearchDataCreateStart.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataDogDataCreate + " >= '" + DataCreateSearchStart.getValue().format(formatter) + "'";
-        if (isSearchDataCreateFin.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataDogDataCreate + " <= '" + DataCreateSearchFin.getValue().format(formatter) + "'";
-        if (isSearchDataEndStart.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataDogDataEnd + " >= '" + DataEndSearchStart.getValue().format(formatter) + "'";
-        if (isSearchDataEndFin.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataDogDataEnd + " <= '" + DataEndSearchFin.getValue().format(formatter) + "'";
-
-        refreshDogovorTable(addSqlQuestion);
+            if (isSearchDataCreateStart.isSelected())
+                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateStart + "', '" + Constants.dateFormat + "')" + " >= to_date('" + DataCreateSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+            if (isSearchDataCreateFin.isSelected())
+                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateStart + "', '" + Constants.dateFormat + "')" + " <= to_date('" + DataCreateSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+            if (isSearchDataEndStart.isSelected())
+                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateEnd + "', '" + Constants.dateFormat + "')" + " >= to_date('" + DataEndSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+            if (isSearchDataEndFin.isSelected())
+                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateEnd + "', '" + Constants.dateFormat + "')" + " <= to_date('" + DataEndSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+            Messedge.setText("Поиск договора успешно завершен");
+            refreshDogovorTable(addSqlQuestion);
+        } catch (Exception e)
+        {
+            Messedge.setText("Ошибка при поиске договора");
+        }
     }
 
     public void searchObjectAction(ActionEvent actionEvent) {
-        String addSqlQuestion = "";
-        if (isSearchAddress.isSelected())
-            addSqlQuestion += Select.and + Select.getDataObjAddress + "'" + AddressSearch.getText() + "'";
-        if (isSearchTypeObj.isSelected())
-            addSqlQuestion += Select.and + Select.getDataObjType + "'" + selectsearchType + "'";
-        if (isSearchSistem.isSelected())
-            addSqlQuestion += Select.and + Select.getDataObjSistem + "'" + PSistemSearch.getText() + "'";
-        refreshObjectTable(addSqlQuestion);
+        try {
+            String addSqlQuestion = "";
+            if (isSearchAddress.isSelected())
+                addSqlQuestion += Select.and + Select.getDataObjAddress + "'" + AddressSearch.getText() + "'";
+            if (isSearchTypeObj.isSelected())
+                addSqlQuestion += Select.and + Select.getDataObjType + "'" + selectsearchType + "'";
+            if (isSearchSistem.isSelected())
+                addSqlQuestion += Select.and + Select.getDataObjSistem + "'" + PSistemSearch.getText() + "'";
+            refreshObjectTable(addSqlQuestion);
+            Messedge.setText("Поиск по объекту успешно завершен");
+        } catch(Exception e)
+        { Messedge.setText("Ошибка при поиске объекта");}
     }
 
     private int strToInt(String num) {
@@ -713,5 +774,11 @@ public class CustServiceUIController {
     public void ChangesearchSobstVipiska(ActionEvent actionEvent) {
         searchSobst.setText(Constants.SobstVipiska);
         selectsearchSobst = Constants.SobstVipiska;
+    }
+
+    public void CancelSearchAction(ActionEvent actionEvent) {
+        refreshDogovorTable("");
+        refreshClientTable("");
+        refreshObjectTable("");
     }
 }

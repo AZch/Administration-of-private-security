@@ -93,8 +93,10 @@ public class Select {
     public static final String dataLOAFacPay = "factpay_loa";
     public static final String dataLOAPayType = "paytype_loa";
     public static final String getDataLOAidAct = "actofpaying_idactpay = ";
+
     public static final String notEqDataLOADateFact = "to_date(datafact_loa, '" + Constants.dateFormat + "')";
     public static final String notEqDataLOADateSuppose = "to_date(datasuppose_loa, '" + Constants.dateFormat + "')";
+
     public static final String getDataLOAPayType = "paytype_loa = ";
     public static final String getDataLOAPayment = "payment_loa = ";
     public static final String getDataLOA = "select idiineact, dogovor_iddogovor, to_char(datafact_loa, '" + Constants.dateFormat + "') datafact_loa, " +
@@ -121,6 +123,8 @@ public class Select {
     public static final String dataDogClient = "client_idclient";
     public static final String dataDogObject = "objectofprotect_idobject";
     public static final String getDog = "select iddogovor from dogovor";
+    public static final String getDogObj = "select objectofprotect_idobject from dogovor";
+
     public static final String getFullDataDog = "select iddogovor, client_idclient, objectofprotect_idobject, serviceofficier_idserviceoff, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog, peoplecount_dog from dogovor";
     public static final String notEqDataDogDataCreate = "to_char(datastart_dog, '" + Constants.dateFormat + "')";
