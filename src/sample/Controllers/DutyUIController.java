@@ -74,6 +74,7 @@ public class DutyUIController {
     private Long idSelectObjectOP = Long.valueOf("0");
     private Long idSelectObjectPO = Long.valueOf("0");
     private Long idSelectRequest = Long.valueOf("0");
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
 
 
@@ -260,119 +261,161 @@ public class DutyUIController {
         });
     }
 
-
+    //Добавление записи
     public void addReqAction(ActionEvent actionEvent) {
-        try {
+        if (BtnActionForm("Подтверждение действия.", "Вы точно хотите добавить запись?")) {
+            try {
+                Main.getStmt().executeQuery(Insert.insertRequest +
+                        idSelectObjectOP + Insert.comma +
+                        _id + Insert.comma +
+                        idSelectObjectPO + Insert.comma +
+                        "'" + SerReqT.getText() + "'" + Insert.comma +
+                        "'" + setTypeReq.getText() + "'" + Insert.comma +
+                        setFineReqT.getText() + Insert.comma +
+                        Insert.toDate + "'" + setdateCreateReqDTP.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                        "'" + setNotesReqTF.getText() + "'" + Insert.rbc);
 
-            Main.getStmt().executeQuery(Insert.insertRequest +
-                    idSelectObjectOP + Insert.comma +
-                    _id + Insert.comma +
-                    idSelectObjectPO + Insert.comma +
-                    "'" + SerReqT.getText() + "'" + Insert.comma +
-                    "'" + setTypeReq.getText() + "'" + Insert.comma +
-                    setFineReqT.getText()  + Insert.comma +
-                    Insert.toDate +  "'" + setdateCreateReqDTP.getValue().format(formatter) + "'"  + Insert.comma +  Insert.formatDate + Insert.rbc + Insert.comma +
-                    "'" + setNotesReqTF.getText() + "'" + Insert.rbc);
+                refreshTableRequest("");
 
-            refreshTableRequest("");
-
-            msg.setText(msgForm.GoodAdd);
-        } catch (SQLException e) {
-            msg.setText(msgForm.BadAdd);
-            e.printStackTrace();
+                msg.setText(msgForm.GoodAdd);
+            } catch (SQLException e) {
+                msg.setText(msgForm.BadAdd);
+                e.printStackTrace();
+            }
         }
     }
 
+    //Редактирование записи
     public void editReqAction(ActionEvent actionEvent) {
-        try {
-            Main.getStmt().executeQuery(Update.updateRequest + Update.set +
-                Update.setRequestIDOoP + idSelectObjectOP + Insert.comma +
-                Update.setRequestIDPO + idSelectObjectPO + Insert.comma +
-                Update.setRequestSER + "'" + SerReqT.getText() + "'" + Insert.comma +
-                Update.setRequestTYPE + "'" + setTypeReq.getText() + "'" + Insert.comma +
-                Update.setRequestFINE + "'" + setFineReqT.getText() + "'" + Insert.comma +
-                Update.setRequestDataCreate +
-                Insert.toDate + "'" + setdateCreateReqDTP.getValue().format(formatter)+ "'" + Insert.comma +  Insert.formatDate + Insert.rbc + Insert.comma +
-                Update.setRequestNOTES + "'" + setNotesReqTF.getText() + "'" +
-                Select.where + Update.whereRequestId + idSelectRequest);
+        if (BtnActionForm("Подтверждение действия.", "Вы точно хотите сохранить изменения?")) {
+            try {
+                Main.getStmt().executeQuery(Update.updateRequest + Update.set +
+                        Update.setRequestIDOoP + idSelectObjectOP + Insert.comma +
+                        Update.setRequestIDPO + idSelectObjectPO + Insert.comma +
+                        Update.setRequestSER + "'" + SerReqT.getText() + "'" + Insert.comma +
+                        Update.setRequestTYPE + "'" + setTypeReq.getText() + "'" + Insert.comma +
+                        Update.setRequestFINE + "'" + setFineReqT.getText() + "'" + Insert.comma +
+                        Update.setRequestDataCreate +
+                        Insert.toDate + "'" + setdateCreateReqDTP.getValue().format(formatter) + "'" + Insert.comma + Insert.formatDate + Insert.rbc + Insert.comma +
+                        Update.setRequestNOTES + "'" + setNotesReqTF.getText() + "'" +
+                        Select.where + Update.whereRequestId + idSelectRequest);
 
-            refreshTableRequest("");
+                refreshTableRequest("");
 
-            msg.setText(msgForm.GoodEdit);
-        } catch (SQLException e) {
-            msg.setText(msgForm.BadEdit);
-            e.printStackTrace();
+                msg.setText(msgForm.GoodEdit);
+            } catch (SQLException e) {
+                msg.setText(msgForm.BadEdit);
+                e.printStackTrace();
+            }
         }
     }
 
+    //Удаление записи
     public void delReqAction(ActionEvent actionEvent) {
-        try {
-            Main.getStmt().executeQuery(Delete.deleteRequest +
-                    Select.where + Update.whereRequestId + idSelectRequest);
+        if (BtnActionForm("Подтверждение действия.", "Вы точно хотите удалить запись?")) {
+            try {
+                Main.getStmt().executeQuery(Delete.deleteRequest +
+                        Select.where + Update.whereRequestId + idSelectRequest);
 
-            refreshTableRequest("");
+                refreshTableRequest("");
 
-            msg.setText(msgForm.GoddDelete);
-        } catch (SQLException e) {
-            msg.setText(msgForm.BadDelete);
-            e.printStackTrace();
+                msg.setText(msgForm.GoddDelete);
+            } catch (SQLException e) {
+                msg.setText(msgForm.BadDelete);
+                e.printStackTrace();
+            }
         }
     }
 
-    public void ExitBtnAction(ActionEvent actionEvent) {
+    //Открытие формы потверждения
+    public boolean BtnActionForm(String Title, String Text){
+        final boolean[] fl = {false};
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Выход");
+        alert.setTitle(Title);
         alert.setHeaderText("");
-        alert.setContentText("Вы точно хотите выйти?");
+        alert.setContentText(Text);
         alert.showAndWait().ifPresent(rs -> {
             if (rs == ButtonType.OK) {
-                ((Stage) (ExitBtn.getScene().getWindow())).close();
+                fl[0] = true;
             }
         });
+        return fl[0];
     }
 
+    //Кнопка выход
+    public void ExitBtnAction(ActionEvent actionEvent) {
+        if (BtnActionForm("Выход", "Вы точно хотите выйти?")) {
+            ((Stage) (ExitBtn.getScene().getWindow())).close();
+        }
+    }
 
+    //Активация поля поиска
     public void on_off_st(ActionEvent actionEvent) {
+
         if(isSearchDateStartRequest.isSelected()){
             dateStartCreateSuppose.setDisable(false);
         }
         else{
             dateStartCreateSuppose.setDisable(true);
         }
-
+        activeBtn();
     }
 
+    //Активация поля поиска
     public void on_off_en(ActionEvent actionEvent) {
+        boolean fl = false;
         if(isSearchDateEndRequest.isSelected()){
             dateEndCreateSuppose.setDisable(false);
         }
         else{
             dateEndCreateSuppose.setDisable(true);
         }
+        activeBtn();
     }
 
-
-    public void clickFindBtn(ActionEvent actionEvent) {
-        String addSqlQuestion = "";
-        Boolean sql_f = false;
-
-        if (!dateStartCreateSuppose.isDisable()) {
-            addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " >= '" + dateStartCreateSuppose.getValue().format(formatter) + "'";
-            sql_f = true;
-        }
-
-        if (!dateEndCreateSuppose.isDisable()) {
-            addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " <= '" + dateEndCreateSuppose.getValue().format(formatter) + "'";
-            sql_f = true;
-        }
-
-        if(sql_f) {
-            refreshTableRequest(addSqlQuestion);
-            msg.setText(msgForm.GoodFind);
+    //Активация кнопки поиска
+    public void activeBtn(){
+        if(isSearchDateEndRequest.isSelected() || isSearchDateStartRequest.isSelected()){
+            FindBtn.setDisable(false);
         }
         else{
-            msg.setText(msgForm.BadFind);
+            FindBtn.setDisable(true);
         }
+    }
 
+    //Поиск по таблице Заявки на осбледование
+    public void clickFindBtn(ActionEvent actionEvent) {
+        if (BtnActionForm("Подтверждение действия.", "Вы точно хотите выполнить поиск?")) {
+            String addSqlQuestion = "";
+            boolean sql_f = false;
+
+            if (!dateStartCreateSuppose.isDisable()) {
+                if (dateStartCreateSuppose.getValue() == null) {
+                    sql_f = false;
+                } else {
+                    addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " >= to_date('" + dateStartCreateSuppose.getValue().format(formatter) +
+                            "', '" + Constants.dateFormat + "')";
+                    sql_f = true;
+                }
+            }
+
+            if (!dateEndCreateSuppose.isDisable()) {
+                if (dateEndCreateSuppose.getValue() == null) {
+                    sql_f = false;
+                } else {
+                    addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " <= to_date('" + dateEndCreateSuppose.getValue().format(formatter) +
+                            "', '" + Constants.dateFormat + "')";
+                    sql_f = true;
+                }
+            }
+
+            if (sql_f) {
+                refreshTableRequest(addSqlQuestion);
+                msg.setText(msgForm.GoodFind);
+            } else {
+                msg.setText(msgForm.BadFind);
+            }
+
+        }
     }
 }

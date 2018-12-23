@@ -84,6 +84,6 @@
       <Label layoutX="202.0" layoutY="678.0" text="по" />
       <CheckBox fx:id="isSearchDateStartRequest" layoutX="20.0" layoutY="677.0" mnemonicParsing="false" onAction="#on_off_st" />
       <CheckBox fx:id="isSearchDateEndRequest" layoutX="183.0" layoutY="678.0" mnemonicParsing="false" onAction="#on_off_en" />
-      <Button fx:id="FindBtn" layoutX="341.0" layoutY="673.0" mnemonicParsing="false" onAction="#clickFindBtn" text="Поиск" />
+      <Button fx:id="FindBtn" disable="true" layoutX="341.0" layoutY="673.0" mnemonicParsing="false" onAction="#clickFindBtn" text="Поиск" />
    </children>
 </AnchorPane>

@@ -116,7 +116,7 @@ public class Select {
     public static final String getDdataRequestidOoP = "objectofprotect_idobject = ";
     public static final String getDataRequest = "select idrequest, objectofprotect_idobject, operator_idoperator, patrolOfficier_idpatroloff, series_req, type_req, fine_req," +
             " to_char(datecreate_req, '" + Constants.dateFormat + "') datecreate_req, notes_req from request";
-    public static final String notEqDataRequestDateCreate = "to_char(datecreate_req, '" + Constants.dateFormat + "')";
+    public static final String notEqDataRequestDateCreate = "to_date(datecreate_req, '" + Constants.dateFormat + "')";
 
 
     public static final String dataPathDataCreate = "datecreate_path";
