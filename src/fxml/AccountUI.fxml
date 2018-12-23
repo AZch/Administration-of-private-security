@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="337.0" prefWidth="234.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AccountUIController">
+   <children>
+      <Label layoutX="22.0" layoutY="27.0" text="ФИО" />
+      <Label layoutX="22.0" layoutY="57.0" text="Логин" />
+      <Label layoutX="22.0" layoutY="92.0" text="Пароль" />
+      <Label fx:id="addAdminLabel" layoutX="17.0" layoutY="231.0" text="Добавить администратора" />
+      <Label fx:id="fioLable" layoutX="17.0" layoutY="250.0" text="ФИО" />
+      <Label fx:id="lgnLabel" layoutX="117.0" layoutY="250.0" text="Логин" />
+      <Label fx:id="pswLabel" layoutX="15.0" layoutY="292.0" text="Пароль" />
+      <Label fx:id="gunLabel" layoutX="16.0" layoutY="153.0" text="Оружие" />
+      <Label layoutX="2.0" layoutY="334.0" text="Сообщение:" />
+      <Label fx:id="msg" layoutX="71.0" layoutY="334.0" />
+      <Button fx:id="extBtn" layoutX="5.0" layoutY="351.0" mnemonicParsing="false" onAction="#exitAction" text="Выход" />
+      <TextField fx:id="fioAcc" layoutX="65.0" layoutY="23.0" />
+      <TextField fx:id="lgn" layoutX="65.0" layoutY="53.0" />
+      <TextField fx:id="psw" layoutX="65.0" layoutY="88.0" />
+      <TextField fx:id="rank" layoutX="65.0" layoutY="121.0" />
+      <TextField fx:id="fioAdd" layoutX="8.0" layoutY="267.0" prefHeight="25.0" prefWidth="84.0" />
+      <Button layoutX="18.0" layoutY="174.0" mnemonicParsing="false" onAction="#changeAction" prefHeight="25.0" prefWidth="199.0" text="Изменить" />
+      <TextField fx:id="lgnAdd" layoutX="109.0" layoutY="267.0" prefHeight="25.0" prefWidth="84.0" />
+      <TextField fx:id="pswAdd" layoutX="7.0" layoutY="309.0" prefHeight="25.0" prefWidth="84.0" />
+      <Label layoutX="17.0" layoutY="6.0" text="Личный кабинет" />
+      <Button fx:id="btnAdd" layoutX="109.0" layoutY="309.0" mnemonicParsing="false" onAction="#addAdminAction" prefHeight="25.0" prefWidth="84.0" text="Добавить" />
+      <Button layoutX="18.0" layoutY="206.0" mnemonicParsing="false" onAction="#delAction" prefHeight="25.0" prefWidth="199.0" text="Удалить" />
+      <TextField fx:id="gun" layoutX="65.0" layoutY="149.0" />
+      <Label fx:id="rankLabel" layoutX="19.0" layoutY="125.0" text="Звание" />
+   </children>
+</AnchorPane>

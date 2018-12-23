@@ -1,14 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.Controllers.CustServiceUIController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane id=" " prefHeight="731.0" prefWidth="989.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.CustServiceUIController">
+   <children>
+      <Label fx:id="FIOLabel" layoutX="23.0" layoutY="22.0" text="ФИО" />
+      <TableView fx:id="DogovorTable" layoutX="23.0" layoutY="47.0" prefHeight="200.0" prefWidth="552.0">
+        <columns>
+          <TableColumn fx:id="NumDog" prefWidth="118.0" text="Номер договора" />
+          <TableColumn fx:id="PayPeriod" prefWidth="114.0" text="Период оплаты" />
+            <TableColumn fx:id="DataCreate" prefWidth="101.0" text="Дата создания" />
+            <TableColumn fx:id="DataEnd" prefWidth="107.0" text="Дата окончания" />
+            <TableColumn fx:id="Lives" minWidth="9.0" prefWidth="111.0" text="Проживающие лица" />
+        </columns>
+      </TableView>
+      <TableView fx:id="ClientTable" layoutX="26.0" layoutY="395.0" prefHeight="200.0" prefWidth="484.0">
+        <columns>
+          <TableColumn fx:id="FIOClient" prefWidth="109.0" text="ФИО" />
+            <TableColumn fx:id="Serial" prefWidth="90.0" text="Серия паспорта" />
+            <TableColumn fx:id="Number" prefWidth="90.0" text="Номер паспорта" />
+          <TableColumn fx:id="AddressClient" prefWidth="106.0" text="Адрес проживания" />
+            <TableColumn fx:id="DocClient" prefWidth="88.0" text="Документ о праве собственности" />
+        </columns>
+      </TableView>
+      <TableView fx:id="ObjProtectTable" layoutX="562.0" layoutY="395.0" prefHeight="200.0" prefWidth="404.0">
+        <columns>
+          <TableColumn fx:id="AddressObject" prefWidth="140.0" text="Адрес объекта" />
+          <TableColumn fx:id="TypeObject" prefWidth="83.0" text="Тип" />
+            <TableColumn fx:id="SistemonObject" prefWidth="129.0" text="Охранные системы" />
+        </columns>
+      </TableView>
+      <Label layoutX="23.0" layoutY="260.0" text="Период оплаты" />
+      <DatePicker fx:id="DataCreateEdit" layoutX="148.0" layoutY="285.0" prefHeight="25.0" prefWidth="122.0" />
+      <Label layoutX="599.0" layoutY="58.0" text="Дата создания" />
+      <DatePicker fx:id="DataEndEdit" layoutX="274.0" layoutY="285.0" prefHeight="25.0" prefWidth="122.0" />
+      <Label layoutX="599.0" layoutY="90.0" text="Дата окончания" />
+      <TextField fx:id="LivesEdit" layoutX="22.0" layoutY="352.0" prefHeight="25.0" prefWidth="122.0" />
+      <Label layoutX="22.0" layoutY="327.0" text="Кол-во прожвающих" />
+      <Button layoutX="505.0" layoutY="261.0" mnemonicParsing="false" onAction="#addDogovorAction" text="Добавить" />
+      <Button layoutX="505.0" layoutY="297.0" mnemonicParsing="false" onAction="#editDogovorAction" text="Изменить" />
+      <Button layoutX="505.0" layoutY="335.0" mnemonicParsing="false" onAction="#delDogovorAction" prefHeight="25.0" prefWidth="69.0" text="Удалить" />
+      <TextField fx:id="FIOClientEdit" layoutX="26.0" layoutY="627.0" prefHeight="25.0" prefWidth="122.0" />
+      <TextField fx:id="serialEdit" layoutX="158.0" layoutY="627.0" prefHeight="25.0" prefWidth="58.0" />
+      <TextField fx:id="numberEdit" layoutX="221.0" layoutY="627.0" prefHeight="25.0" prefWidth="81.0" />
+      <TextField fx:id="AddressLivingEdit" layoutX="310.0" layoutY="627.0" prefHeight="25.0" prefWidth="122.0" />
+      <Button layoutX="898.0" layoutY="618.0" mnemonicParsing="false" onAction="#addObjectAction" text="Добавить" />
+      <Button layoutX="897.0" layoutY="659.0" mnemonicParsing="false" onAction="#editObjectAction" text="Изменить" />
+      <Button layoutX="897.0" layoutY="697.0" mnemonicParsing="false" onAction="#delObjectAction" prefHeight="25.0" prefWidth="70.0" text="Удалить" />
+      <Label layoutX="26.0" layoutY="607.0" text="ФИО" />
+      <Label layoutX="158.0" layoutY="607.0" text="Серия" />
+      <Label layoutX="219.0" layoutY="607.0" text="Номер" />
+      <Label layoutX="310.0" layoutY="604.0" text="Адрес проживания" />
+      <Label layoutX="26.0" layoutY="662.0" text="Документ о собственности" />
+      <SplitMenuButton fx:id="editSobst" layoutX="26.0" layoutY="684.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Документ о собственности">
+        <items>
+          <MenuItem fx:id="editSobstSvidetel" mnemonicParsing="false" onAction="#ChangeeditSobstSvidetel" text="Свидетельство о праве собственности на квартиру" />
+          <MenuItem fx:id="editSobstVipiska" mnemonicParsing="false" onAction="#ChangeeditSobstVipiska" text="Выписка из ЕГРП" />
+        </items>
+      </SplitMenuButton>
+      <Button layoutX="442.0" layoutY="619.0" mnemonicParsing="false" onAction="#addClientAction" text="Добавить" />
+      <Button layoutX="441.0" layoutY="660.0" mnemonicParsing="false" onAction="#editClientAction" text="Изменить" />
+      <Button layoutX="441.0" layoutY="698.0" mnemonicParsing="false" onAction="#delClientAction" prefHeight="25.0" prefWidth="70.0" text="Удалить" />
+      <TextField fx:id="AddressObjectEdit" layoutX="562.0" layoutY="627.0" prefHeight="25.0" prefWidth="122.0" />
+      <SplitMenuButton fx:id="editTypeObject" layoutX="691.0" layoutY="627.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Тип объекта">
+        <items>
+          <MenuItem fx:id="editTypeKvartira" mnemonicParsing="false" onAction="#ChangeeditTypeKvartira" text="квартира" />
+          <MenuItem fx:id="editTypeGarage" mnemonicParsing="false" onAction="#ChangeeditTypeGarage" text="гараж" />
+        </items>
+      </SplitMenuButton>
+      <TextField fx:id="SistemObjectEdit" layoutX="562.0" layoutY="685.0" prefHeight="25.0" prefWidth="122.0" />
+      <Label layoutX="562.0" layoutY="607.0" text="Адрес объекта" />
+      <Label layoutX="691.0" layoutY="607.0" text="Тип объекта" />
+      <Label layoutX="562.0" layoutY="661.0" text="Охранные системы" />
+      <TextField fx:id="AddressSearch" layoutX="630.0" layoutY="119.0" prefHeight="25.0" prefWidth="89.0" />
+      <TextField fx:id="FIOClientSearch" layoutX="630.0" layoutY="150.0" prefHeight="25.0" prefWidth="89.0" />
+      <TextField fx:id="LivesSearch" layoutX="630.0" layoutY="182.0" prefHeight="25.0" prefWidth="89.0" />
+      <TextField fx:id="PSistemSearch" layoutX="630.0" layoutY="219.0" prefHeight="25.0" prefWidth="89.0" />
+      <DatePicker fx:id="DataCreateSearchStart" layoutX="707.0" layoutY="51.0" prefHeight="25.0" prefWidth="89.0" />
+      <DatePicker fx:id="DataEndSearchStart" layoutX="707.0" layoutY="83.0" prefHeight="25.0" prefWidth="89.0" />
+      <SplitMenuButton fx:id="searchSobst" layoutX="630.0" layoutY="256.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Документ о собственности">
+         <items>
+            <MenuItem fx:id="searchSobstSvidetel" mnemonicParsing="false" onAction="#ChangesearchSobstSvidetel" text="Свидетельство о праве собственности на квартиру" />
+            <MenuItem fx:id="searchSobstVipiska" mnemonicParsing="false" onAction="#ChangesearchSobstVipiska" text="Выписка из ЕГРП" />
+         </items>
+      </SplitMenuButton>
+      <SplitMenuButton fx:id="searchType" layoutX="630.0" layoutY="294.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Тип объекта">
+         <items>
+            <MenuItem fx:id="searchTypeKvartira" mnemonicParsing="false" onAction="#ChangesearchTypeKvartira" text="квартира" />
+            <MenuItem fx:id="searchTypeGarage" mnemonicParsing="false" onAction="#ChangesearchTypeGarage" text="гараж" />
+         </items>
+      </SplitMenuButton>
+      <Label layoutX="726.0" layoutY="26.0" text="Период оплаты" />
+      <Label layoutX="148.0" layoutY="261.0" text="Дата создания" />
+      <Label layoutX="274.0" layoutY="261.0" text="Дата окончания" />
+      <Label layoutX="728.0" layoutY="123.0" text="Адрес" />
+      <Label layoutX="725.0" layoutY="186.0" text="Кол-во прожвающих" />
+      <Label layoutX="725.0" layoutY="154.0" text="ФИО" />
+      <Label layoutX="731.0" layoutY="223.0" text="Охранные системы" />
+      <Label layoutX="734.0" layoutY="298.0" text="Тип объекта" />
+      <Label layoutX="728.0" layoutY="260.0" text="Документ о собственности" />
+      <Button layoutX="601.0" layoutY="340.0" mnemonicParsing="false" onAction="#searchDogovorAction" prefHeight="25.0" prefWidth="130.0" text="Поиск по договору" />
+      <Button layoutX="728.0" layoutY="340.0" mnemonicParsing="false" onAction="#searchClientAction" prefHeight="25.0" prefWidth="110.0" text="Поиск клиентов" />
+      <Button layoutX="836.0" layoutY="340.0" mnemonicParsing="false" onAction="#searchObjectAction" prefHeight="25.0" prefWidth="100.0" text="Поиск объекта" />
+      <SplitMenuButton fx:id="payPeriod" layoutX="22.0" layoutY="284.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Период оплаты">
+        <items>
+          <MenuItem fx:id="payPeriodMonth" mnemonicParsing="false" onAction="#ChangepayPeriodMonth" text="месяц" />
+          <MenuItem fx:id="payPeriodDecade" mnemonicParsing="false" onAction="#ChangepayPeriodDecade" text="декада" />
+            <MenuItem fx:id="payPeriodYear" mnemonicParsing="false" onAction="#ChangepayPeriodYear" text="Год" />
+        </items>
+      </SplitMenuButton>
+      <SplitMenuButton fx:id="payPeriodSearch" layoutX="631.0" layoutY="22.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Период оплаты">
+         <items>
+            <MenuItem fx:id="searchpayPeriodMonth" mnemonicParsing="false" onAction="#ChangesearchpayPeriodMonth" text="месяц" />
+            <MenuItem fx:id="searchpayPeriodDecade" mnemonicParsing="false" onAction="#ChangesearchpayPeriodDecade" text="декада" />
+            <MenuItem fx:id="searchpayPeriodYear" mnemonicParsing="false" onAction="#ChangesearchpayPeriodYear" text="Год" />
+         </items>
+      </SplitMenuButton>
+      <TextField fx:id="NumDogEdit" layoutX="148.0" layoutY="353.0" prefHeight="25.0" prefWidth="122.0" />
+      <Label layoutX="148.0" layoutY="328.0" text="Номер договора" />
+      <CheckBox fx:id="isSearchPayPeriod" layoutX="599.0" layoutY="26.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchDataEndStart" layoutX="797.0" layoutY="87.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchDataCreateStart" layoutX="797.0" layoutY="55.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchAddress" layoutX="599.0" layoutY="123.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchFIO" layoutX="599.0" layoutY="154.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchPeopleLives" layoutX="599.0" layoutY="186.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchSistem" layoutX="599.0" layoutY="223.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchDoc" layoutX="599.0" layoutY="260.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchTypeObj" layoutX="599.0" layoutY="298.0" mnemonicParsing="false" text="+" />
+      <DatePicker fx:id="DataCreateSearchFin" layoutX="852.0" layoutY="51.0" prefHeight="25.0" prefWidth="89.0" />
+      <Label layoutX="695.0" layoutY="55.0" text="с" />
+      <Label layoutX="836.0" layoutY="55.0" text="по" />
+      <DatePicker fx:id="DataEndSearchFin" layoutX="852.0" layoutY="83.0" prefHeight="25.0" prefWidth="89.0" />
+      <Label layoutX="836.0" layoutY="87.0" text="по" />
+      <Label layoutX="695.0" layoutY="87.0" text="с" />
+      <CheckBox fx:id="isSearchDataCreateFin" layoutX="942.0" layoutY="55.0" mnemonicParsing="false" text="+" />
+      <CheckBox fx:id="isSearchDataEndFin" layoutX="942.0" layoutY="87.0" mnemonicParsing="false" text="+" />
+      <Label layoutX="274.0" layoutY="331.0" text="ФИО" />
+      <Label layoutX="388.0" layoutY="329.0" text="Адрес проживания" />
+      <ChoiceBox fx:id="AllOperator" layoutX="690.0" layoutY="685.0" prefHeight="25.0" prefWidth="100.0" />
+      <ChoiceBox fx:id="AllPath" layoutX="793.0" layoutY="685.0" prefHeight="25.0" prefWidth="100.0" />
+      <ChoiceBox fx:id="DogClientEdit" layoutX="274.0" layoutY="353.0" prefHeight="25.0" prefWidth="110.0" />
+      <ChoiceBox fx:id="DogAddressEdit" layoutX="387.0" layoutY="353.0" prefHeight="25.0" prefWidth="110.0" />
+   </children>
 </AnchorPane>

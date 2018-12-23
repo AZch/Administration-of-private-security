@@ -13,10 +13,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="659.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AccountantUIController">
+<AnchorPane prefHeight="692.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.AccountantUIController">
    <children>
       <Label layoutX="19.0" layoutY="14.0" text="ФИО:" />
-      <TableView fx:id="TableLOA" layoutX="13.0" layoutY="349.0" prefHeight="142.0" prefWidth="428.0">
+      <TableView fx:id="TableLOA" layoutX="12.0" layoutY="368.0" prefHeight="142.0" prefWidth="428.0">
         <columns>
           <TableColumn fx:id="DateSuppose" prefWidth="128.0" text="Предп дата оплаты" />
           <TableColumn fx:id="DateFactPay" prefWidth="122.0" text="Факт дата оплаты" />
@@ -24,29 +24,29 @@
             <TableColumn fx:id="TypePay" minWidth="0.0" prefWidth="83.0" text="Тип оплаты" />
         </columns>
       </TableView>
-      <TableView fx:id="ActPayTable" layoutX="15.0" layoutY="38.0" prefHeight="211.0" prefWidth="272.0">
+      <TableView fx:id="ActPayTable" layoutX="15.0" layoutY="55.0" prefHeight="211.0" prefWidth="272.0">
         <columns>
             <TableColumn fx:id="NumAct" prefWidth="75.0" text="Номер акта" />
           <TableColumn fx:id="DateCreate" prefWidth="106.0" text="Дата создания" />
           <TableColumn fx:id="DatePayAct" prefWidth="88.0" text="Дата оплаты" />
         </columns>
       </TableView>
-      <Label layoutX="14.0" layoutY="611.0" text="Договор:" />
-      <Label fx:id="NumDog" layoutX="67.0" layoutY="611.0" />
-      <Label layoutX="14.0" layoutY="628.0" text="Дата начала договора:" />
-      <Label fx:id="PeriodPay" layoutX="357.0" layoutY="611.0" prefHeight="17.0" prefWidth="74.0" />
-      <Label fx:id="DateStart" layoutX="141.0" layoutY="628.0" />
-      <Label layoutX="264.0" layoutY="611.0" text="Период оплаты:" />
-      <Label layoutX="209.0" layoutY="628.0" text="Дата окончания договора:" />
-      <Label fx:id="DateEnd" layoutX="359.0" layoutY="628.0" />
+      <Label layoutX="9.0" layoutY="617.0" text="Договор:" />
+      <Label fx:id="NumDog" layoutX="62.0" layoutY="617.0" />
+      <Label layoutX="13.0" layoutY="647.0" text="Дата начала договора:" />
+      <Label fx:id="PeriodPay" layoutX="356.0" layoutY="630.0" prefHeight="17.0" prefWidth="74.0" />
+      <Label fx:id="DateStart" layoutX="140.0" layoutY="647.0" />
+      <Label layoutX="263.0" layoutY="630.0" text="Период оплаты:" />
+      <Label layoutX="208.0" layoutY="647.0" text="Дата окончания договора:" />
+      <Label fx:id="DateEnd" layoutX="358.0" layoutY="647.0" />
       <Label fx:id="FIO" layoutX="51.0" layoutY="14.0" />
-      <DatePicker fx:id="dateCreateEdit" layoutX="14.0" layoutY="275.0" prefHeight="25.0" prefWidth="125.0" />
-      <DatePicker fx:id="datePayEdit" layoutX="162.0" layoutY="275.0" prefHeight="25.0" prefWidth="125.0" />
-      <Label layoutX="16.0" layoutY="254.0" text="Дата создания" />
-      <Label layoutX="162.0" layoutY="254.0" text="Дата оплаты" />
-      <Button layoutX="14.0" layoutY="309.0" mnemonicParsing="false" onAction="#addActPayAction" prefHeight="25.0" prefWidth="80.0" text="Добавить" />
-      <Button layoutX="111.0" layoutY="309.0" mnemonicParsing="false" onAction="#editActPayAction" prefHeight="25.0" prefWidth="80.0" text="Изменить" />
-      <Button layoutX="209.0" layoutY="309.0" mnemonicParsing="false" onAction="#delActPayAction" prefHeight="25.0" prefWidth="80.0" text="Удалить" />
+      <DatePicker fx:id="dateCreateEdit" layoutX="14.0" layoutY="292.0" prefHeight="25.0" prefWidth="125.0" />
+      <DatePicker fx:id="datePayEdit" layoutX="162.0" layoutY="292.0" prefHeight="25.0" prefWidth="125.0" />
+      <Label layoutX="16.0" layoutY="271.0" text="Дата создания" />
+      <Label layoutX="162.0" layoutY="271.0" text="Дата оплаты" />
+      <Button layoutX="14.0" layoutY="326.0" mnemonicParsing="false" onAction="#addActPayAction" prefHeight="25.0" prefWidth="80.0" text="Добавить" />
+      <Button layoutX="111.0" layoutY="326.0" mnemonicParsing="false" onAction="#editActPayAction" prefHeight="25.0" prefWidth="80.0" text="Изменить" />
+      <Button layoutX="209.0" layoutY="326.0" mnemonicParsing="false" onAction="#delActPayAction" prefHeight="25.0" prefWidth="80.0" text="Удалить" />
       <Label layoutX="284.0" layoutY="14.0" text="Поиск по бланку/строке бланка" />
       <Label layoutX="287.0" layoutY="30.0" text="Дата создания/предп дата опл" />
       <DatePicker fx:id="dateStartCreateSuppose" layoutX="305.0" layoutY="48.0" prefHeight="25.0" prefWidth="125.0" />
@@ -54,21 +54,21 @@
       <DatePicker fx:id="dateEndPayFact" layoutX="305.0" layoutY="161.0" prefHeight="25.0" prefWidth="125.0" />
       <DatePicker fx:id="dateStartPayFact" layoutX="305.0" layoutY="127.0" prefHeight="25.0" prefWidth="125.0" />
       <Label layoutX="287.0" layoutY="102.0" text="Дата оплаты/факт дата оплаты" />
-      <DatePicker fx:id="dateSupposeEdit" layoutX="16.0" layoutY="516.0" prefHeight="25.0" prefWidth="147.0" />
-      <DatePicker fx:id="dateFactEdit" layoutX="187.0" layoutY="516.0" prefHeight="25.0" prefWidth="147.0" />
-      <TextField fx:id="SumPayEdit" layoutX="16.0" layoutY="572.0" prefHeight="25.0" prefWidth="147.0" />
-      <Label layoutX="17.0" layoutY="491.0" text="Предп дата оплаты" />
-      <Label layoutX="184.0" layoutY="491.0" text="Факт дата оплаты" />
-      <Label layoutX="18.0" layoutY="549.0" text="Сумма оплаты" />
-      <Label layoutX="181.0" layoutY="549.0" text="Тип оплаты" />
-      <Button layoutX="358.0" layoutY="496.0" mnemonicParsing="false" onAction="#addLoaAction" prefHeight="25.0" prefWidth="83.0" text="Добавить" />
-      <Button layoutX="358.0" layoutY="520.0" mnemonicParsing="false" onAction="#editLoaAction" prefHeight="25.0" prefWidth="83.0" text="Изменить" />
-      <Button layoutX="358.0" layoutY="545.0" mnemonicParsing="false" onAction="#delLoaAction" prefHeight="25.0" prefWidth="83.0" text="Удалить" />
+      <DatePicker fx:id="dateSupposeEdit" layoutX="15.0" layoutY="535.0" prefHeight="25.0" prefWidth="147.0" />
+      <DatePicker fx:id="dateFactEdit" layoutX="186.0" layoutY="535.0" prefHeight="25.0" prefWidth="147.0" />
+      <TextField fx:id="SumPayEdit" layoutX="15.0" layoutY="591.0" prefHeight="25.0" prefWidth="147.0" />
+      <Label layoutX="16.0" layoutY="510.0" text="Предп дата оплаты" />
+      <Label layoutX="183.0" layoutY="510.0" text="Факт дата оплаты" />
+      <Label layoutX="17.0" layoutY="568.0" text="Сумма оплаты" />
+      <Label layoutX="180.0" layoutY="568.0" text="Тип оплаты" />
+      <Button layoutX="357.0" layoutY="515.0" mnemonicParsing="false" onAction="#addLoaAction" prefHeight="25.0" prefWidth="83.0" text="Добавить" />
+      <Button layoutX="357.0" layoutY="539.0" mnemonicParsing="false" onAction="#editLoaAction" prefHeight="25.0" prefWidth="83.0" text="Изменить" />
+      <Button layoutX="357.0" layoutY="564.0" mnemonicParsing="false" onAction="#delLoaAction" prefHeight="25.0" prefWidth="83.0" text="Удалить" />
       <Label layoutX="305.0" layoutY="186.0" text="Тип оплаты" />
       <Label layoutX="305.0" layoutY="226.0" text="Сумма оплаты" />
-      <TextField fx:id="SumPaySearch" layoutX="307.0" layoutY="247.0" prefHeight="25.0" prefWidth="125.0" />
-      <Button layoutX="307.0" layoutY="280.0" mnemonicParsing="false" onAction="#searchActPayAction" prefHeight="25.0" prefWidth="125.0" text="Поиск по бланку" />
-      <Button layoutX="305.0" layoutY="312.0" mnemonicParsing="false" onAction="#searchLOAAction" prefHeight="25.0" prefWidth="125.0" text="Поиск по строке" />
+      <TextField fx:id="SumPaySearch" layoutX="307.0" layoutY="245.0" prefHeight="25.0" prefWidth="125.0" />
+      <Button layoutX="307.0" layoutY="270.0" mnemonicParsing="false" onAction="#searchActPayAction" prefHeight="25.0" prefWidth="125.0" text="Поиск по бланку" />
+      <Button layoutX="307.0" layoutY="318.0" mnemonicParsing="false" onAction="#searchLOAAction" prefHeight="25.0" prefWidth="125.0" text="Поиск по строке" />
       <RadioButton fx:id="More" layoutX="432.0" layoutY="226.0" mnemonicParsing="false" text="&gt;" />
       <RadioButton fx:id="Less" layoutX="432.0" layoutY="246.0" mnemonicParsing="false" text="&lt;" />
       <CheckBox fx:id="Equal" layoutX="432.0" layoutY="263.0" mnemonicParsing="false" text="=" />
@@ -82,17 +82,24 @@
           <MenuItem fx:id="searchTypePayTrans" mnemonicParsing="false" onAction="#ChangeSearchTypePayTrans" text="перевод" />
         </items>
       </SplitMenuButton>
-      <SplitMenuButton fx:id="TypePayEdit" layoutX="187.0" layoutY="572.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Тип оплаты">
+      <SplitMenuButton fx:id="TypePayEdit" layoutX="186.0" layoutY="591.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="147.0" text="Тип оплаты">
          <items>
             <MenuItem fx:id="editTypePayCash" mnemonicParsing="false" onAction="#ChangeEditTypePayCash" text="наличные" />
             <MenuItem fx:id="editTypePayTrans" mnemonicParsing="false" onAction="#ChangeEditTypePayTrans" text="перевод" />
          </items>
       </SplitMenuButton>
-      <ChoiceBox fx:id="allDogovor" layoutX="357.0" layoutY="572.0" prefHeight="25.0" prefWidth="83.0" />
+      <ChoiceBox fx:id="allDogovor" layoutX="356.0" layoutY="591.0" prefHeight="25.0" prefWidth="83.0" />
       <CheckBox fx:id="isSearchDateStartCreateSuppose" layoutX="440.0" layoutY="50.0" mnemonicParsing="false" text="+" />
       <CheckBox fx:id="isSearchDateEndCreateSuppose" layoutX="440.0" layoutY="79.0" mnemonicParsing="false" text="+" />
       <CheckBox fx:id="isSearchDateStartPayFact" layoutX="440.0" layoutY="131.0" mnemonicParsing="false" text="+" />
       <CheckBox fx:id="isSearchDateEndPayFact" layoutX="440.0" layoutY="165.0" mnemonicParsing="false" text="+" />
       <CheckBox fx:id="isSearchTypePay" layoutX="440.0" layoutY="207.0" mnemonicParsing="false" text="+" />
+      <Label layoutX="20.0" layoutY="34.0" text="Акты оплаты" />
+      <Label layoutX="20.0" layoutY="351.0" text="Строки акта" />
+      <Button fx:id="ExitBtn" layoutX="359.0" layoutY="666.0" mnemonicParsing="false" onAction="#ExitBtnAction" prefHeight="25.0" prefWidth="80.0" text="Выход" />
+      <Button layoutX="307.0" layoutY="343.0" mnemonicParsing="false" onAction="#ClearLineAction" prefHeight="25.0" prefWidth="125.0" text="Сбросить строки" />
+      <Button layoutX="307.0" layoutY="293.0" mnemonicParsing="false" onAction="#clearActAction" prefHeight="25.0" prefWidth="125.0" text="Сбросить акты" />
+      <Label layoutX="12.0" layoutY="670.0" text="Сообщение:" />
+      <Label fx:id="msg" layoutX="82.0" layoutY="670.0" />
    </children>
 </AnchorPane>

@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -40,5 +43,17 @@ public class Main extends Application {
 
     public static Statement getStmt() {
         return stmt;
+    }
+
+    public static void closeWnd(Button btn) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Выход");
+        alert.setTitle("Выход");
+        alert.setContentText("Выход?");
+        alert.showAndWait().ifPresent(rs -> {
+            if (rs == ButtonType.OK) {
+                ((Stage) (btn.getScene().getWindow())).close();
+            }
+        });
     }
 }

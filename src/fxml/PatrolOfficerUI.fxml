@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="656.0" prefWidth="848.000199999995" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="sample.Controllers.PatrolOfficerUIController">
+<AnchorPane prefHeight="694.0" prefWidth="1056.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.PatrolOfficerUIController">
   <children>
     <Label fx:id="FIO" labelFor="$FIO" layoutX="14.0" layoutY="6.0" text="ФИО: ">
       <font>
@@ -18,27 +24,27 @@
     <Label fx:id="SerGun" font="$x1" layoutX="428.0" layoutY="25.0" text="Табельный номер оружия:" />
     <TableView fx:id="GraphicTable" layoutX="13.0" layoutY="91.0" prefHeight="130.0" prefWidth="407.0">
       <columns>
-        <TableColumn editable="false" prefWidth="117.0" resizable="false" text="Номер графика" fx:id="SeriesGC" />
-        <TableColumn editable="false" prefWidth="147.0" resizable="false" text="Дата создания" fx:id="DataCreateGC" />
-        <TableColumn editable="false" prefWidth="141.0" resizable="false" text="Дата окончания" fx:id="DataEndGC" />
+        <TableColumn fx:id="SeriesGC" editable="false" prefWidth="117.0" resizable="false" text="Номер графика" />
+        <TableColumn fx:id="DataCreateGC" editable="false" prefWidth="147.0" resizable="false" text="Дата создания" />
+        <TableColumn fx:id="DataEndGC" editable="false" prefWidth="141.0" resizable="false" text="Дата окончания" />
       </columns>
     </TableView>
     <TableView fx:id="PathTable" layoutX="428.0" layoutY="91.0" prefHeight="130.0" prefWidth="407.0">
       <columns>
-        <TableColumn editable="false" prefWidth="117.0" resizable="false" text="Номер маршрута" fx:id="SeriesPC" />
-        <TableColumn editable="false" prefWidth="147.0" resizable="false" text="Дата создания" fx:id="DataCreatePC" />
-        <TableColumn editable="false" prefWidth="141.0" resizable="false" text="Дата окончания" fx:id="DataEndPC" />
+        <TableColumn fx:id="SeriesPC" editable="false" prefWidth="117.0" resizable="false" text="Номер маршрута" />
+        <TableColumn fx:id="DataCreatePC" editable="false" prefWidth="147.0" resizable="false" text="Дата создания" />
+        <TableColumn fx:id="DataEndPC" editable="false" prefWidth="141.0" resizable="false" text="Дата окончания" />
       </columns>
     </TableView>
     <TableView id="TestT" fx:id="SheduleTable" layoutX="14.0" layoutY="259.0" prefHeight="130.0" prefWidth="407.0">
       <columns>
-        <TableColumn editable="false" prefWidth="405.0" resizable="false" text="График патрулирования" fx:id="SheduleC" />
+        <TableColumn fx:id="SheduleC" editable="false" prefWidth="405.0" resizable="false" text="График патрулирования" />
       </columns>
     </TableView>
     <TableView id="ObjectsPatrolTable" fx:id="ObjectsPathTable" layoutX="428.0" layoutY="258.0" prefHeight="130.0" prefWidth="407.0">
       <columns>
-        <TableColumn editable="false" prefWidth="300.0" resizable="false" text="Улица" fx:id="StreetC" />
-        <TableColumn editable="false" prefWidth="105.0" resizable="false" text="Квартира/дом" fx:id="HomeC" />
+        <TableColumn fx:id="StreetC" editable="false" prefWidth="300.0" resizable="false" text="Улица" />
+        <TableColumn fx:id="HomeC" editable="false" prefWidth="105.0" resizable="false" text="Квартира/дом" />
       </columns>
     </TableView>
     <Label layoutX="523.0" layoutY="231.0" text="Объекты патрулирования">
@@ -51,12 +57,55 @@
     <Label font="$x2" layoutX="113.0" layoutY="64.0" text="Графики патрулирования" />
     <TableView fx:id="RequestTable" layoutX="13.0" layoutY="436.0" prefHeight="208.0" prefWidth="407.0">
       <columns>
-        <TableColumn editable="false" prefWidth="102.0" resizable="false" text="Номер заявки" fx:id="SeriesRC" />
-        <TableColumn editable="false" prefWidth="200.0" resizable="false" text="Тип заявки" fx:id="TypeC" />
-        <TableColumn editable="false" prefWidth="103.0" resizable="false" text="Дата создания" fx:id="DataCreateRC" />
+        <TableColumn fx:id="SeriesRC" editable="false" prefWidth="102.0" resizable="false" text="Номер заявки" />
+        <TableColumn fx:id="TypeC" editable="false" prefWidth="200.0" resizable="false" text="Тип заявки" />
+        <TableColumn fx:id="DataCreateRC" editable="false" prefWidth="103.0" resizable="false" text="Дата создания" />
       </columns>
     </TableView>
     <Label font="$x2" layoutX="332.0" layoutY="406.0" text="Заявки на обследование" />
     <TextArea fx:id="NoteRequest" editable="false" layoutX="432.0" layoutY="436.0" prefHeight="208.00009999999747" prefWidth="403.0" wrapText="true" />
+      <Button fx:id="btnExit" layoutX="728.0" layoutY="655.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="25.0" prefWidth="105.0" text="Выход" />
+      <Label layoutX="818.0" layoutY="13.0" text="Поиск" />
+      <Label layoutX="818.0" layoutY="27.0" text="Поиск по графику/маршрутам патрулирования" />
+      <Label layoutX="896.0" layoutY="49.0" text="Номер" />
+      <Label layoutX="847.0" layoutY="74.0" text="Дата создания" />
+      <Label layoutX="842.0" layoutY="124.0" text="Дата окончания" />
+      <Label layoutX="848.0" layoutY="450.0" text="Поис по заявке" />
+      <Label layoutX="852.0" layoutY="468.0" text="Номер заявки" />
+      <Label layoutX="872.0" layoutY="494.0" text="Тип заявки" />
+      <Label layoutX="850.0" layoutY="529.0" text="Дата создания" />
+      <DatePicker fx:id="dateStartCreateGraphSearch" layoutX="942.0" layoutY="70.0" prefHeight="25.0" prefWidth="134.0" />
+      <DatePicker fx:id="dateEndEndGraphSearch" layoutX="942.0" layoutY="144.0" prefHeight="25.0" prefWidth="134.0" />
+      <DatePicker fx:id="endDateCreateReq" layoutX="945.0" layoutY="550.0" prefHeight="25.0" prefWidth="134.0" />
+      <TextField fx:id="numReqSearch" layoutX="945.0" layoutY="464.0" prefHeight="25.0" prefWidth="134.0" />
+      <TextField fx:id="numGraphPathSearch" layoutX="942.0" layoutY="45.0" prefHeight="25.0" prefWidth="134.0" />
+      <Button layoutX="850.0" layoutY="176.0" mnemonicParsing="false" onAction="#searchGraphAction" prefHeight="25.0" prefWidth="105.0" text="Графики патр" />
+      <Button layoutX="851.0" layoutY="201.0" mnemonicParsing="false" onAction="#clearGraphAction" prefHeight="25.0" prefWidth="105.0" text="Сброс" />
+      <Button layoutX="979.0" layoutY="176.0" mnemonicParsing="false" onAction="#searchPathAction" text="Маршруты патр" />
+      <Button layoutX="979.0" layoutY="201.0" mnemonicParsing="false" onAction="#clearSearchPathAction" prefHeight="25.0" prefWidth="105.0" text="Сброс" />
+      <Button layoutX="844.0" layoutY="655.0" mnemonicParsing="false" onAction="#searchReqAction" prefHeight="25.0" prefWidth="105.0" text="Искать" />
+      <Button layoutX="980.0" layoutY="655.0" mnemonicParsing="false" onAction="#clearReqAction" prefHeight="25.0" prefWidth="105.0" text="Сбросить" />
+      <TextArea fx:id="notesSearch" layoutX="849.0" layoutY="595.0" prefHeight="48.0" prefWidth="222.0" />
+      <Text layoutX="1000.0" layoutY="591.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Примечания" />
+      <CheckBox fx:id="isNotesSearch" layoutX="1082.0" layoutY="578.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isEndDateCreateReqSearch" layoutX="1082.0" layoutY="554.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isTypeReqSearch" layoutX="1082.0" layoutY="494.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isNumReqSearch" layoutX="1082.0" layoutY="468.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isStartDateEndGraphSearch" layoutX="1078.0" layoutY="124.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isStartDateCreateGraphSearch" layoutX="1078.0" layoutY="74.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isNumGraphPathSearch" layoutX="1078.0" layoutY="49.0" mnemonicParsing="false" />
+      <ChoiceBox fx:id="typeReqSearch" layoutX="945.0" layoutY="490.0" prefHeight="25.0" prefWidth="134.0" />
+      <DatePicker fx:id="startDateCreateReq" layoutX="945.0" layoutY="525.0" prefHeight="25.0" prefWidth="134.0" />
+      <CheckBox fx:id="isStartDateCreateReqSearch" layoutX="1082.0" layoutY="529.0" mnemonicParsing="false" />
+      <DatePicker fx:id="dateStartEndGraphSearch" layoutX="942.0" layoutY="120.0" prefHeight="25.0" prefWidth="134.0" />
+      <DatePicker fx:id="dateEndCreateGraphSearch" layoutX="942.0" layoutY="94.0" prefHeight="25.0" prefWidth="134.0" />
+      <CheckBox fx:id="isEndDateEndGraphSearch" layoutX="1078.0" layoutY="148.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isEndDateCreateGraphSearch" layoutX="1078.0" layoutY="98.0" mnemonicParsing="false" />
+      <Label layoutX="931.0" layoutY="74.0" text="c" />
+      <Label layoutX="934.0" layoutY="529.0" text="c" />
+      <Label layoutX="926.0" layoutY="98.0" text="по" />
+      <Label layoutX="927.0" layoutY="554.0" text="по" />
+      <Label layoutX="923.0" layoutY="148.0" text="по" />
+      <Label layoutX="934.0" layoutY="124.0" text="c" />
   </children>
 </AnchorPane>
