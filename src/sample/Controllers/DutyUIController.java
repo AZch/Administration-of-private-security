@@ -276,6 +276,7 @@ public class DutyUIController {
                         "'" + setNotesReqTF.getText() + "'" + Insert.rbc);
 
                 refreshTableRequest("");
+                Notes.clear();
 
                 msg.setText(msgForm.GoodAdd);
             } catch (SQLException e) {
@@ -301,6 +302,7 @@ public class DutyUIController {
                         Select.where + Update.whereRequestId + idSelectRequest);
 
                 refreshTableRequest("");
+                Notes.clear();
 
                 msg.setText(msgForm.GoodEdit);
             } catch (SQLException e) {
@@ -318,6 +320,7 @@ public class DutyUIController {
                         Select.where + Update.whereRequestId + idSelectRequest);
 
                 refreshTableRequest("");
+                Notes.clear();
 
                 msg.setText(msgForm.GoddDelete);
             } catch (SQLException e) {
@@ -351,7 +354,6 @@ public class DutyUIController {
 
     //Активация поля поиска
     public void on_off_st(ActionEvent actionEvent) {
-
         if(isSearchDateStartRequest.isSelected()){
             dateStartCreateSuppose.setDisable(false);
         }
@@ -363,7 +365,6 @@ public class DutyUIController {
 
     //Активация поля поиска
     public void on_off_en(ActionEvent actionEvent) {
-        boolean fl = false;
         if(isSearchDateEndRequest.isSelected()){
             dateEndCreateSuppose.setDisable(false);
         }
@@ -379,6 +380,8 @@ public class DutyUIController {
             FindBtn.setDisable(false);
         }
         else{
+            Notes.clear();
+            refreshTableRequest("");
             FindBtn.setDisable(true);
         }
     }

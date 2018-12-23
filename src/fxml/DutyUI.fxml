@@ -40,7 +40,7 @@
       <TextField fx:id="SerReqT" layoutX="12.0" layoutY="518.0" prefHeight="25.0" prefWidth="116.0" />
       <TextField fx:id="setFineReqT" layoutX="12.0" layoutY="577.0" prefHeight="25.0" prefWidth="116.0" />
       <DatePicker fx:id="setdateCreateReqDTP" layoutX="178.0" layoutY="577.0" prefHeight="25.0" prefWidth="116.0" />
-      <TextArea fx:id="setNotesReqTF" editable="false" layoutX="303.0" layoutY="517.0" prefHeight="120.0" prefWidth="177.0" wrapText="true" />
+      <TextArea fx:id="setNotesReqTF" layoutX="303.0" layoutY="517.0" prefHeight="120.0" prefWidth="177.0" wrapText="true" />
       <ChoiceBox fx:id="PatrolOffChoice" layoutX="502.0" layoutY="518.0" prefHeight="25.0" prefWidth="116.0" />
       <Label layoutX="507.0" layoutY="501.0" text="Сотрудник патруля" />
       <Label layoutX="540.0" layoutY="555.0" text="Звание:" />
