@@ -2,7 +2,6 @@ package sample.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import sample.Constants;
 import sample.Main;
 import sample.Scripts.Delete;

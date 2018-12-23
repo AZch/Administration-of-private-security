@@ -3,16 +3,16 @@ package sample.Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import oracle.jdbc.driver.Const;
 import sample.Constants;
 import sample.Main;
-import sample.Scripts.Delete;
 import sample.Scripts.Select;
-import sample.Scripts.Update;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -107,8 +107,8 @@ public class Controller {
                 fio = rs.getString(Select.dataOperatorFIO);
                 lgn = lgnUser.getText();
                 psw = pswUser.getText();
-                num = rs.getString(Select.dataOperatorNUM);
-                ser = rs.getString(Select.dataOperatorSER);
+                num = rs.getLong(Select.dataOperatorNUM);
+                ser = rs.getLong(Select.dataOperatorSER);
                 return Constants.staffDuty;
             }
             // открытие формы админа
@@ -157,7 +157,7 @@ public class Controller {
                 openDirForm(id, fio, num, ser);
                 break;
             case Constants.staffDuty:
-                openOperatorForm(id, fio, num, ser;
+                openOperatorForm(id, fio, num, ser);
                 break;
             case Constants.staffPatrolOff:
                 openPatrolOfficerForm(id, fio, rank, serGun);
@@ -247,7 +247,7 @@ public class Controller {
         }
     }
 
-    private void openOperatorForm(Long id, String fio, String ser, String num){
+    private void openOperatorForm(Long id, String fio, Long ser, Long num){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DutyUI.fxml"));
             AnchorPane load = loader.load();

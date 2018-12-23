@@ -114,33 +114,15 @@ public class Select {
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog from dogovor";
 
     //Select для Патрульного
-    public static final String dataPatrolOfficerID = "idpatroloff";
-    public static final String dataPatrolOfficerFIO = "fio_po";
-    public static final String dataPatrolOfficerSER = "series_po";
-    public static final String dataPatrolOfficerNUM = "num_po";
-    public static final String dataPatrolOfficerRANK = "rank_po";
-    public static final String dataPatrolOfficerSERG = "seriesgun_po";
-    public static final String getDataPatrolOfficer = "select idpatroloff, fio_po, series_po, num_po, rank_po, seriesgun_po from patrolofficier";
-    public static final String getDataPatrolOfficerLgn = "login_po = ";
-    public static final String getDataPatrolOfficerPsw = "password_po = ";
     public static final String getDataPatrolOfficerFIO = "fio_po = ";
-    public static final String getDataPatrolOfficerFIOС = "select fio_po from patrolofficier where idpatroloff = ";
     public static final String getDataPatrolOfficerALL = "select idpatroloff, fio_po, series_po, num_po, login_po, password_po, rank_po, seriesgun_po from patrolofficier";
     public static final String dataDogPeople = "peoplecount_dog";
     public static final String dataDogCustService = "serviceofficier_idserviceoff";
     public static final String dataDogClient = "client_idclient";
     public static final String dataDogObject = "objectofprotect_idobject";
-
-    public static final String getDataDog = "select iddogovor, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
-            "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog from dogovor";
-
     public static final String getDog = "select iddogovor from dogovor";
-
     public static final String getFullDataDog = "select iddogovor, client_idclient, objectofprotect_idobject, serviceofficier_idserviceoff, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
             "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog, peoplecount_dog from dogovor";
-
-    public static final String getDataDogIdDog = "iddogovor = ";
-    public static final String getDataDogSerDog = "series_dog = ";
     public static final String notEqDataDogDataCreate = "to_char(datastart_dog, '" + Constants.dateFormat + "')";
     public static final String notEqDataDogDataEnd = "to_char(dataend_dog, '" + Constants.dateFormat + "')";
     public static final String getDataDogPeople = "peoplecount_dog = ";
@@ -189,7 +171,6 @@ public class Select {
 
     public static final String getPath = "select idpath, series_path from path";
     public static final String getOperator = "select idoperator, fio_oper from operator";
-    public static final String dataOperatorID = "idoperator";
     public static final String getDataOperatorFIO = "fio_oper = ";
     public static final String getDataSerPath = "series_path = ";
     public static final String DataOperatorFIO = "fio_oper";

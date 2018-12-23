@@ -335,9 +335,9 @@ public class PatrolOfficerUIController {
         if (isNumReqSearch.isSelected())
             addSqlQuestion += Select.and + Select.dataRequestSER + "= '" + numReqSearch.getText() + "'";
         if (isStartDateCreateReqSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " >= to_date('" + startDateCreateReq.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+            addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " >= to_date('" + startDateCreateReq.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isEndDateCreateReqSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " <= to_date('" + endDateCreateReq.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+            addSqlQuestion += Select.and + Select.notEqDataRequestDateCreate + " <= to_date('" + endDateCreateReq.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isTypeReqSearch.isSelected())
             addSqlQuestion += Select.and + Select.dataRequestTYPE + " = '" + selectTypeSearch + "'";
         if (isNotesSearch.isSelected())

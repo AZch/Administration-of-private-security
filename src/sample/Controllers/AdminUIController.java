@@ -5,20 +5,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import oracle.jdbc.driver.Const;
 import sample.Constants;
 import sample.Main;
 import sample.Scripts.Delete;
 import sample.Scripts.Insert;
 import sample.Scripts.Select;
 import sample.Scripts.Update;
-import sample.Tables.ActPay;
 import sample.Tables.Staff;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class AdminUIController {
     public TextField rankEdit;
