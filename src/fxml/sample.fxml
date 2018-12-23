@@ -19,12 +19,16 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="468.0" prefWidth="704.0">
+      <AnchorPane prefHeight="191.0" prefWidth="240.0">
          <children>
-            <TextField fx:id="lgnUser" layoutX="227.0" layoutY="116.0" />
-            <PasswordField fx:id="pswUser" layoutX="227.0" layoutY="143.0" />
-            <Label layoutX="227.0" layoutY="93.0" text="Введите логин и пароль:" />
-            <Button layoutX="227.0" layoutY="168.0" mnemonicParsing="false" onAction="#loginAction" text="Войти" />
+            <TextField fx:id="lgnUser" layoutX="32.0" layoutY="56.0" prefHeight="25.0" prefWidth="163.0" />
+            <PasswordField fx:id="pswUser" layoutX="32.0" layoutY="83.0" prefHeight="25.0" prefWidth="163.0" />
+            <Label layoutX="32.0" layoutY="33.0" text="Введите логин и пароль:" />
+            <Button layoutX="32.0" layoutY="108.0" mnemonicParsing="false" onAction="#loginAction" text="Войти" />
+            <Button fx:id="exitBtn" layoutX="32.0" layoutY="140.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="25.0" prefWidth="163.0" text="Выйти" />
+            <Button layoutX="91.0" layoutY="108.0" mnemonicParsing="false" onAction="#AccountAction" text="Войти в аккаунт" />
+            <Label layoutX="22.0" layoutY="174.0" text="Сообщение:" />
+            <Label fx:id="msg" layoutX="91.0" layoutY="174.0" />
          </children>
       </AnchorPane>
    </children>
