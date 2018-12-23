@@ -179,6 +179,8 @@ public class AccountantUIController {
         actPaysData.clear();
         try {
             ResultSet rs = null;
+            String str = Select.getDataActPaying + Select.where +
+                    Select.getDataActPayingIdAcc + idAcc + addSqlQuestion;
             rs = Main.getStmt().executeQuery(Select.getDataActPaying + Select.where +
                     Select.getDataActPayingIdAcc + idAcc + addSqlQuestion);
             int index = 1;
@@ -369,26 +371,26 @@ public class AccountantUIController {
     public void searchActPayAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
         if (isSearchDateStartCreateSuppose.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataActPayingDateCreate + " >= '" + dateStartCreateSuppose.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDateCreate + " >= to_date('" + dateStartCreateSuppose.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSearchDateEndCreateSuppose.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataActPayingDateCreate + " <= '" + dateEndCreateSuppose.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDateCreate + " <= to_date('" + dateEndCreateSuppose.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSearchDateStartPayFact.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataActPayingDatePay + " >= '" + dateStartPayFact.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDatePay + " >= to_date('" + dateStartPayFact.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSearchDateEndPayFact.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataActPayingDatePay + " <= '" + dateEndPayFact.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataActPayingDatePay + " <= to_date('" + dateEndPayFact.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         initTableActPay(addSqlQuestion);
     }
 
     public void searchLOAAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
         if (isSearchDateStartCreateSuppose.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataLOADateSuppose + " >= '" + dateStartCreateSuppose.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataLOADateSuppose + " >= to_date('" + dateStartCreateSuppose.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSearchDateEndCreateSuppose.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataLOADateSuppose + " <= '" + dateEndCreateSuppose.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataLOADateSuppose + " <= to_date('" + dateEndCreateSuppose.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSearchDateStartPayFact.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataLOADateFact + " >= '" + dateStartPayFact.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataLOADateFact + " >= to_date('" + dateStartPayFact.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSearchDateEndPayFact.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataLOADateFact + " <= '" + dateEndPayFact.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataLOADateFact + " <= to_date('" + dateEndPayFact.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSearchTypePay.isSelected())
             addSqlQuestion += Select.and + Select.getDataLOAPayType + "'" + selectSearchTypePay + "'";
         if (!SumPaySearch.getText().equals("") && (More.isSelected() || Less.isSelected())) {

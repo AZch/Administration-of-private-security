@@ -324,13 +324,13 @@ public class DirectorUIController {
     public void searchPathAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
         if (isDateCreateSearchStart.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " >= '" + dateStartCreateSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " >= to_date('" + dateStartCreateSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isDateCreateSearchEnd.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " <= '" + dateEndCreateSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " <= to_date('" + dateEndCreateSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isDateEndSearchStart.isSelected())
-            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " >= '" + dateStartEndSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " >= to_date('" + dateStartEndSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isDateEndSearchEnd.isSelected())
-            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " <= '" + dateEndEndSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " <= to_date('" + dateEndEndSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSerSearch.isSelected())
             addSqlQuestion += Select.and + Select.dataPathSeries + "='" + SerSearch.getText() + "'";
         if (isShedListSearch.isSelected())
@@ -342,13 +342,13 @@ public class DirectorUIController {
     public void searchGraphAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
         if (isDateCreateSearchStart.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " >= '" + dateStartCreateSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " >= to_date('" + dateStartCreateSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isDateCreateSearchEnd.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " <= '" + dateEndCreateSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " <= to_date('" + dateEndCreateSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isDateEndSearchStart.isSelected())
-            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " >= '" + dateStartEndSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " >= to_date('" + dateStartEndSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isDateEndSearchEnd.isSelected())
-            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " <= '" + dateEndEndSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " <= to_date('" + dateEndEndSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isSerSearch.isSelected())
             addSqlQuestion += Select.and + Select.dataGraohSeries + "='" + SerSearch.getText() + "'";
         if (isShedListSearch.isSelected())

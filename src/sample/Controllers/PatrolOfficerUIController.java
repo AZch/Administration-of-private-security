@@ -290,13 +290,13 @@ public class PatrolOfficerUIController {
         if (isNumGraphPathSearch.isSelected())
             addSqlQuestion += Select.and + Update.setSerGraph + "'" + numGraphPathSearch.getText() + "'";
         if (isStartDateCreateGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " >= '" + dateStartCreateGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " >= to_date('" + dateStartCreateGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isEndDateCreateGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " <= '" + dateEndCreateGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataGraphCretate + " <= to_date('" + dateEndCreateGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isStartDateEndGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " >= '" + dateStartEndGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " >= to_date('" + dateStartEndGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isEndDateEndGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " <= '" + dateEndEndGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqGraphDataEnd + " <= to_date('" + dateEndEndGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         refreshTableGraphic(addSqlQuestion);
     }
 
@@ -309,13 +309,13 @@ public class PatrolOfficerUIController {
         if (isNumGraphPathSearch.isSelected())
             addSqlQuestion += Select.and + Update.setPathSeries + "'" + numGraphPathSearch.getText() + "'";
         if (isStartDateCreateGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " >= '" + dateStartCreateGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " >= to_date('" + dateStartCreateGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isEndDateCreateGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " <= '" + dateEndCreateGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataPathDateCretate + " <= to_date('" + dateEndCreateGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isStartDateEndGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " >= '" + dateStartEndGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " >= to_date('" + dateStartEndGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isEndDateEndGraphSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " <= '" + dateEndEndGraphSearch.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqPathDataEnd + " <= to_date('" + dateEndEndGraphSearch.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         refreshPathTable(addSqlQuestion);
     }
 
@@ -335,9 +335,9 @@ public class PatrolOfficerUIController {
         if (isNumReqSearch.isSelected())
             addSqlQuestion += Select.and + Select.dataRequestSER + "= '" + numReqSearch.getText() + "'";
         if (isStartDateCreateReqSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " >= '" + startDateCreateReq.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " >= to_date('" + startDateCreateReq.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isEndDateCreateReqSearch.isSelected())
-            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " <= '" + endDateCreateReq.getValue().format(formatter) + "'";
+            addSqlQuestion += Select.and + Select.notEqDataReqDateCretate + " <= to_date('" + endDateCreateReq.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
         if (isTypeReqSearch.isSelected())
             addSqlQuestion += Select.and + Select.dataRequestTYPE + " = '" + selectTypeSearch + "'";
         if (isNotesSearch.isSelected())

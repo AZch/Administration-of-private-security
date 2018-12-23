@@ -79,8 +79,8 @@ public class Select {
     public static final String dataActPayingDatePay = "datapay_aop";
     public static final String dataActPayingDateId = "idactpay";
     public static final String getDataActPayingIdAcc = "accountant_idaccountant = ";
-    public static final String notEqDataActPayingDatePay = "to_char(datapay_aop, '" + Constants.dateFormat + "')";
-    public static final String notEqDataActPayingDateCreate = "to_char(datacreate_aop, '" + Constants.dateFormat + "')";
+    public static final String notEqDataActPayingDatePay = "to_date(datapay_aop, '" + Constants.dateFormat + "')";
+    public static final String notEqDataActPayingDateCreate = "to_date(datacreate_aop, '" + Constants.dateFormat + "')";
     public static final String getDataActPaying = "select to_char(datacreate_aop, '" + Constants.dateFormat + "') datacreate_aop, " +
             "to_char(datapay_aop, '" + Constants.dateFormat + "') datapay_aop, idactpay from ACTOFPAYING";
 
@@ -93,8 +93,8 @@ public class Select {
     public static final String dataLOAFacPay = "factpay_loa";
     public static final String dataLOAPayType = "paytype_loa";
     public static final String getDataLOAidAct = "actofpaying_idactpay = ";
-    public static final String notEqDataLOADateFact = "to_char(datafact_loa, '" + Constants.dateFormat + "')";
-    public static final String notEqDataLOADateSuppose = "to_char(datasuppose_loa, '" + Constants.dateFormat + "')";
+    public static final String notEqDataLOADateFact = "to_date(datafact_loa, '" + Constants.dateFormat + "')";
+    public static final String notEqDataLOADateSuppose = "to_date(datasuppose_loa, '" + Constants.dateFormat + "')";
     public static final String getDataLOAPayType = "paytype_loa = ";
     public static final String getDataLOAPayment = "payment_loa = ";
     public static final String getDataLOA = "select idiineact, dogovor_iddogovor, to_char(datafact_loa, '" + Constants.dateFormat + "') datafact_loa, " +
@@ -213,7 +213,7 @@ public class Select {
     public static final String getDataRequestPO= "patrolOfficier_idpatroloff = ";
     public static final String getDataRequest = "select idrequest, objectofprotect_idobject, operator_idoperator, patrolOfficier_idpatroloff, series_req, type_req, fine_req," +
             " to_char(datecreate_req, '" + Constants.dateFormat + "') datecreate_req, notes_req from request";
-    public static final String notEqDataReqDateCretate = "to_char(datecreate_req, '" + Constants.dateFormat + "')";
+    public static final String notEqDataReqDateCretate = "to_date(datecreate_req, '" + Constants.dateFormat + "')";
 
     public static final String dataPathDataCreate = "datecreate_path";
     public static final String dataPathDataEnd = "DATEEND_PATH";
@@ -222,8 +222,8 @@ public class Select {
     //public static final String getDataPath = "select idpath, to_char(datecreate_path, '" + Constants.dateFormat + "') datecreate_path, " +
     //        "to_char(DATEEND_PATH, '" + Constants.dateFormat + "') DATEEND_PATH, series_path, listobj_path from path";
     public static final String getDataPathDirector = "DIRECTOR_IDDIRECTOR = ";
-    public static final String notEqDataPathDateCretate = "to_char(datecreate_path, '" + Constants.dateFormat + "')";
-    public static final String notEqPathDataEnd = "to_char(DATEEND_PATH, '" + Constants.dateFormat + "')";
+    public static final String notEqDataPathDateCretate = "to_date(datecreate_path, '" + Constants.dateFormat + "')";
+    public static final String notEqPathDataEnd = "to_date(DATEEND_PATH, '" + Constants.dateFormat + "')";
 
     public static final String dataGraohID = "idgraphic";
     public static final String dataGraohPatrolId = "PATROLOFFICIER_IDPATROLOFF";
@@ -236,8 +236,8 @@ public class Select {
             "to_char(DATEEND_GRAPH, '" + Constants.dateFormat + "') DATEEND_GRAPH, " +
             "SHEDULE_GRAPH from graphic";
     public static final String getDataGraphPathId = "PATH_IDPATH = ";
-    public static final String notEqDataGraphCretate = "to_char(DATECREATE_GRAPH, '" + Constants.dateFormat + "')";
-    public static final String notEqGraphDataEnd = "to_char(DATEEND_GRAPH, '" + Constants.dateFormat + "')";
+    public static final String notEqDataGraphCretate = "to_date(DATECREATE_GRAPH, '" + Constants.dateFormat + "')";
+    public static final String notEqGraphDataEnd = "to_date(DATEEND_GRAPH, '" + Constants.dateFormat + "')";
 
     public static final String patrolOfName = "fio_po";
     public static final String patrolOfRang = "rank_po";
