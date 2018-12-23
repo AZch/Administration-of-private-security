@@ -667,13 +667,13 @@ public class CustServiceUIController {
                 addSqlQuestion += Select.and + Select.getDataDogPeriod + "'" + selectpayPeriodSearch + "'";
 
             if (isSearchDataCreateStart.isSelected())
-                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateStart + "', '" + Constants.dateFormat + "')" + " >= to_date('" + DataCreateSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+                addSqlQuestion += Select.and + "to_date(" + Select.dataDogDateStart + ", '" + Constants.dateFormat + "')" + " >= to_date('" + DataCreateSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             if (isSearchDataCreateFin.isSelected())
-                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateStart + "', '" + Constants.dateFormat + "')" + " <= to_date('" + DataCreateSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+                addSqlQuestion += Select.and + "to_date(" + Select.dataDogDateStart + ", '" + Constants.dateFormat + "')" + " <= to_date('" + DataCreateSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             if (isSearchDataEndStart.isSelected())
-                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateEnd + "', '" + Constants.dateFormat + "')" + " >= to_date('" + DataEndSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+                addSqlQuestion += Select.and + "to_date(" + Select.dataDogDateEnd + ", '" + Constants.dateFormat + "')" + " >= to_date('" + DataEndSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             if (isSearchDataEndFin.isSelected())
-                addSqlQuestion += Select.and + "to_date('" + Select.dataDogDateEnd + "', '" + Constants.dateFormat + "')" + " <= to_date('" + DataEndSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
+                addSqlQuestion += Select.and + "to_date(" + Select.dataDogDateEnd + ", '" + Constants.dateFormat + "')" + " <= to_date('" + DataEndSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             Messedge.setText("Поиск договора успешно завершен");
             refreshDogovorTable(addSqlQuestion);
         } catch (Exception e)
