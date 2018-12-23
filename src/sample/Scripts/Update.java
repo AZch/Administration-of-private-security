@@ -1,13 +1,15 @@
 package sample.Scripts;
 
 public class Update {
+    // add configuration
     public static String set = " set ";
-
+  
+    //update act pay
     public static String updateActPay = "update actofpaying ";
     public static String setDateCreate = "datacreate_aop = ";
     public static String setDatePay = "datapay_aop = ";
     public static String whereIdActPay = "idactpay = ";
-
+    // update loa
     public static String updateLOA = "update lineofact set ";
     public static String setLoaDogovorId = "dogovor_iddogovor = ";
     public static String setLoaDataFact = "datafact_loa = ";
@@ -15,7 +17,7 @@ public class Update {
     public static String setLoaPayment = "payment_loa = ";
     public static String setLoaPayType = "paytype_loa = ";
     public static String whereIdLOA = "idiineact = ";
-
+    // update client 
     public static String updateClient = "update client set ";
     public static String setClientFIO =  "fio_client = ";
     public static String setClientSeries =  "series_client = ";
@@ -23,7 +25,7 @@ public class Update {
     public static String setClientDoc =  "doc_client = ";
     public static String setClientAddress =  "address_client = ";
     public static String whereIdClient = "idclient = ";
-
+    // update dogovor
     public static String updateDogovor = "update dogovor set ";
     public static String setDogSeries =  "series_dog = ";
     public static String setDogPayPeriod =  "payperiod_dog = ";
@@ -34,14 +36,13 @@ public class Update {
     public static String setDogIdClient = "client_idclient = ";
     public static String setDogIdObj = "objectofprotect_idobject = ";
     public static String setDogIdCustService = "serviceofficier_idserviceoff = ";
-
-
+    //update object
     public static String updateObject = "update objectofprotect set ";
     public static String setObjAddress =  "address_obj = ";
     public static String setObjType =  "type_obj = ";
     public static String setObjSistem =  "listsecsys_obj = ";
     public static String whereIdObject = "idobject = ";
-
+    // update path
     public static String updatePath = "update path ";
     public static String setPathIdDir = "director_iddirector = ";
     public static String setPathDateCreate = "datecreate_path = ";
@@ -49,7 +50,7 @@ public class Update {
     public static String setPathSeries = "series_path = ";
     public static String setPathListObj = "listobj_path = ";
     public static String wherePathId = "idpath = ";
-
+    // update graph
     public static String updateGraph = "update graphic ";
     public static String setGraphIdPath = "path_idpath = ";
     public static String setGraphPatrOff = "patrolofficier_idpatroloff = ";
@@ -58,7 +59,17 @@ public class Update {
     public static String setShedule = "shedule_graph = ";
     public static String setSerGraph = "series_graph = ";
     public static String whereGrapId = "idgraphic = ";
-
+    // update request
+    public static String updateRequest = "update request ";
+    public static String setRequestIDOoP = "objectofprotect_idobject = ";
+    public static String setRequestidO = "operator_idoperator = ";
+    public static String setRequestIDPO = "patrolOfficier_idpatroloff = ";
+    public static String setRequestSER = "series_req = ";
+    public static String setRequestTYPE = "type_req = ";
+    public static String setRequestFINE = "fine_req = ";
+    public static String setRequestDataCreate = "datecreate_req = ";
+    public static String setRequestNOTES = "notes_req = ";
+    public static String whereRequestId = "idrequest = ";
     // update director
     public static String updateDirector = "update director set ";
     public static String setFioDirector = "fio_dir = ";

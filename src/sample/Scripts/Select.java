@@ -106,6 +106,26 @@ public class Select {
     public static final String dataDogDateEnd = "dataend_dog";
     public static final String dataDogSeries = "series_dog";
     public static final String dataDogId = "iddogovor";
+    public static final String getDataDogIdDog = "iddogovor = ";
+    public static final String getDataDogSerDog = "series_dog = ";
+    public static final String DataDogPeoples = "peoplecount_dog";
+    public static final String getDataDogPeoples = "select peoplecount_dog from dogovor where objectofprotect_idobject = ";
+    public static final String getDataDog = "select iddogovor, payperiod_dog, to_char(datastart_dog, '" + Constants.dateFormat + "') datastart_dog, " +
+            "to_char(dataend_dog, '" + Constants.dateFormat + "') dataend_dog, series_dog from dogovor";
+
+    //Select для Патрульного
+    public static final String dataPatrolOfficerID = "idpatroloff";
+    public static final String dataPatrolOfficerFIO = "fio_po";
+    public static final String dataPatrolOfficerSER = "series_po";
+    public static final String dataPatrolOfficerNUM = "num_po";
+    public static final String dataPatrolOfficerRANK = "rank_po";
+    public static final String dataPatrolOfficerSERG = "seriesgun_po";
+    public static final String getDataPatrolOfficer = "select idpatroloff, fio_po, series_po, num_po, rank_po, seriesgun_po from patrolofficier";
+    public static final String getDataPatrolOfficerLgn = "login_po = ";
+    public static final String getDataPatrolOfficerPsw = "password_po = ";
+    public static final String getDataPatrolOfficerFIO = "fio_po = ";
+    public static final String getDataPatrolOfficerFIOС = "select fio_po from patrolofficier where idpatroloff = ";
+    public static final String getDataPatrolOfficerALL = "select idpatroloff, fio_po, series_po, num_po, login_po, password_po, rank_po, seriesgun_po from patrolofficier";
     public static final String dataDogPeople = "peoplecount_dog";
     public static final String dataDogCustService = "serviceofficier_idserviceoff";
     public static final String dataDogClient = "client_idclient";
@@ -157,8 +177,6 @@ public class Select {
     public static final String getDataObjSistem = "listsecsys_obj = ";
     public static final String getObj = "select address_obj from objectofprotect";
     public static final String getObjId = "select idobject from objectofprotect";
-
-
     public static final String getDataFromDog = ", dogovor";
 
     public static final String dataCustServiceID = "IDSERVICEOFF";
@@ -175,6 +193,7 @@ public class Select {
     public static final String getDataOperatorFIO = "fio_oper = ";
     public static final String getDataSerPath = "series_path = ";
     public static final String DataOperatorFIO = "fio_oper";
+
 
     //Select для Графика патрулирования
     public static final String dataGraphicID = "idgraphic";
@@ -211,9 +230,12 @@ public class Select {
     public static final String dataRequestDataCreate = "datecreate_req";
     public static final String dataRequestNotes = "notes_req";
     public static final String getDataRequestPO= "patrolOfficier_idpatroloff = ";
+    public static final String getDataRequestO= "operator_idoperator = ";
+    public static final String getDdataRequestidOoP = "objectofprotect_idobject = ";
     public static final String getDataRequest = "select idrequest, objectofprotect_idobject, operator_idoperator, patrolOfficier_idpatroloff, series_req, type_req, fine_req," +
             " to_char(datecreate_req, '" + Constants.dateFormat + "') datecreate_req, notes_req from request";
-    public static final String notEqDataReqDateCretate = "to_date(datecreate_req, '" + Constants.dateFormat + "')";
+    public static final String notEqDataRequestDateCreate = "to_date(datecreate_req, '" + Constants.dateFormat + "')";
+
 
     public static final String dataPathDataCreate = "datecreate_path";
     public static final String dataPathDataEnd = "DATEEND_PATH";
@@ -224,6 +246,7 @@ public class Select {
     public static final String getDataPathDirector = "DIRECTOR_IDDIRECTOR = ";
     public static final String notEqDataPathDateCretate = "to_date(datecreate_path, '" + Constants.dateFormat + "')";
     public static final String notEqPathDataEnd = "to_date(DATEEND_PATH, '" + Constants.dateFormat + "')";
+
 
     public static final String dataGraohID = "idgraphic";
     public static final String dataGraohPatrolId = "PATROLOFFICIER_IDPATROLOFF";
@@ -244,4 +267,24 @@ public class Select {
     public static final String patrolOfId = "idpatroloff";
     public static final String getPatrolOff = "select idpatroloff, fio_po, rank_po from patrolofficier";
     public static final String getPatrolOffId = "idpatroloff = ";
+
+    //Select для дежурного
+    public static final String dataOperatorID = "idoperator";
+    public static final String dataOperatorFIO  = "fio_oper";
+    public static final String dataOperatorSER  = "series_oper";
+    public static final String dataOperatorNUM  = "num_oper";
+    public static final String getOperatorLgn = "login_oper = ";
+    public static final String getOperatorPsw = "password_oper = ";
+    public static final String getDataOperator = "select idoperator, fio_oper, series_oper, num_oper from operator";
+
+    //Select для Объекта охраны
+    public static final String dataObjecOfPID = "idobject";
+    public static final String dataObjecOfPIDO  = "Operator_idOperator";
+    public static final String dataObjecOfPIDP  = "Path_idPath";
+    public static final String dataObjecOfPADRESS  = "Address_Obj";
+    public static final String dataObjecOfPTYPE = "Type_Obj";
+    public static final String dataObjecOfPOBJS = "ListSecSys_Obj";
+    public static final String getDataObjecOfPIDO  = "Operator_idOperator = ";
+    public static final String getDataObjecOfP = "select idobject, Operator_idOperator, Path_idPath, Address_Obj, Type_Obj, ListSecSys_Obj from objectofprotect";
+
 }

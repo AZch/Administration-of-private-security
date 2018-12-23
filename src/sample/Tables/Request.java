@@ -5,6 +5,7 @@ public class Request {
     public static String columnSeries = "Series";
     public static String columnType = "Type";
     public static String columnDataCreate = "DateCreate";
+    public static String columnFine = "Fine";
 
     private Long id;
     private Long idOoP;

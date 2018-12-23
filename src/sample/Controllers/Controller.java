@@ -35,7 +35,8 @@ public class Controller {
     public void openDirectorAction(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DirectorUI.fxml"));
-            AnchorPane load = loader.load();
+            AnchorPane load;
+            load = loader.load();
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -96,6 +97,20 @@ public class Controller {
                 return Constants.staffPatrolOff;
             }
 
+            //Открытие формы Дежурного
+            rs = Main.getStmt().executeQuery(Select.getDataOperator + Select.where +
+                    Select.getOperatorLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
+                    Select.getOperatorPsw + "\'" + pswUser.getText() + "\'");
+
+            if (rs != null && rs.next()) {
+              id = rs.getLong(Select.dataOperatorID);
+                fio = rs.getString(Select.dataOperatorFIO);
+                lgn = lgnUser.getText();
+                psw = pswUser.getText();
+                num = rs.getString(Select.dataOperatorNUM);
+                ser = rs.getString(Select.dataOperatorSER);
+                return Constants.staffDuty;
+            }
             // открытие формы админа
             rs = Main.getStmt().executeQuery(Select.getDataAdmin + Select.where +
                     Select.getDataAdminLgn + "\'" + lgnUser.getText() + "\'" + Select.and +
@@ -142,7 +157,7 @@ public class Controller {
                 openDirForm(id, fio, num, ser);
                 break;
             case Constants.staffDuty:
-
+                openOperatorForm(id, fio, num, ser;
                 break;
             case Constants.staffPatrolOff:
                 openPatrolOfficerForm(id, fio, rank, serGun);
@@ -191,7 +206,7 @@ public class Controller {
             e.printStackTrace();
         }
     }
-
+                                 
     private void openPatrolOfficerForm(Long id, String fio, String rank, String sergun) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/PatrolOfficerUI.fxml"));
@@ -211,7 +226,6 @@ public class Controller {
             e.printStackTrace();
         }
     }
-
 
     private void openCustServiceForm(Long id, String fio, Long num, Long ser) {
         try {
@@ -233,6 +247,25 @@ public class Controller {
         }
     }
 
+    private void openOperatorForm(Long id, String fio, String ser, String num){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../../fxml/DutyUI.fxml"));
+            AnchorPane load = loader.load();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Д Е Ж У Р Н Ы Й");
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+
+            DutyUIController dutyUIController = loader.getController();
+            dutyUIController.setStartData(id, fio);
+
+            stage.showAndWait();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private void openDirForm(Long id, String fio, Long num, Long ser) {
         try {
@@ -258,7 +291,6 @@ public class Controller {
         Main.closeWnd(exitBtn);
     }
 
-
     public void AccountAction(ActionEvent actionEvent) {
         String whatAcc = getDataAcc();
         if (!whatAcc.equals("")) {
@@ -282,6 +314,4 @@ public class Controller {
         } else
             msg.setText("Не верный логин или пароль");
     }
-}
-        
-
+}    

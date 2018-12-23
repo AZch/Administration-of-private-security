@@ -18,12 +18,12 @@ public class Insert {
             "values(";
     public static String insertDogovor = "insert into dogovor (client_idclient, serviceofficier_idserviceoff, objectofprotect_idobject, series_dog, payperiod_dog, datastart_dog, dataend_dog, peoplecount_dog) " +
             "values(";
-
     public static String insertPath = "insert into path (director_iddirector, datecreate_path, dateend_path, series_path, " +
             "listobj_path) values (";
     public static String insertGraphic = "insert into graphic (path_idpath, patrolofficier_idpatroloff, series_graph, " +
             "datecreate_graph, dateend_graph, shedule_graph) values (";
-
+    public static String insertRequest = "insert into request (objectofprotect_idobject, operator_idoperator, " +
+            "patrolOfficier_idpatroloff, series_req, type_req, fine_req, datecreate_req, notes_req) values (";
     public static String insertDirector = "insert into director (fio_dir, series_dir, num_dir, login_dir, password_dir) " +
             "values (";
     public static String insertAdmin = "insert into admin (fio_admin, lgn_admin, psw_admin) " +
