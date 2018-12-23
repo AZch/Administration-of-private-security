@@ -666,13 +666,13 @@ public class CustServiceUIController {
                 addSqlQuestion += Select.and + Select.getDataDogPeriod + "'" + selectpayPeriodSearch + "'";
 
             if (isSearchDataCreateStart.isSelected())
-                addSqlQuestion += Select.and + Select.notEqDataDogDataCreate + " >= '" + DataCreateSearchStart.getValue().format(formatter) + "'";
+                addSqlQuestion += Select.and + Select.dataDogDateStart + " >= to_date('" + DataCreateSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             if (isSearchDataCreateFin.isSelected())
-                addSqlQuestion += Select.and + Select.notEqDataDogDataCreate + " <= '" + DataCreateSearchFin.getValue().format(formatter) + "'";
+                addSqlQuestion += Select.and + Select.dataDogDateStart + " <= to_date('" + DataCreateSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             if (isSearchDataEndStart.isSelected())
-                addSqlQuestion += Select.and + Select.notEqDataDogDataEnd + " >= '" + DataEndSearchStart.getValue().format(formatter) + "'";
+                addSqlQuestion += Select.and + Select.dataDogDateEnd + " >= to_date('" + DataEndSearchStart.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             if (isSearchDataEndFin.isSelected())
-                addSqlQuestion += Select.and + Select.notEqDataDogDataEnd + " <= '" + DataEndSearchFin.getValue().format(formatter) + "'";
+                addSqlQuestion += Select.and + Select.dataDogDateEnd + " <= to_date('" + DataEndSearchFin.getValue().format(formatter) + "', '" + Constants.dateFormat + "')";
             Messedge.setText("Поиск договора успешно завершен");
             refreshDogovorTable(addSqlQuestion);
         } catch (Exception e)

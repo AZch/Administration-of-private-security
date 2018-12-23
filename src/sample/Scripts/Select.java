@@ -43,8 +43,10 @@ public class Select {
     public static final String dataLOAFacPay = "factpay_loa";
     public static final String dataLOAPayType = "paytype_loa";
     public static final String getDataLOAidAct = "actofpaying_idactpay = ";
+
     public static final String notEqDataLOADateFact = "to_char(datafact_loa, '" + Constants.dateFormat + "')";
     public static final String notEqDataLOADateSuppose = "to_char(datasuppose_loa, '" + Constants.dateFormat + "')";
+
     public static final String getDataLOAPayType = "paytype_loa = ";
     public static final String getDataLOAPayment = "payment_loa = ";
     public static final String getDataLOA = "select idiineact, dogovor_iddogovor, to_char(datafact_loa, '" + Constants.dateFormat + "') datafact_loa, " +

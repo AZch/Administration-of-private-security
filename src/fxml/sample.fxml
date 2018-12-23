@@ -21,7 +21,6 @@
    <children>
       <AnchorPane prefHeight="468.0" prefWidth="704.0">
          <children>
-            <Button layoutX="478.0" layoutY="44.0" mnemonicParsing="false" onAction="#openDirectorAction" text="Начальник" />
             <TextField fx:id="lgnUser" layoutX="227.0" layoutY="116.0" />
             <PasswordField fx:id="pswUser" layoutX="227.0" layoutY="143.0" />
             <Label layoutX="227.0" layoutY="93.0" text="Введите логин и пароль:" />
