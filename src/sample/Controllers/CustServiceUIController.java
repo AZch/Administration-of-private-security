@@ -1,4 +1,8 @@
 package sample.Controllers;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +25,7 @@ import sample.Tables.Client;
 import sample.Tables.Dogovor;
 import sample.Tables.ObjectOfProtect;
 
+import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -58,6 +63,8 @@ public class CustServiceUIController {
     public DatePicker DataEndSearchStart;
     public Button CancelSearch;
     public Label Messedge;
+    public TextField nameOth;
+    public Button btnExit;
     private String selecteditSobst;
 
     public TextField AddressObjectEdit;
@@ -780,5 +787,41 @@ public class CustServiceUIController {
         refreshDogovorTable("");
         refreshClientTable("");
         refreshObjectTable("");
+    }
+
+    public void makeOthetAction(ActionEvent actionEvent) {
+        try {
+            if (nameOth.getText().equals("")) {
+                Messedge.setText("Некорректное имя отчета");
+                return;
+            }
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(nameOth.getText() + ".pdf"));
+            document.open();
+            ResultSet rs = Main.getStmt().executeQuery("select address_obj, series_dog " +
+                    "    from objectofprotect, dogovor " +
+                    "    where client_idclient = " + idCurClient +" " +
+                    "    and idobject = objectofprotect_idobject " +
+                    "    and to_date(datastart_dog) <= to_date(current_date) " +
+                    "    and to_date(dataend_dog) >= to_date(current_date)");
+            int count = 1;
+            BaseFont times = BaseFont.createFont("c:/windows/fonts/times.ttf","cp1251",BaseFont.EMBEDDED);
+            document.add(new Paragraph("Othet: "));
+            while (rs != null && rs.next()) {
+                document.add(new Paragraph("№ " + String.valueOf(count) + " | " +
+                        "Адрес: " + rs.getString("address_obj") + " | " +
+                        "Серия договора: " + rs.getString("series_dog"), new com.itextpdf.text.Font(times, 14)));
+                count++;
+            }
+            document.close();
+            Messedge.setText("Отчет сформирован");
+        } catch(Exception e) {
+            Messedge.setText("Не удалось сформировать отчет");
+            e.printStackTrace();
+        }
+    }
+
+    public void exitAction(ActionEvent actionEvent) {
+        Main.closeWnd(btnExit);
     }
 }

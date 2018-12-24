@@ -1,5 +1,11 @@
 package sample.Controllers;
 
+import com.itextpdf.text.Anchor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +22,7 @@ import sample.Scripts.Update;
 import sample.Tables.ActPay;
 import sample.Tables.LOA;
 
+import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -51,6 +58,7 @@ public class AccountantUIController {
     public CheckBox isSearchTypePay;
     public Button ExitBtn;
     public Label msg;
+    public TextField nameOth;
     private String selectSearchTypePay;
     public MenuItem editTypePayCash;
     public MenuItem editTypePayTrans;
@@ -442,5 +450,43 @@ public class AccountantUIController {
 
     public void clearActAction(ActionEvent actionEvent) {
         initTableActPay("");
+    }
+
+    public void createOthetAction(ActionEvent actionEvent) {
+        try {
+            if (nameOth.getText().equals("")) {
+                msg.setText("Некорректное имя отчета");
+                return;
+            }
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(nameOth.getText() + ".pdf"));
+            document.open();
+            ResultSet rs = Main.getStmt().executeQuery("select client.fio_client fio, client.address_client address, " +
+                    "client.doc_client doc, loa.fine_loa fine, dog.series_dog ser " +
+                    "from client, lineofact loa, dogovor dog, actofpaying aop, accountant acca " +
+                    "where loa.dogovor_iddogovor = dog.iddogovor " +
+                    "  and dog.client_idclient = client.idclient" +
+                    "  and loa.fine_loa > 0" +
+                    "  and aop.idactpay = loa.actofpaying_idactpay" +
+                    "  and aop.accountant_idaccountant = acca.idaccountant" +
+                    "  and acca.idaccountant = " + idAcc);
+            int count = 1;
+            BaseFont times = BaseFont.createFont("c:/windows/fonts/times.ttf","cp1251",BaseFont.EMBEDDED);
+            document.add(new Paragraph("Othet: "));
+            while (rs != null && rs.next()) {
+                document.add(new Paragraph("№ " + String.valueOf(count) + " | " +
+                        "ФИО: " + rs.getString("fio") + " | " +
+                        "Адрес: " + rs.getString("address") + " | " +
+                        "Документ: " + rs.getString("doc") + " | " +
+                        "Долг: " + rs.getString("fine") + " | " +
+                        "Серия договора: " + rs.getString("ser"), new Font(times, 14)));
+                count++;
+            }
+            document.close();
+            msg.setText("Отчет сформирован");
+        } catch(Exception e) {
+            msg.setText("Не удалось сформировать отчет");
+            e.printStackTrace();
+        }
     }
 }

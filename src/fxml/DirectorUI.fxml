@@ -14,7 +14,7 @@
 <AnchorPane prefHeight="595.0" prefWidth="941.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controllers.DirectorUIController">
    <children>
       <Label layoutX="7.0" layoutY="6.0" text="Директор:" />
-      <Label fx:id="fio" layoutX="63.0" layoutY="23.0" />
+      <Label fx:id="fio" layoutX="66.0" layoutY="6.0" prefHeight="17.0" prefWidth="246.0" />
       <TableView fx:id="TablePath" layoutX="6.0" layoutY="40.0" prefHeight="200.0" prefWidth="458.0">
         <columns>
           <TableColumn fx:id="DateEndPath" prefWidth="120.0" text="Дата окон действ" />

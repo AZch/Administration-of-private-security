@@ -1,5 +1,9 @@
 package sample.Controllers;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +18,7 @@ import sample.Scripts.Select;
 import sample.Scripts.Update;
 import sample.Tables.*;
 
+import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
@@ -35,6 +40,8 @@ public class PatrolOfficerUIController {
     public CheckBox isAddressObjSearch;
     public CheckBox isNumGraphPathSearch;
     public ChoiceBox whatTypeObjSearch;
+    public TextField nameOthet;
+    public Label msg;
     private ObservableList<String> typeReqData = FXCollections.observableArrayList();
     public ChoiceBox<String> typeReqSearch;
     private String selectTypeSearch = "";
@@ -323,12 +330,6 @@ public class PatrolOfficerUIController {
         refreshPathTable("");
     }
 
-    public void searchObjAction(ActionEvent actionEvent) {
-
-    }
-
-    public void clearSearchObjAction(ActionEvent actionEvent) {
-    }
 
     public void searchReqAction(ActionEvent actionEvent) {
         String addSqlQuestion = "";
@@ -353,9 +354,34 @@ public class PatrolOfficerUIController {
         Main.closeWnd(btnExit);
     }
 
-    public void searchGraphShedAction(ActionEvent actionEvent) {
-    }
-
-    public void clearGraphShedAction(ActionEvent actionEvent) {
+    public void makeOthetAction(ActionEvent actionEvent) {
+        try {
+            if (nameOthet.getText().equals("")) {
+                msg.setText("Некорректное имя отчета");
+                return;
+            }
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(nameOthet.getText() + ".pdf"));
+            document.open();
+            ResultSet rs = Main.getStmt().executeQuery("select DISTINCT(client.fio_client) fio, client.address_client address " +
+                    "from client, dogovor, request, objectofprotect " +
+                    "where client.idclient = dogovor.client_idclient " +
+                    "and dogovor.objectofprotect_idobject = objectofprotect.idobject " +
+                    "and objectofprotect.idobject = request.objectofprotect_idobject");
+            int count = 1;
+            BaseFont times = BaseFont.createFont("c:/windows/fonts/times.ttf","cp1251",BaseFont.EMBEDDED);
+            document.add(new Paragraph("Othet: "));
+            while (rs != null && rs.next()) {
+                document.add(new Paragraph("№ " + String.valueOf(count) + " | " +
+                        "ФИО: " + rs.getString("fio") + " | " +
+                        "Адрес: " + rs.getString("address"), new com.itextpdf.text.Font(times, 14)));
+                count++;
+            }
+            document.close();
+            msg.setText("Отчет сформирован");
+        } catch(Exception e) {
+            msg.setText("Не удалось сформировать отчет");
+            e.printStackTrace();
+        }
     }
 }

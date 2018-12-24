@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -32,7 +33,7 @@ public class Main extends Application {
         Locale.setDefault(Locale.ENGLISH);
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "system");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "vo", "1");
             stmt = con.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
