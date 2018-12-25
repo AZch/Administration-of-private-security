@@ -287,10 +287,10 @@ public class AccountantUIController {
 
     public void delActPayAction(ActionEvent actionEvent) {
         try {
-            if (loaData.size() > 0) {
-                msg.setText("Невозможно удалить запись");
-                return;
-            }
+//            if (loaData.size() > 0) {
+//                msg.setText("Невозможно удалить запись");
+//                return;
+//            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constants.dateFormat);
             Main.getStmt().executeQuery(Delete.deleteActPay +
                     Select.where + Update.whereIdActPay + idSelectActPay);

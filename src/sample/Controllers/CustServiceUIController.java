@@ -824,4 +824,43 @@ public class CustServiceUIController {
     public void exitAction(ActionEvent actionEvent) {
         Main.closeWnd(btnExit);
     }
+
+    public void getDogAction(ActionEvent actionEvent) {
+        try {
+            if (nameOth.getText().equals("")) {
+                Messedge.setText("Некорректное имя отчета");
+                return;
+            }
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(nameOth.getText() + ".pdf"));
+            document.open();
+            ResultSet rs = Main.getStmt().executeQuery(" select cl.fio_client fioc, serv.fio_so fios, dog.series_dog ser, " +
+                    "    to_char(dog.datastart_dog, 'dd.MM.yy') ds, to_char(dog.dataend_dog, 'dd.MM.yy') de, " +
+                    "    dog.payperiod_dog payp, dog.peoplecount_dog cnt " +
+                    "    from dogovor dog, serviceofficier serv, client cl, objectofprotect obj" +
+                    "    where dog.client_idclient = cl.idclient " +
+                    "      and dog.objectofprotect_idobject = obj.idobject " +
+                    "      and dog.serviceofficier_idserviceoff = serv.idserviceoff " +
+                    "      and dog.iddogovor = " + idDog);
+            int count = 1;
+            BaseFont times = BaseFont.createFont("c:/windows/fonts/times.ttf","cp1251",BaseFont.EMBEDDED);
+            document.add(new Paragraph("Договор: "));
+            while (rs != null && rs.next()) {
+                document.add(new Paragraph("№ " + String.valueOf(count) + " \n " +
+                        "ФИО клиента: " + rs.getString("fioc") + " \n " +
+                        "ФИО сотрудника: " + rs.getString("fios") + " \n " +
+                        "Серия договора: " + rs.getString("ser") + " \n " +
+                        "Дата начала: " + rs.getString("ds") + " \n " +
+                        "Дата завершения: " + rs.getString("de") + " \n " +
+                        "Период оплаты: " + rs.getString("payp") + " \n " +
+                        "Количество людей на объекте: " + rs.getString("cnt") + "\n\n", new com.itextpdf.text.Font(times, 14)));
+                count++;
+            }
+            document.close();
+            Messedge.setText("Отчет сформирован");
+        } catch(Exception e) {
+            Messedge.setText("Не удалось сформировать отчет");
+            e.printStackTrace();
+        }
+    }
 }
